@@ -1,0 +1,672 @@
+lib/serpro-cnpj.mjs: OK
+
+
+api/cnpj.js: OK
+
+
+api/quote.js: OK
+
+
+assets/calculator-page.js: OK
+
+
+full tests: FAIL
+TAP version 13
+# Quote persistence failed Error: QUOTE_STORE_NOT_CONFIGURED
+#     at getSql (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/lib/quote-store.mjs:5:19)
+#     at persistQuote (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/lib/quote-store.mjs:13:21)
+#     at handler (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/api/quote.js:50:11)
+#     at TestContext.<anonymous> (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/tests/api.test.mjs:19:474)
+# [90m    at Test.runInAsyncScope (node:async_hooks:214:14)[39m
+# [90m    at Test.run (node:internal/test_runner/test:1047:25)[39m
+# [90m    at Test.processPendingSubtests (node:internal/test_runner/test:744:18)[39m
+# [90m    at Test.postRun (node:internal/test_runner/test:1173:19)[39m
+# [90m    at Test.run (node:internal/test_runner/test:1101:12)[39m
+# [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)[39m
+# Subtest: CNPJ API rejects invalid value before external lookup
+ok 1 - CNPJ API rejects invalid value before external lookup
+  ---
+  duration_ms: 0.931585
+  type: 'test'
+  ...
+# Subtest: company lookup tokens are signed and expire
+ok 2 - company lookup tokens are signed and expire
+  ---
+  duration_ms: 0.853308
+  type: 'test'
+  ...
+# Subtest: quote API rejects category not linked to signed CNPJ
+ok 3 - quote API rejects category not linked to signed CNPJ
+  ---
+  duration_ms: 0.425563
+  type: 'test'
+  ...
+# Subtest: quote API refuses authoritative proposal when database is absent
+ok 4 - quote API refuses authoritative proposal when database is absent
+  ---
+  duration_ms: 1.736152
+  type: 'test'
+  ...
+# Subtest: SERPRO response normalizer retains official activities
+ok 5 - SERPRO response normalizer retains official activities
+  ---
+  duration_ms: 0.482788
+  type: 'test'
+  ...
+# Subtest: readiness fails closed when production configuration is missing
+ok 6 - readiness fails closed when production configuration is missing
+  ---
+  duration_ms: 0.312044
+  type: 'test'
+  ...
+# Subtest: SERPRO client contract shape can consume alphanumeric CNPJ through OAuth
+ok 7 - SERPRO client contract shape can consume alphanumeric CNPJ through OAuth
+  ---
+  duration_ms: 0.942291
+  type: 'test'
+  ...
+# Subtest: readiness can pass only with all external production dependencies configured
+ok 8 - readiness can pass only with all external production dependencies configured
+  ---
+  duration_ms: 0.126377
+  type: 'test'
+  ...
+# Subtest: CP60-v1 reproduces contractual anchors exactly
+ok 9 - CP60-v1 reproduces contractual anchors exactly
+  ---
+  duration_ms: 1.390067
+  type: 'test'
+  ...
+# Subtest: CP60-v1 is monotonic across 0..100
+ok 10 - CP60-v1 is monotonic across 0..100
+  ---
+  duration_ms: 4.069441
+  type: 'test'
+  ...
+# Subtest: any official CNAE category can receive BASE_ONLY fallback
+ok 11 - any official CNAE category can receive BASE_ONLY fallback
+  ---
+  duration_ms: 0.164204
+  type: 'test'
+  ...
+# Subtest: arbitrary non-CNAE category is rejected
+ok 12 - arbitrary non-CNAE category is rejected
+  ---
+  duration_ms: 1.266302
+  type: 'test'
+  ...
+# Subtest: stale evidence cannot raise price
+ok 13 - stale evidence cannot raise price
+  ---
+  duration_ms: 0.232416
+  type: 'test'
+  ...
+# Subtest: verified Founder proposal is zero while PME remains auditable
+ok 14 - verified Founder proposal is zero while PME remains auditable
+  ---
+  duration_ms: 0.187599
+  type: 'test'
+  ...
+# Subtest: unknown resources remain blocked
+ok 15 - unknown resources remain blocked
+  ---
+  duration_ms: 0.483339
+  type: 'test'
+  ...
+# Subtest: quote validity remains exactly seven days
+ok 16 - quote validity remains exactly seven days
+  ---
+  duration_ms: 0.171865
+  type: 'test'
+  ...
+# Subtest: quote payload can be signed and verified
+ok 17 - quote payload can be signed and verified
+  ---
+  duration_ms: 0.83422
+  type: 'test'
+  ...
+# Subtest: numeric and alphanumeric CNPJ fixtures validate
+ok 18 - numeric and alphanumeric CNPJ fixtures validate
+  ---
+  duration_ms: 0.519883
+  type: 'test'
+  ...
+# Subtest: CNPJ normalization preserves letters and formatting
+ok 19 - CNPJ normalization preserves letters and formatting
+  ---
+  duration_ms: 0.203322
+  type: 'test'
+  ...
+# Subtest: contract categories are created only from official activities
+ok 20 - contract categories are created only from official activities
+  ---
+  duration_ms: 0.215401
+  type: 'test'
+  ...
+# Subtest: pricing scope is official CNAE activity
+ok 21 - pricing scope is official CNAE activity
+  ---
+  duration_ms: 0.063725
+  type: 'test'
+  ...
+# Subtest: formulario de contato existe e usa endpoint server-side
+ok 22 - formulario de contato existe e usa endpoint server-side
+  ---
+  duration_ms: 1.618316
+  type: 'test'
+  ...
+# Subtest: segredos do Resend ficam apenas no servidor
+ok 23 - segredos do Resend ficam apenas no servidor
+  ---
+  duration_ms: 0.287918
+  type: 'test'
+  ...
+# Subtest: contato possui validacao honeypot rate-limit e turnstile
+ok 24 - contato possui validacao honeypot rate-limit e turnstile
+  ---
+  duration_ms: 0.192386
+  type: 'test'
+  ...
+# Subtest: readiness exige configuracao Resend
+ok 25 - readiness exige configuracao Resend
+  ---
+  duration_ms: 9.21429
+  type: 'test'
+  ...
+# Subtest: canal de privacidade pode reutilizar formulario Resend
+ok 26 - canal de privacidade pode reutilizar formulario Resend
+  ---
+  duration_ms: 0.238625
+  type: 'test'
+  ...
+# Subtest: pagina de privacidade direciona pedidos ao formulario institucional
+ok 27 - pagina de privacidade direciona pedidos ao formulario institucional
+  ---
+  duration_ms: 0.182381
+  type: 'test'
+  ...
+# Subtest: migração cria quotes e quote_events
+not ok 28 - migração cria quotes e quote_events
+  ---
+  duration_ms: 1.873255
+  type: 'test'
+  location: '/mnt/data/achei-aqui-site-v3.1.5-serpro/tests/postgres.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /quote_id TEXT NOT NULL UNIQUE/. Input:
+    
+    'BEGIN;\n' +
+      '\n' +
+      'CREATE TABLE IF NOT EXISTS quotes (\n' +
+      '  quote_id TEXT PRIMARY KEY,\n' +
+      '  cnpj TEXT NOT NULL,\n' +
+      '  company_name TEXT NOT NULL,\n' +
+      '  activity_code TEXT NOT NULL,\n' +
+      '  activity_label TEXT NOT NULL,\n' +
+      '  pricing_policy_version TEXT NOT NULL,\n' +
+      '  economic_model_version TEXT NOT NULL,\n' +
+      '  pme_cents INTEGER NOT NULL CHECK (pme_cents >= 0),\n' +
+      '  mp_cents INTEGER NOT NULL CHECK (mp_cents >= 0),\n' +
+      '  created_at TIMESTAMPTZ NOT NULL,\n' +
+      '  valid_until TIMESTAMPTZ NOT NULL,\n' +
+      '  signature TEXT NOT NULL,\n' +
+      "  status TEXT NOT NULL DEFAULT 'issued'\n" +
+      "    CHECK (status IN ('issued','viewed','accepted','expired','cancelled')),\n" +
+      '  source_payload_hash TEXT,\n' +
+      '  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\n' +
+      ');\n' +
+      '\n' +
+      'CREATE INDEX IF NOT EXISTS quotes_cnpj_idx ON quotes(cnpj);\n' +
+      'CREATE INDEX IF NOT EXISTS quotes_status_idx ON quotes(status);\n' +
+      'CREATE INDEX IF NOT EXISTS quotes_valid_until_idx ON quotes(valid_until);\n' +
+      'CREATE INDEX IF NOT EXISTS quotes_created_at_idx ON quotes(created_at DESC);\n' +
+      '\n' +
+      'CREATE TABLE IF NOT EXISTS quote_events (\n' +
+      '  id BIGSERIAL PRIMARY KEY,\n' +
+      '  quote_id TEXT NOT NULL REFERENCES quotes(quote_id) ON DELETE CASCADE,\n' +
+      '  event_type TEXT NOT NULL,\n' +
+      "  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,\n" +
+      '  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\n' +
+      ');\n' +
+      '\n' +
+      'CREATE INDEX IF NOT EXISTS quote_events_quote_id_idx ON quote_events(quote_id);\n' +
+      'CREATE INDEX IF NOT EXISTS quote_events_created_at_idx ON quote_events(created_at DESC);\n' +
+      '\n' +
+      'COMMIT;\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    BEGIN;
+    
+    CREATE TABLE IF NOT EXISTS quotes (
+      quote_id TEXT PRIMARY KEY,
+      cnpj TEXT NOT NULL,
+      company_name TEXT NOT NULL,
+      activity_code TEXT NOT NULL,
+      activity_label TEXT NOT NULL,
+      pricing_policy_version TEXT NOT NULL,
+      economic_model_version TEXT NOT NULL,
+      pme_cents INTEGER NOT NULL CHECK (pme_cents >= 0),
+      mp_cents INTEGER NOT NULL CHECK (mp_cents >= 0),
+      created_at TIMESTAMPTZ NOT NULL,
+      valid_until TIMESTAMPTZ NOT NULL,
+      signature TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'issued'
+        CHECK (status IN ('issued','viewed','accepted','expired','cancelled')),
+      source_payload_hash TEXT,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+    
+    CREATE INDEX IF NOT EXISTS quotes_cnpj_idx ON quotes(cnpj);
+    CREATE INDEX IF NOT EXISTS quotes_status_idx ON quotes(status);
+    CREATE INDEX IF NOT EXISTS quotes_valid_until_idx ON quotes(valid_until);
+    CREATE INDEX IF NOT EXISTS quotes_created_at_idx ON quotes(created_at DESC);
+    
+    CREATE TABLE IF NOT EXISTS quote_events (
+      id BIGSERIAL PRIMARY KEY,
+      quote_id TEXT NOT NULL REFERENCES quotes(quote_id) ON DELETE CASCADE,
+      event_type TEXT NOT NULL,
+      metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+    
+    CREATE INDEX IF NOT EXISTS quote_events_quote_id_idx ON quote_events(quote_id);
+    CREATE INDEX IF NOT EXISTS quote_events_created_at_idx ON quote_events(created_at DESC);
+    
+    COMMIT;
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/tests/postgres.test.mjs:14:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: status da proposta é limitado
+ok 29 - status da proposta é limitado
+  ---
+  duration_ms: 0.218696
+  type: 'test'
+  ...
+# Subtest: db layer possui salvar ler status e eventos
+ok 30 - db layer possui salvar ler status e eventos
+  ---
+  duration_ms: 0.178756
+  type: 'test'
+  ...
+# Subtest: api de leitura expira proposta vencida
+ok 31 - api de leitura expira proposta vencida
+  ---
+  duration_ms: 0.131205
+  type: 'test'
+  ...
+# Subtest: api de aceite recusa proposta vencida
+ok 32 - api de aceite recusa proposta vencida
+  ---
+  duration_ms: 0.186638
+  type: 'test'
+  ...
+# Subtest: migrate script exige banco
+ok 33 - migrate script exige banco
+  ---
+  duration_ms: 0.180719
+  type: 'test'
+  ...
+# Subtest: gerador usa segredo criptograficamente aleatorio de 32 bytes
+ok 34 - gerador usa segredo criptograficamente aleatorio de 32 bytes
+  ---
+  duration_ms: 0.627493
+  type: 'test'
+  ...
+# Subtest: migracao de propostas preserva integridade e estados
+not ok 35 - migracao de propostas preserva integridade e estados
+  ---
+  duration_ms: 0.568525
+  type: 'test'
+  location: '/mnt/data/achei-aqui-site-v3.1.5-serpro/tests/preprod.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: 'quote_id text primary key'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/tests/preprod.test.mjs:19:172)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: API CNPJ falha fechada em parcial status e mismatch
+ok 36 - API CNPJ falha fechada em parcial status e mismatch
+  ---
+  duration_ms: 0.67252
+  type: 'test'
+  ...
+# Subtest: API CNPJ usa lookup V2 e TTL curto
+ok 37 - API CNPJ usa lookup V2 e TTL curto
+  ---
+  duration_ms: 0.194159
+  type: 'test'
+  ...
+# Subtest: cliente possui timeout e x-request-tag
+ok 38 - cliente possui timeout e x-request-tag
+  ---
+  duration_ms: 0.171956
+  type: 'test'
+  ...
+# Subtest: normaliza resposta V2 com CNAE principal e secundários
+ok 39 - normaliza resposta V2 com CNAE principal e secundários
+  ---
+  duration_ms: 1.23083
+  type: 'test'
+  ...
+# Subtest: normaliza shape de cadastro compartilhado
+ok 40 - normaliza shape de cadastro compartilhado
+  ---
+  duration_ms: 0.231895
+  type: 'test'
+  ...
+# Subtest: cliente SERPRO usa OAuth, request tag e endpoint com CNPJ alfanumérico
+ok 41 - cliente SERPRO usa OAuth, request tag e endpoint com CNPJ alfanumérico
+  ---
+  duration_ms: 1.328365
+  type: 'test'
+  ...
+# Subtest: HTTP 206 é marcado como parcial
+ok 42 - HTTP 206 é marcado como parcial
+  ---
+  duration_ms: 0.38316
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 40
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 143.281923
+
+
+FINAL FULL SUITE:
+TAP version 13
+# Quote persistence failed Error: QUOTE_STORE_NOT_CONFIGURED
+#     at getSql (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/lib/quote-store.mjs:5:19)
+#     at persistQuote (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/lib/quote-store.mjs:13:21)
+#     at handler (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/api/quote.js:50:11)
+#     at TestContext.<anonymous> (file:///mnt/data/achei-aqui-site-v3.1.5-serpro/tests/api.test.mjs:19:474)
+# [90m    at Test.runInAsyncScope (node:async_hooks:214:14)[39m
+# [90m    at Test.run (node:internal/test_runner/test:1047:25)[39m
+# [90m    at Test.processPendingSubtests (node:internal/test_runner/test:744:18)[39m
+# [90m    at Test.postRun (node:internal/test_runner/test:1173:19)[39m
+# [90m    at Test.run (node:internal/test_runner/test:1101:12)[39m
+# [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)[39m
+# Subtest: CNPJ API rejects invalid value before external lookup
+ok 1 - CNPJ API rejects invalid value before external lookup
+  ---
+  duration_ms: 0.975531
+  type: 'test'
+  ...
+# Subtest: company lookup tokens are signed and expire
+ok 2 - company lookup tokens are signed and expire
+  ---
+  duration_ms: 0.958335
+  type: 'test'
+  ...
+# Subtest: quote API rejects category not linked to signed CNPJ
+ok 3 - quote API rejects category not linked to signed CNPJ
+  ---
+  duration_ms: 0.457541
+  type: 'test'
+  ...
+# Subtest: quote API refuses authoritative proposal when database is absent
+ok 4 - quote API refuses authoritative proposal when database is absent
+  ---
+  duration_ms: 1.914827
+  type: 'test'
+  ...
+# Subtest: SERPRO response normalizer retains official activities
+ok 5 - SERPRO response normalizer retains official activities
+  ---
+  duration_ms: 0.51117
+  type: 'test'
+  ...
+# Subtest: readiness fails closed when production configuration is missing
+ok 6 - readiness fails closed when production configuration is missing
+  ---
+  duration_ms: 0.823835
+  type: 'test'
+  ...
+# Subtest: SERPRO client contract shape can consume alphanumeric CNPJ through OAuth
+ok 7 - SERPRO client contract shape can consume alphanumeric CNPJ through OAuth
+  ---
+  duration_ms: 2.850558
+  type: 'test'
+  ...
+# Subtest: readiness can pass only with all external production dependencies configured
+ok 8 - readiness can pass only with all external production dependencies configured
+  ---
+  duration_ms: 0.14767
+  type: 'test'
+  ...
+# Subtest: CP60-v1 reproduces contractual anchors exactly
+ok 9 - CP60-v1 reproduces contractual anchors exactly
+  ---
+  duration_ms: 1.731615
+  type: 'test'
+  ...
+# Subtest: CP60-v1 is monotonic across 0..100
+ok 10 - CP60-v1 is monotonic across 0..100
+  ---
+  duration_ms: 5.997658
+  type: 'test'
+  ...
+# Subtest: any official CNAE category can receive BASE_ONLY fallback
+ok 11 - any official CNAE category can receive BASE_ONLY fallback
+  ---
+  duration_ms: 0.14765
+  type: 'test'
+  ...
+# Subtest: arbitrary non-CNAE category is rejected
+ok 12 - arbitrary non-CNAE category is rejected
+  ---
+  duration_ms: 0.586112
+  type: 'test'
+  ...
+# Subtest: stale evidence cannot raise price
+ok 13 - stale evidence cannot raise price
+  ---
+  duration_ms: 0.311193
+  type: 'test'
+  ...
+# Subtest: verified Founder proposal is zero while PME remains auditable
+ok 14 - verified Founder proposal is zero while PME remains auditable
+  ---
+  duration_ms: 0.22141
+  type: 'test'
+  ...
+# Subtest: unknown resources remain blocked
+ok 15 - unknown resources remain blocked
+  ---
+  duration_ms: 0.310502
+  type: 'test'
+  ...
+# Subtest: quote validity remains exactly seven days
+ok 16 - quote validity remains exactly seven days
+  ---
+  duration_ms: 0.126758
+  type: 'test'
+  ...
+# Subtest: quote payload can be signed and verified
+ok 17 - quote payload can be signed and verified
+  ---
+  duration_ms: 0.823745
+  type: 'test'
+  ...
+# Subtest: numeric and alphanumeric CNPJ fixtures validate
+ok 18 - numeric and alphanumeric CNPJ fixtures validate
+  ---
+  duration_ms: 0.585962
+  type: 'test'
+  ...
+# Subtest: CNPJ normalization preserves letters and formatting
+ok 19 - CNPJ normalization preserves letters and formatting
+  ---
+  duration_ms: 0.186437
+  type: 'test'
+  ...
+# Subtest: contract categories are created only from official activities
+ok 20 - contract categories are created only from official activities
+  ---
+  duration_ms: 0.226727
+  type: 'test'
+  ...
+# Subtest: pricing scope is official CNAE activity
+ok 21 - pricing scope is official CNAE activity
+  ---
+  duration_ms: 0.162101
+  type: 'test'
+  ...
+# Subtest: formulario de contato existe e usa endpoint server-side
+ok 22 - formulario de contato existe e usa endpoint server-side
+  ---
+  duration_ms: 1.687158
+  type: 'test'
+  ...
+# Subtest: segredos do Resend ficam apenas no servidor
+ok 23 - segredos do Resend ficam apenas no servidor
+  ---
+  duration_ms: 0.480765
+  type: 'test'
+  ...
+# Subtest: contato possui validacao honeypot rate-limit e turnstile
+ok 24 - contato possui validacao honeypot rate-limit e turnstile
+  ---
+  duration_ms: 0.223632
+  type: 'test'
+  ...
+# Subtest: readiness exige configuracao Resend
+ok 25 - readiness exige configuracao Resend
+  ---
+  duration_ms: 5.151269
+  type: 'test'
+  ...
+# Subtest: canal de privacidade pode reutilizar formulario Resend
+ok 26 - canal de privacidade pode reutilizar formulario Resend
+  ---
+  duration_ms: 0.241188
+  type: 'test'
+  ...
+# Subtest: pagina de privacidade direciona pedidos ao formulario institucional
+ok 27 - pagina de privacidade direciona pedidos ao formulario institucional
+  ---
+  duration_ms: 0.178856
+  type: 'test'
+  ...
+# Subtest: migração cria quotes e quote_events
+ok 28 - migração cria quotes e quote_events
+  ---
+  duration_ms: 0.706371
+  type: 'test'
+  ...
+# Subtest: status da proposta é limitado
+ok 29 - status da proposta é limitado
+  ---
+  duration_ms: 0.236591
+  type: 'test'
+  ...
+# Subtest: db layer possui salvar ler status e eventos
+ok 30 - db layer possui salvar ler status e eventos
+  ---
+  duration_ms: 0.204564
+  type: 'test'
+  ...
+# Subtest: api de leitura expira proposta vencida
+ok 31 - api de leitura expira proposta vencida
+  ---
+  duration_ms: 0.139798
+  type: 'test'
+  ...
+# Subtest: api de aceite recusa proposta vencida
+ok 32 - api de aceite recusa proposta vencida
+  ---
+  duration_ms: 0.196041
+  type: 'test'
+  ...
+# Subtest: migrate script exige banco
+ok 33 - migrate script exige banco
+  ---
+  duration_ms: 0.196392
+  type: 'test'
+  ...
+# Subtest: gerador usa segredo criptograficamente aleatorio de 32 bytes
+ok 34 - gerador usa segredo criptograficamente aleatorio de 32 bytes
+  ---
+  duration_ms: 0.679401
+  type: 'test'
+  ...
+# Subtest: migracao de propostas preserva integridade e estados
+ok 35 - migracao de propostas preserva integridade e estados
+  ---
+  duration_ms: 0.190183
+  type: 'test'
+  ...
+# Subtest: API CNPJ falha fechada em parcial status e mismatch
+ok 36 - API CNPJ falha fechada em parcial status e mismatch
+  ---
+  duration_ms: 0.663316
+  type: 'test'
+  ...
+# Subtest: API CNPJ usa lookup V2 e TTL curto
+ok 37 - API CNPJ usa lookup V2 e TTL curto
+  ---
+  duration_ms: 0.39691
+  type: 'test'
+  ...
+# Subtest: cliente possui timeout e x-request-tag
+ok 38 - cliente possui timeout e x-request-tag
+  ---
+  duration_ms: 0.181179
+  type: 'test'
+  ...
+# Subtest: normaliza resposta V2 com CNAE principal e secundários
+ok 39 - normaliza resposta V2 com CNAE principal e secundários
+  ---
+  duration_ms: 1.113516
+  type: 'test'
+  ...
+# Subtest: normaliza shape de cadastro compartilhado
+ok 40 - normaliza shape de cadastro compartilhado
+  ---
+  duration_ms: 0.220208
+  type: 'test'
+  ...
+# Subtest: cliente SERPRO usa OAuth, request tag e endpoint com CNPJ alfanumérico
+ok 41 - cliente SERPRO usa OAuth, request tag e endpoint com CNPJ alfanumérico
+  ---
+  duration_ms: 2.116076
+  type: 'test'
+  ...
+# Subtest: HTTP 206 é marcado como parcial
+ok 42 - HTTP 206 é marcado como parcial
+  ---
+  duration_ms: 0.419113
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 174.332857

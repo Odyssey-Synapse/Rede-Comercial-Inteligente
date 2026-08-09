@@ -1,0 +1,20 @@
+{
+  "project": "Achei Aqui — Site Institucional",
+  "version": "3.1.0-preproduction",
+  "inheritsVisualLanguageFrom": "V3",
+  "productionGates": [
+    "official_cnpj_lookup",
+    "alphanumeric_cnpj",
+    "official_cnae_category",
+    "active_registration_status",
+    "turnstile_abuse_protection",
+    "server_side_lookup_signature",
+    "server_side_quote_signature",
+    "postgres_quote_persistence",
+    "official_contact",
+    "privacy_controller_and_channel",
+    "approved_privacy_policy"
+  ],
+  "categoryPolicy": "CNPJ -> official CNAE activities -> contractual category",
+  "fallbackPricing": "BASE_ONLY_EVIDENCE_PENDING"
+}

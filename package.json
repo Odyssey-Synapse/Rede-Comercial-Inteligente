@@ -1,0 +1,17 @@
+{
+  "name": "achei-aqui-site-institucional-v3-1-preproducao",
+  "version": "3.1.6",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "preview": "python3 -m http.server 3000",
+    "readiness": "node scripts/readiness.mjs",
+    "generate:secrets": "node scripts/generate-secrets.mjs",
+    "db:migrate": "node scripts/migrate.mjs"
+  },
+  "dependencies": {
+    "postgres": "^3.4.7",
+    "@vercel/postgres": "^0.10.0"
+  }
+}

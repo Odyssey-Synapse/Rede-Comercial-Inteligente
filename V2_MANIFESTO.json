@@ -1,0 +1,20 @@
+{
+  "artifact": "Achei Aqui Site Institucional",
+  "version": "v2.0.0-candidate",
+  "status": "CANDIDATE_FOR_REVIEW",
+  "v1_baseline_untouched": true,
+  "calculator": {
+    "artifact": "Calculadora Contratual MCIR 001",
+    "pricing_policy": "AA-PRICING-001",
+    "pricing_policy_version": "1.0.0",
+    "vbc_brl": 140.00,
+    "curve": "CP60-v1",
+    "quote_validity_days": 7,
+    "production_evidence_registry": "EMPTY_BY_DESIGN",
+    "fallback_without_authorized_evidence": "BASE_ONLY"
+  },
+  "site_pages": [
+    "/", "/rede.html", "/empresas.html", "/tecnologia.html",
+    "/transparencia.html", "/calculadora.html", "/privacidade.html", "/contato.html"
+  ]
+}

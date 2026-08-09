@@ -1,0 +1,24 @@
+{
+  "artifact": "ACHEI_AQUI_SITE_INSTITUCIONAL_V3",
+  "version": "3.0.0",
+  "base": "Site Institucional V2 preservado como fonte",
+  "copy_mode": "institucional-humano-profissional",
+  "responsive": {
+    "mobile_min_px": 360,
+    "tested_widths": [
+      360,
+      390,
+      430,
+      1366,
+      1440,
+      1920
+    ]
+  },
+  "commercial_truths": [
+    "necessidade vem primeiro",
+    "pagamento não compra relevância orgânica",
+    "mensalidade consultável antes da contratação",
+    "ausência de evidência não é transformada em justificativa de preço maior"
+  ],
+  "calculator_engine": "preservado da V2; copy pública simplificada"
+}
