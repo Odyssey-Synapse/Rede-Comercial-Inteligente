@@ -56,3 +56,8 @@ test("Programa deixa claro que Fundador não é participação societária",()=>
   const html=read("index.html");
   assert.match(html,/não representa participação societária/i);
 });
+
+test("topbar inclui link global para Contato",()=>{
+  const js=read("assets/site.js");
+  assert.match(js,/\["\/contato\.html","Contato"\]/);
+});

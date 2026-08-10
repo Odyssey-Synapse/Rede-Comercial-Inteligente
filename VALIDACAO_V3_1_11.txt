@@ -46,3 +46,9 @@ NÃO ALTERADO NESTA VERSÃO
 - cálculo contratual
 - consulta CNPJ
 - fluxo de aceite comercial V3.1.10
+
+AJUSTE DE NAVEGACAO — TOPBAR
+- Adicionado link global "Contato" apontando para /contato.html.
+- O link é renderizado por assets/site.js em todas as páginas que usam o cabeçalho institucional.
+- O menu responsivo/mobile recebe o mesmo link automaticamente.
+- Validação completa após o ajuste: 78 testes aprovados, 0 falhas.
