@@ -26,14 +26,15 @@ test("demo possui três cenários e loop contínuo",()=>{
   for(const term of ["elétrica residencial","climatização comercial","chaveiro emergencial"]) assert.ok(js.includes(term),term);
   assert.match(js,/scenarioIndex=\(scenarioIndex\+1\)%scenarios\.length/);
   assert.match(js,/while\(id===runId\)/);
-  assert.match(js,/const base=760/);
+  assert.match(js,/const base=1120/);
 });
 
-test("demo preserva controles e velocidades mais rápidas",()=>{
+test("demo preserva controles e velocidade padrão mais confortável",()=>{
   const html=read("index.html");
   for(const id of ['id="demo-prev"','id="demo-play"','id="demo-next"','id="demo-restart"','id="demo-speed"']) assert.ok(html.includes(id),id);
-  assert.match(html,/value="\.78" selected>Normal/);
-  assert.match(html,/value="\.58">Rápida/);
+  assert.match(html,/value="1" selected>Normal/);
+  assert.match(html,/value="1\.28">Lenta/);
+  assert.match(html,/value="\.78">Rápida/);
 });
 
 test("Programa Parceiros Fundadores aparece como bloco comercial completo",()=>{

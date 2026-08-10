@@ -6,7 +6,7 @@ ESCOPO
 - Demo automatizada integrada à home.
 - Três cenários hipotéticos: elétrica residencial, climatização comercial e chaveiro emergencial.
 - Cenários exibidos um por vez em loop contínuo; após o terceiro, retorno automático ao primeiro.
-- Ritmo e transições acelerados, com controles de pausar, avançar, voltar, reiniciar e velocidade.
+- Ritmo recalibrado para leitura confortável, com transições mais lentas entre consumidor, Rede e empresa; controles de pausar, avançar, voltar, reiniciar e velocidade preservados.
 - Identificação explícita: "DEMONSTRAÇÃO — cenário hipotético".
 - Bloco completo Programa Parceiros Fundadores.
 - Limite comercial de 25 vagas.
@@ -16,6 +16,12 @@ ESCOPO
 - 2ª etapa descrita como marketing e lançamento em massa da Rede.
 - Regra pós-25 vagas: novas empresas seguem condições comerciais vigentes para parceiros convencionais.
 - Programa identificado como condição comercial, sem participação societária.
+
+CALIBRAÇÃO DE VELOCIDADE
+- Base da apresentação: 1120 ms.
+- Velocidade padrão: Normal (1x).
+- Opções: Lenta (1.28x de duração), Normal (1x) e Rápida (0.78x de duração).
+- Transição do pacote na Rede: 0.96 s.
 
 REGRESSÃO
 Comando: npm test

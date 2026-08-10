@@ -94,10 +94,10 @@ if(root){
   };
 
   let scenarioIndex=0,step=0,playing=true,runId=0;
-  const base=760;
+  const base=1120;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function rate(){return Number(els.speed?.value||.78)}
+  function rate(){return Number(els.speed?.value||1)}
   async function wait(ms,id){
     let left=ms*rate();
     while(left>0){
@@ -145,7 +145,7 @@ if(root){
     for(let i=0;i<text.length;i++){
       if(id!==runId)return;
       els.assistantText.textContent+=text[i];
-      if(i%4===0)await wait(7,id);
+      if(i%4===0)await wait(10,id);
     }
   }
   async function setStep(i,id,instant=false){
@@ -154,10 +154,10 @@ if(root){
     if(i===0){side("consumer");els.request.classList.add("show");return}
     if(i===1){
       show(els.ai);$("#demo-ai-1")?.classList.add("on");els.aiStatus.textContent="entendendo sua mensagem…";
-      await wait(d*.22,id);$("#demo-ai-2")?.classList.add("on");els.aiStatus.textContent="identificando contexto…";
-      await wait(d*.22,id);$("#demo-ai-3")?.classList.add("on");els.aiStatus.textContent="organizando necessidade…";
+      await wait(d*.30,id);$("#demo-ai-2")?.classList.add("on");els.aiStatus.textContent="identificando contexto…";
+      await wait(d*.30,id);$("#demo-ai-3")?.classList.add("on");els.aiStatus.textContent="organizando necessidade…";
       show(els.parsed);els.tags.innerHTML="";
-      for(const tag of s.tags){const span=document.createElement("span");span.textContent=tag;els.tags.appendChild(span);if(!instant)await wait(42,id)}
+      for(const tag of s.tags){const span=document.createElement("span");span.textContent=tag;els.tags.appendChild(span);if(!instant)await wait(72,id)}
       return;
     }
     if(i===2){show(els.ai,false);show(els.assistant);await typeText(s.assistant,id,instant);return}
@@ -167,13 +167,13 @@ if(root){
     }
     if(i===4){
       side("company");els.bridge.classList.add("active");els.packet.classList.remove("travel");void els.packet.offsetWidth;els.packet.classList.add("travel");
-      await wait(d*.34,id);show(els.opportunity);els.open.textContent="1";els.today.textContent="1";els.bridge.classList.remove("active");return;
+      await wait(d*.48,id);show(els.opportunity);els.open.textContent="1";els.today.textContent="1";els.bridge.classList.remove("active");return;
     }
-    if(i===5){side("company");show(els.companyChat);els.n1.classList.add("show");await wait(d*.24,id);side("consumer");els.companyQuestion.classList.add("show");return}
-    if(i===6){side("consumer");els.answer.classList.add("show");await wait(d*.22,id);side("company");els.n2.classList.add("show");await wait(d*.16,id);els.n3.classList.add("show");return}
-    if(i===7){side("company");show(els.quote);await wait(d*.2,id);side("consumer");els.consumerQuote.classList.add("show");return}
-    if(i===8){side("consumer");els.accept.classList.add("show");await wait(d*.2,id);side("company");show(els.quoteState);els.open.textContent="0";await wait(d*.18,id);side("consumer");els.done.classList.add("show");return}
-    if(i===9){side("company");els.bridge.classList.add("active");await wait(d*.3,id);els.bridge.classList.remove("active");return}
+    if(i===5){side("company");show(els.companyChat);els.n1.classList.add("show");await wait(d*.34,id);side("consumer");els.companyQuestion.classList.add("show");return}
+    if(i===6){side("consumer");els.answer.classList.add("show");await wait(d*.32,id);side("company");els.n2.classList.add("show");await wait(d*.24,id);els.n3.classList.add("show");return}
+    if(i===7){side("company");show(els.quote);await wait(d*.30,id);side("consumer");els.consumerQuote.classList.add("show");return}
+    if(i===8){side("consumer");els.accept.classList.add("show");await wait(d*.30,id);side("company");show(els.quoteState);els.open.textContent="0";await wait(d*.26,id);side("consumer");els.done.classList.add("show");return}
+    if(i===9){side("company");els.bridge.classList.add("active");await wait(d*.44,id);els.bridge.classList.remove("active");return}
   }
   async function autoplay(){
     const id=++runId;
@@ -182,9 +182,9 @@ if(root){
       for(let i=0;i<captions.length;i++){
         if(id!==runId)return;
         await setStep(i,id);
-        if(i<captions.length-1 && !(await wait(base*.48,id)))return;
+        if(i<captions.length-1 && !(await wait(base*.68,id)))return;
       }
-      if(!(await wait(700,id)))return;
+      if(!(await wait(1100,id)))return;
       scenarioIndex=(scenarioIndex+1)%scenarios.length;
     }
   }
