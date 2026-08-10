@@ -26,7 +26,7 @@ async function setupTurnstile(){
  if(!window.turnstile){
   await new Promise((resolve,reject)=>{const s=document.createElement("script");s.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";s.async=true;s.defer=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})
  }
- turnstileWidgetId=window.turnstile.render(slot,{sitekey:publicConfig.turnstileSiteKey,theme:document.documentElement.dataset.theme==="dark"?"dark":"light"});
+ turnstileWidgetId=window.turnstile.render(slot,{sitekey:publicConfig.turnstileSiteKey,theme:document.documentElement.dataset.theme==="dark"?"dark":"light",action:"cnpj_lookup"});
 }
 function turnstileToken(){return turnstileWidgetId!==null&&window.turnstile?window.turnstile.getResponse(turnstileWidgetId):null}
 function resetTurnstile(){if(turnstileWidgetId!==null&&window.turnstile)window.turnstile.reset(turnstileWidgetId)}
@@ -66,7 +66,7 @@ lookupForm.addEventListener("submit",async e=>{
    CNPJ_PROVIDER_TIMEOUT:"A consulta cadastral demorou mais que o limite de segurança. Tente novamente.",
    CNPJ_PROVIDER_PARTIAL:"A consulta cadastral retornou dados incompletos. Nenhuma proposta foi emitida.",
    SERPRO_AUTH_FAILED:"A autenticação do serviço oficial de CNPJ falhou no servidor.",
-   SERPRO_ACCESS_DENIED:"O contrato do provedor SERPRO não autorizou esta consulta.",SERPRO_CREDENTIALS_NOT_CONFIGURED:"A integração SERPRO ainda não foi configurada no servidor.",SERPRO_ENDPOINT_TEMPLATE_NOT_CONFIGURED:"O endpoint contratado do SERPRO ainda não foi configurado.",CNPJ_PROVIDER_RATE_LIMITED:"O limite temporário da consulta cadastral foi atingido. Aguarde um minuto e tente novamente.",CNPJ_PROVIDER_NOT_CONFIGURED:"O provedor de consulta CNPJ não está configurado.",LOOKUP_SIGNING_NOT_CONFIGURED:"A assinatura da consulta empresarial ainda não foi configurada."};
+   SERPRO_ACCESS_DENIED:"O contrato do provedor SERPRO não autorizou esta consulta.",SERPRO_CREDENTIALS_NOT_CONFIGURED:"A integração SERPRO ainda não foi configurada no servidor.",SERPRO_ENDPOINT_TEMPLATE_NOT_CONFIGURED:"O endpoint contratado do SERPRO ainda não foi configurado.",CNPJ_PROVIDER_RATE_LIMITED:"O limite temporário da consulta cadastral foi atingido. Aguarde um minuto e tente novamente.",CNPJ_LOOKUP_INTERNAL_ERROR:"A consulta falhou internamente. O erro foi registrado para diagnóstico.",CNPJ_PROVIDER_NOT_CONFIGURED:"O provedor de consulta CNPJ não está configurado.",TURNSTILE_VERIFY_UNAVAILABLE:"A verificação de segurança não conseguiu falar com a Cloudflare. Tente novamente.",TURNSTILE_VERIFY_TIMEOUT:"A verificação de segurança demorou demais. Tente novamente.",TURNSTILE_ACTION_MISMATCH:"A verificação de segurança não corresponde a esta ação. Recarregue a página.",TURNSTILE_HOSTNAME_MISMATCH:"A verificação de segurança não corresponde a este endereço do site. Recarregue a página.",TURNSTILE_REJECTED:"A verificação de segurança expirou ou já foi usada. Tente novamente.",LOOKUP_SIGNING_NOT_CONFIGURED:"A assinatura da consulta empresarial ainda não foi configurada."};
    throw new Error(messages[data.error]||"Não foi possível validar esta empresa agora.")
   }
   lookupToken=data.lookupToken;renderCompany(data.company);setLookupMessage("Empresa validada. A atividade principal foi identificada automaticamente.","success")
