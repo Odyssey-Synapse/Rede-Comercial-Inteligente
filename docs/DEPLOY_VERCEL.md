@@ -99,7 +99,7 @@ A V3.1 possui `/api/contact`, que envia o formulário pelo Resend sem expor a AP
 Configure na Vercel:
 
 - `RESEND_API_KEY`: chave com permissão de envio.
-- `RESEND_FROM_EMAIL`: remetente em domínio verificado, por exemplo `Achei Aqui <contato@seudominio.com.br>`.
+- `RESEND_FROM_EMAIL`: remetente em domínio verificado, por exemplo `Projeto RLI <contato@seudominio.com.br>`.
 - `CONTACT_DESTINATION_EMAIL`: e-mail privado que recebe os contatos.
 - `PUBLIC_CONTACT_EMAIL`: opcional; só use se quiser publicar um e-mail no site.
 

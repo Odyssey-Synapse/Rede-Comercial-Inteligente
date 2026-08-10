@@ -1,4 +1,4 @@
-# Achei Aqui — Site Institucional V3
+# Projeto RLI — Site Institucional V3
 
 Versão institucional com copy reescrita para linguagem pública, humana e comercial, preservando as regras do produto e a Calculadora Contratual existente.
 

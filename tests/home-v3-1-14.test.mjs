@@ -12,7 +12,7 @@ test("V3.1.14 eleva a home da venda curta para visão de Rede",()=>{
     "Explique o que está acontecendo. A Rede trabalha para chegar à solução.",
     "A vida não vem separada por categorias",
     "Uma intenção pode movimentar uma Rede inteira",
-    "Como o Achei Aqui pretende crescer",
+    "Como esta Rede pretende crescer",
     "Uma porta de entrada útil para a cidade"
   ]) assert.ok(html.includes(term),term);
 });

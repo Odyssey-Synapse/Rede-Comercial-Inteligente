@@ -287,7 +287,7 @@ function renderAcceptanceSuccess(q,data,name,email){
     <div><small>E-mail</small><strong>${escapeHtml(email)}</strong></div>
     <div><small>Registrado em</small><strong>${fmtDate(data.acceptedAt)}</strong></div>
    </div>
-   <p class="fine">Guarde a identificação da proposta. O próximo passo operacional/comercial pode ser tratado pela equipe do Achei Aqui.</p>
+   <p class="fine">Guarde a identificação da proposta. O próximo passo operacional/comercial pode ser tratado pela equipe responsável pela Rede.</p>
   </div>`;
 
  document.querySelector("#print-quote")?.addEventListener("click",()=>window.print());

@@ -1,0 +1,19 @@
+PROJETO RLI — V3.1.15 — MIGRAÇÃO NOMINAL PROVISÓRIA
+
+OBJETIVO
+- Remover a denominação pública anterior das superfícies atuais do site.
+- Usar "Projeto RLI — Rede Local Inteligente" apenas como nome provisório de demonstração.
+- Separar explicitamente projeto/produto, marca futura e Operadora da Rede.
+- Preservar arquitetura, demos, Fundadores, calculadora, contato e APIs.
+
+REGRAS
+- Projeto RLI = codinome provisório.
+- Operadora da Rede = pessoa jurídica, razão social a definir.
+- Marca definitiva = decisão pendente.
+- Logística da Rede = função; denominação comercial pendente.
+- A mudança de nome não altera MCIR, roadmap, contratos, preços ou regras de relevância.
+
+VALIDAÇÃO
+- npm test: 95/95 aprovados.
+- Superfícies públicas: nenhuma ocorrência da denominação anterior.
+- Teste específico V3.1.15 protege a separação entre codinome e pessoa jurídica.

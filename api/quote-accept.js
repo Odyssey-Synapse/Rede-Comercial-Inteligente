@@ -10,7 +10,7 @@ function remoteIp(req){
 export default async function handler(req,res){
   const requestId=`ACCEPT-${crypto.randomUUID()}`;
   res.setHeader?.("Cache-Control","no-store");
-  res.setHeader?.("X-AcheiAqui-Request-Id",requestId);
+  res.setHeader?.("X-RLI-Request-Id",requestId);
 
   try{
     if(req.method!=="POST"){

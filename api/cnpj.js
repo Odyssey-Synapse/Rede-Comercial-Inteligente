@@ -28,7 +28,7 @@ function publicCompany(company, cnpj, categories = undefined) {
 export default async function handler(req, res) {
   const requestId = `CNPJ-${crypto.randomUUID()}`;
   res.setHeader?.("Cache-Control", "no-store");
-  res.setHeader?.("X-AcheiAqui-Request-Id", requestId);
+  res.setHeader?.("X-RLI-Request-Id", requestId);
 
   try {
     if (req.method !== "POST") return res.status(405).json({ error: "METHOD_NOT_ALLOWED", requestId });

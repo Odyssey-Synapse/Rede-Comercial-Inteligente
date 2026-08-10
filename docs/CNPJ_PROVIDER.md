@@ -10,7 +10,7 @@ A API pública do CNPJ.ws não exige token, possui limite de 3 consultas por min
 
 ## Dados usados
 
-O Achei Aqui retém somente:
+O Projeto RLI retém somente:
 - CNPJ;
 - razão social;
 - nome fantasia;

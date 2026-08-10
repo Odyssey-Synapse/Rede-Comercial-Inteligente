@@ -31,7 +31,7 @@ test("Turnstile valida action e hostname",async()=>{
 
 test("API CNPJ possui requestId e catch externo",()=>{
   const s=read("api/cnpj.js");
-  assert.match(s,/X-AcheiAqui-Request-Id/);
+  assert.match(s,/X-RLI-Request-Id/);
   assert.match(s,/CNPJ_LOOKUP_INTERNAL_ERROR/);
   assert.match(s,/expectedAction: "cnpj_lookup"/);
 });

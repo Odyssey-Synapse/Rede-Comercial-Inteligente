@@ -26,7 +26,7 @@ test("readiness exige configuracao Resend",async()=>{
 
 test("canal de privacidade pode reutilizar formulario Resend",async()=>{
  const {productionReadiness}=await import("../lib/readiness.mjs");
- const env={RESEND_API_KEY:"re_x",RESEND_FROM_EMAIL:"Achei Aqui <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test"};
+ const env={RESEND_API_KEY:"re_x",RESEND_FROM_EMAIL:"Projeto RLI - nome provisorio <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test"};
  const r=productionReadiness(env);
  assert.equal(r.blockers.some(x=>x.id==="PRIVACY_CHANNEL"),false);
 });

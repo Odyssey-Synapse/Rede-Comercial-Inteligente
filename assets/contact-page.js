@@ -27,7 +27,7 @@ if(form){
      const data=await r.json().catch(()=>({}));
      if(!r.ok)throw new Error(data.error||"SEND_FAILED");
      form.reset();count.textContent="0/4000";turnstileToken="";if(window.turnstile)window.turnstile.reset();
-     setFeedback("Mensagem enviada. O Achei Aqui poderá responder pelo e-mail informado.","success");
+     setFeedback("Mensagem enviada. A equipe do projeto poderá responder pelo e-mail informado.","success");
    }catch(err){
      const friendly=err.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":err.message==="RATE_LIMITED"?"Muitas tentativas. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";
      setFeedback(friendly,"error");

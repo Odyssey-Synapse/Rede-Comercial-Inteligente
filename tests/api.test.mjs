@@ -32,6 +32,6 @@ test("SERPRO client contract shape can consume alphanumeric CNPJ through OAuth",
 });
 
 test("readiness can pass only with all external production dependencies configured",()=>{
- const env={CNPJ_PROVIDER:"cnpjws",COMPANY_LOOKUP_SIGNING_SECRET:"a".repeat(32),QUOTE_SIGNING_SECRET:"b".repeat(32),DATABASE_URL:"postgres://x",TURNSTILE_REQUIRED:"true",PUBLIC_TURNSTILE_SITE_KEY:"site",TURNSTILE_SECRET_KEY:"secret",RESEND_API_KEY:"re_test",RESEND_FROM_EMAIL:"Achei Aqui <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test",PUBLIC_CONTACT_EMAIL:"",PUBLIC_PRIVACY_EMAIL:"privacidade@example.test",CONTROLLER_LEGAL_NAME:"Controlador",CONTROLLER_DOCUMENT:"Documento",PRIVACY_POLICY_STATUS:"APPROVED"};
+ const env={CNPJ_PROVIDER:"cnpjws",COMPANY_LOOKUP_SIGNING_SECRET:"a".repeat(32),QUOTE_SIGNING_SECRET:"b".repeat(32),DATABASE_URL:"postgres://x",TURNSTILE_REQUIRED:"true",PUBLIC_TURNSTILE_SITE_KEY:"site",TURNSTILE_SECRET_KEY:"secret",RESEND_API_KEY:"re_test",RESEND_FROM_EMAIL:"Projeto RLI - nome provisorio <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test",PUBLIC_CONTACT_EMAIL:"",PUBLIC_PRIVACY_EMAIL:"privacidade@example.test",CONTROLLER_LEGAL_NAME:"Controlador",CONTROLLER_DOCUMENT:"Documento",PRIVACY_POLICY_STATUS:"APPROVED"};
  assert.equal(productionReadiness(env).ready,true)
 });

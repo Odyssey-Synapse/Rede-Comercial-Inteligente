@@ -57,9 +57,9 @@ export default async function handler(req, res) {
     from,
     to: [to],
     reply_to: email,
-    subject: `[Achei Aqui] ${subject}`,
-    text: `Nova mensagem pelo site Achei Aqui\n\nNome: ${name}\nE-mail: ${email}\nAssunto: ${subject}\n\nMensagem:\n${message}\n`,
-    html: `<div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827"><h2>Nova mensagem pelo site Achei Aqui</h2><p><strong>Nome:</strong> ${esc(name)}<br><strong>E-mail:</strong> ${esc(email)}<br><strong>Assunto:</strong> ${esc(subject)}</p><hr><p style="white-space:pre-wrap">${esc(message)}</p><hr><p style="font-size:12px;color:#6b7280">Enviado pelo formulário institucional do Achei Aqui.</p></div>`
+    subject: `[Projeto RLI — nome provisório] ${subject}`,
+    text: `Nova mensagem pelo site do Projeto RLI (nome provisório)\n\nNome: ${name}\nE-mail: ${email}\nAssunto: ${subject}\n\nMensagem:\n${message}\n`,
+    html: `<div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827"><h2>Nova mensagem pelo site do Projeto RLI (nome provisório)</h2><p><strong>Nome:</strong> ${esc(name)}<br><strong>E-mail:</strong> ${esc(email)}<br><strong>Assunto:</strong> ${esc(subject)}</p><hr><p style="white-space:pre-wrap">${esc(message)}</p><hr><p style="font-size:12px;color:#6b7280">Enviado pelo formulário institucional do Projeto RLI (nome provisório).</p></div>`
   };
 
   let rr;
