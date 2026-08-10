@@ -49,3 +49,72 @@ html[data-theme="dark"]{--bg:#07111f;--surface:#0d1929;--surface-2:#111f32;--sur
 .identified-activity span{font-size:.9rem;opacity:.72}
 .company-confirmation-actions{display:grid;gap:.75rem;margin-top:1rem}
 .quote-confirmation-note{margin-top:.75rem}
+
+
+/* V3.1.10 — aceite comercial da proposta */
+.quote-actions-primary{
+  display:grid;
+  gap:.75rem;
+}
+.quote-actions-primary #accept-quote{
+  width:100%;
+}
+.quote-acceptance-panel{
+  margin-top:1rem;
+  padding:1.1rem;
+  border:1px solid var(--line,rgba(15,23,42,.14));
+  border-radius:18px;
+  background:var(--surface-soft,rgba(148,163,184,.08));
+}
+.quote-acceptance-panel[hidden]{display:none}
+.acceptance-heading{margin-bottom:1rem}
+.acceptance-heading h3{margin:.35rem 0 .5rem}
+.acceptance-check{
+  display:flex;
+  gap:.7rem;
+  align-items:flex-start;
+  padding:.9rem;
+  border:1px solid var(--line,rgba(15,23,42,.14));
+  border-radius:14px;
+  cursor:pointer;
+  margin:.9rem 0;
+}
+.acceptance-check input{margin-top:.2rem}
+.acceptance-check.invalid{
+  border-color:#b42318;
+}
+.acceptance-buttons{
+  display:grid;
+  gap:.65rem;
+  margin-top:.75rem;
+}
+.acceptance-success{
+  display:grid;
+  gap:.75rem;
+}
+.acceptance-success-badge{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-height:42px;
+  padding:.55rem .85rem;
+  border-radius:999px;
+  font-weight:800;
+  letter-spacing:.04em;
+  border:1px solid currentColor;
+}
+.acceptance-summary{
+  display:grid;
+  gap:.75rem;
+}
+.acceptance-summary>div{
+  display:grid;
+  gap:.2rem;
+  padding:.75rem;
+  border-radius:12px;
+  background:var(--surface,rgba(255,255,255,.72));
+}
+@media (min-width:720px){
+  .acceptance-buttons{grid-template-columns:1fr 1fr}
+  .acceptance-summary{grid-template-columns:repeat(3,1fr)}
+}

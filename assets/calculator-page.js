@@ -103,8 +103,162 @@ function renderQuote(q,{signed=false,persisted=false,error=null}={}){
  ${error?`<div class="quote-warning"><strong>Esta prévia não é uma proposta oficial.</strong><span>Motivo técnico: ${escapeHtml(error)}</span></div>`:""}
  <div class="quote-meta"><div><small>Regra aplicada</small><strong>Política comercial vigente</strong></div><div><small>Calculado em</small><strong>${fmtDate(q.computedAt)}</strong></div><div><small>Válida até</small><strong>${fmtDate(q.validUntil)}</strong></div><div><small>Identificação</small><strong>${escapeHtml(q.quoteId.slice(0,8))}…</strong></div></div>
  <p class="fine">A atividade utilizada na proposta veio da consulta cadastral do CNPJ. Durante a validade, uma proposta oficial permanece vinculada às condições apresentadas.</p>
- ${signed&&persisted?'<div class="quote-actions"><button class="button button-primary" id="print-quote">Imprimir / salvar PDF</button><a class="button button-ghost" href="/transparencia.html">Entender as regras</a></div>':''}`;
- document.querySelector("#print-quote")?.addEventListener("click",()=>window.print())
+ ${signed&&persisted?`<div class="quote-actions quote-actions-primary">
+   <button class="button button-primary" id="accept-quote" type="button">Aceitar proposta e continuar</button>
+   <button class="button button-ghost" id="print-quote" type="button">Imprimir / salvar PDF</button>
+   <a class="button button-ghost" href="/transparencia.html">Entender as regras</a>
+  </div>
+  <div id="quote-acceptance-panel" class="quote-acceptance-panel" hidden>
+   <div class="acceptance-heading">
+    <span class="eyebrow">ACEITE COMERCIAL</span>
+    <h3>Confirme quem está aceitando esta proposta.</h3>
+    <p class="fine">Este registro confirma o aceite comercial desta proposta e das condições nela apresentadas. Não é apresentado como assinatura eletrônica qualificada ou avançada.</p>
+   </div>
+   <form id="quote-acceptance-form" novalidate>
+    <div class="field">
+     <label for="accepted-by-name">Nome completo</label>
+     <input id="accepted-by-name" name="acceptedByName" autocomplete="name" maxlength="120" required>
+     <span class="input-error">Informe seu nome.</span>
+    </div>
+    <div class="field">
+     <label for="accepted-by-email">E-mail</label>
+     <input id="accepted-by-email" name="acceptedByEmail" type="email" autocomplete="email" maxlength="160" required>
+     <span class="input-error">Informe um e-mail válido.</span>
+    </div>
+    <label class="acceptance-check">
+     <input id="accepted-terms" type="checkbox">
+     <span>Li a proposta acima e confirmo o aceite comercial das condições apresentadas.</span>
+    </label>
+    <p id="acceptance-message" class="lookup-message" aria-live="polite"></p>
+    <div class="acceptance-buttons">
+     <button class="button button-primary button-full" id="confirm-acceptance" type="submit">Confirmar aceite</button>
+     <button class="button button-ghost button-full" id="cancel-acceptance" type="button">Voltar</button>
+    </div>
+   </form>
+  </div>`:''}`;
+ document.querySelector("#print-quote")?.addEventListener("click",()=>window.print());
+ if(signed&&persisted) setupQuoteAcceptance(q);
+}
+
+function validEmail(value){
+ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value||"").trim())
+}
+
+function setupQuoteAcceptance(q){
+ const open=document.querySelector("#accept-quote");
+ const panel=document.querySelector("#quote-acceptance-panel");
+ const form=document.querySelector("#quote-acceptance-form");
+ const cancel=document.querySelector("#cancel-acceptance");
+ const message=document.querySelector("#acceptance-message");
+
+ if(!open||!panel||!form)return;
+
+ open.addEventListener("click",()=>{
+  panel.hidden=false;
+  open.disabled=true;
+  document.querySelector("#accepted-by-name")?.focus();
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+ });
+
+ cancel?.addEventListener("click",()=>{
+  panel.hidden=true;
+  open.disabled=false;
+  message.textContent="";
+  message.className="lookup-message";
+ });
+
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const name=document.querySelector("#accepted-by-name");
+  const email=document.querySelector("#accepted-by-email");
+  const terms=document.querySelector("#accepted-terms");
+  const confirm=document.querySelector("#confirm-acceptance");
+
+  const nameOk=String(name?.value||"").trim().length>=2;
+  const emailOk=validEmail(email?.value);
+  const termsOk=terms?.checked===true;
+
+  name?.closest(".field")?.classList.toggle("invalid",!nameOk);
+  email?.closest(".field")?.classList.toggle("invalid",!emailOk);
+  terms?.closest(".acceptance-check")?.classList.toggle("invalid",!termsOk);
+
+  if(!nameOk||!emailOk||!termsOk){
+   message.className="lookup-message error";
+   message.textContent=!termsOk
+    ?"Confirme que leu e aceita as condições da proposta."
+    :"Confira nome e e-mail antes de continuar.";
+   return;
+  }
+
+  confirm.disabled=true;
+  confirm.textContent="Registrando aceite…";
+  message.className="lookup-message loading";
+  message.textContent="Registrando o aceite comercial…";
+
+  try{
+   const r=await fetch("/api/quote-accept",{
+    method:"POST",
+    headers:{"content-type":"application/json"},
+    body:JSON.stringify({
+     quoteId:q.quoteId,
+     acceptedByName:String(name.value).trim(),
+     acceptedByEmail:String(email.value).trim(),
+     acceptedTerms:true
+    })
+   });
+
+   const data=await r.json().catch(()=>({}));
+
+   if(!r.ok){
+    const messages={
+     INVALID_QUOTE_ID:"A identificação desta proposta é inválida.",
+     QUOTE_NOT_FOUND:"Esta proposta não foi encontrada.",
+     QUOTE_EXPIRED:"Esta proposta venceu. Gere uma nova proposta.",
+     QUOTE_CANCELLED:"Esta proposta foi cancelada.",
+     QUOTE_ALREADY_ACCEPTED:"Esta proposta já possui um aceite registrado.",
+     ACCEPTED_BY_NAME_REQUIRED:"Informe o nome de quem está aceitando.",
+     ACCEPTED_BY_EMAIL_INVALID:"Informe um e-mail válido.",
+     ACCEPTANCE_TERMS_REQUIRED:"Confirme o aceite das condições antes de continuar.",
+     DATABASE_URL_MISSING:"O registro de aceite está temporariamente indisponível.",
+     QUOTE_ACCEPT_FAILED:"Não foi possível registrar o aceite."
+    };
+    throw new Error(messages[data.error]||"Não foi possível registrar o aceite agora.");
+   }
+
+   renderAcceptanceSuccess(q,data,String(name.value).trim(),String(email.value).trim());
+  }catch(err){
+   message.className="lookup-message error";
+   message.textContent=err.message||"Não foi possível registrar o aceite.";
+   confirm.disabled=false;
+   confirm.textContent="Confirmar aceite";
+  }
+ });
+}
+
+function renderAcceptanceSuccess(q,data,name,email){
+ const panel=document.querySelector("#quote-acceptance-panel");
+ const actions=document.querySelector(".quote-actions-primary");
+
+ if(actions)actions.innerHTML=`
+  <div class="acceptance-success-badge">ACEITE REGISTRADO</div>
+  <button class="button button-ghost" id="print-quote" type="button">Imprimir / salvar PDF</button>
+  <a class="button button-ghost" href="/transparencia.html">Entender as regras</a>`;
+
+ if(panel)panel.innerHTML=`
+  <div class="acceptance-success">
+   <span class="eyebrow">ACEITE COMERCIAL REGISTRADO</span>
+   <h3>Proposta aceita.</h3>
+   <p>O aceite da proposta <strong>${escapeHtml(q.quoteId)}</strong> foi registrado.</p>
+   <div class="acceptance-summary">
+    <div><small>Responsável</small><strong>${escapeHtml(name)}</strong></div>
+    <div><small>E-mail</small><strong>${escapeHtml(email)}</strong></div>
+    <div><small>Registrado em</small><strong>${fmtDate(data.acceptedAt)}</strong></div>
+   </div>
+   <p class="fine">Guarde a identificação da proposta. O próximo passo operacional/comercial pode ser tratado pela equipe do Achei Aqui.</p>
+  </div>`;
+
+ document.querySelector("#print-quote")?.addEventListener("click",()=>window.print());
 }
 
 await loadPublicConfig();
