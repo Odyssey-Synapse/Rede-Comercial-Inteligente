@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (!verified.valid) return res.status(401).json({ error: verified.reason === "EXPIRED" ? "COMPANY_LOOKUP_EXPIRED" : "INVALID_COMPANY_LOOKUP" });
 
   const companyLookup = verified.payload;
-  if (!["AA_COMPANY_LOOKUP_V1","AA_COMPANY_LOOKUP_V2"].includes(companyLookup.kind) || companyLookup.status?.code !== "2") {
+  if (!["AA_COMPANY_LOOKUP_V1","AA_COMPANY_LOOKUP_V2","AA_COMPANY_LOOKUP_V3"].includes(companyLookup.kind) || companyLookup.status?.code !== "2") {
     return res.status(422).json({ error: "COMPANY_NOT_ELIGIBLE" });
   }
   const category = companyLookup.categories?.find((item) => item.id === categoryId);
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   if (calculation.status !== "QUOTABLE") return res.status(422).json(calculation);
 
   const quote = {
-    quoteId: crypto.randomUUID(),
+    quoteId: `AA-Q-${crypto.randomUUID().toUpperCase()}`,
     company: {
       cnpj: companyLookup.cnpj,
       name: companyLookup.legalName,
@@ -37,6 +37,9 @@ export default async function handler(req, res) {
       state: companyLookup.state || null
     },
     category: { id: category.id, cnaeCode: category.cnaeCode, label: category.label },
+    cnpjProvider: companyLookup.source || null,
+    cnpjSourceUpdatedAt: companyLookup.sourceUpdatedAt || null,
+    cnpjLookupId: companyLookup.lookupId || null,
     ...calculation
   };
 

@@ -13,7 +13,7 @@ CNPJs separados por vírgula, espaço ou ponto-e-vírgula.
 Regras:
 - máximo 25 CNPJs;
 - comparação server-side;
-- somente CNPJ validado pelo fluxo oficial pode ser reconhecido;
+- somente CNPJ validado pelo fluxo cadastral configurado pode ser reconhecido;
 - o navegador não pode ativar Founder;
 - a proposta registra se a condição Founder foi aplicada;
 - a duração da condição Founder não é inferida nem tratada como vitalícia.

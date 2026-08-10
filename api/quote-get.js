@@ -40,7 +40,10 @@ export default async function handler(req, res) {
       createdAt: quote.created_at,
       validUntil: quote.valid_until,
       status: quote.status,
-      signature: quote.signature
+      signature: quote.signature,
+      cnpjProvider: quote.cnpj_provider || null,
+      cnpjSourceUpdatedAt: quote.cnpj_source_updated_at || null,
+      cnpjLookupId: quote.cnpj_lookup_id || null
     });
   } catch (err) {
     console.error(err);

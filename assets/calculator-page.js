@@ -35,13 +35,13 @@ function resetTurnstile(){if(turnstileWidgetId!==null&&window.turnstile)window.t
 function renderCompany(company){
  companyData=company;confirmation.hidden=false;
  document.querySelector("#found-company-name").textContent=company.tradeName||company.legalName||"Empresa consultada";
- document.querySelector("#found-company-meta").textContent=company.tradeName&&company.legalName?company.legalName:"Dados cadastrais oficiais consultados";
+ document.querySelector("#found-company-meta").textContent=company.tradeName&&company.legalName?company.legalName:"Dados cadastrais consultados";
  document.querySelector("#found-cnpj").textContent=formatCnpj(company.cnpj);
  document.querySelector("#found-location").textContent=[company.city,company.state].filter(Boolean).join(" — ")||"Não informado";
  category.innerHTML="";
  company.categories.forEach(item=>{const o=document.createElement("option");o.value=item.id;o.textContent=`${item.label} · CNAE ${item.cnaeCode}`;category.appendChild(o)});
  category.disabled=company.categories.length===1;
- document.querySelector("#category-help").textContent=company.categories.length===1?"Esta é a atividade contratual identificada para a proposta.":"O CNPJ possui mais de uma atividade elegível. Escolha somente entre as atividades oficiais apresentadas.";
+ document.querySelector("#category-help").textContent=company.categories.length===1?"Esta é a atividade contratual identificada para a proposta.":"O CNPJ possui mais de uma atividade elegível. Escolha somente entre as atividades retornadas para esse cadastro.";
  document.querySelector("#activity-list").innerHTML=company.categories.map((item,index)=>`<div class="activity-item ${index===0?'principal':''}"><span>${index===0?'atividade principal/primeira elegível':'atividade elegível'}</span><strong>${escapeHtml(item.label)}</strong><small>CNAE ${escapeHtml(item.cnaeCode)}</small></div>`).join("");
 }
 
@@ -49,17 +49,17 @@ lookupForm.addEventListener("submit",async e=>{
  e.preventDefault();lookupToken=null;companyData=null;confirmation.hidden=true;
  const valid=isValidCnpj(cnpj.value);fieldInvalid("cnpj",!valid);if(!valid)return;
  if(publicConfig?.turnstileRequired&&!turnstileToken()){setLookupMessage("Conclua a verificação de segurança antes de consultar.","error");return}
- lookupButton.disabled=true;lookupButton.textContent="Consultando…";setLookupMessage("Consultando situação cadastral e atividades oficiais…","loading");
+ lookupButton.disabled=true;lookupButton.textContent="Consultando…";setLookupMessage("Consultando situação cadastral e atividades econômicas…","loading");
  try{
   const r=await fetch("/api/cnpj",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({cnpj:normalizeCnpj(cnpj.value),turnstileToken:turnstileToken()})});
   const data=await r.json().catch(()=>({}));
   resetTurnstile();
   if(!r.ok){
-   const messages={INVALID_CNPJ:"CNPJ inválido.",CNPJ_NOT_FOUND:"CNPJ não encontrado na consulta.",CNPJ_NOT_ACTIVE:"A empresa foi encontrada, mas a situação cadastral não permite proposta automática.",NO_ELIGIBLE_CNAE_ACTIVITY:"A empresa foi encontrada, mas nenhuma atividade econômica elegível foi retornada.",CNPJ_PROVIDER_UNAVAILABLE:"A consulta oficial está temporariamente indisponível.",
-   CNPJ_PROVIDER_TIMEOUT:"A consulta oficial demorou mais que o limite de segurança. Tente novamente.",
-   CNPJ_PROVIDER_PARTIAL:"A consulta oficial retornou dados incompletos. Nenhuma proposta foi emitida.",
+   const messages={INVALID_CNPJ:"CNPJ inválido.",CNPJ_NOT_FOUND:"CNPJ não encontrado na consulta.",CNPJ_NOT_ACTIVE:"A empresa foi encontrada, mas a situação cadastral não permite proposta automática.",NO_ELIGIBLE_CNAE_ACTIVITY:"A empresa foi encontrada, mas nenhuma atividade econômica elegível foi retornada.",CNPJ_PROVIDER_UNAVAILABLE:"A consulta cadastral está temporariamente indisponível.",
+   CNPJ_PROVIDER_TIMEOUT:"A consulta cadastral demorou mais que o limite de segurança. Tente novamente.",
+   CNPJ_PROVIDER_PARTIAL:"A consulta cadastral retornou dados incompletos. Nenhuma proposta foi emitida.",
    SERPRO_AUTH_FAILED:"A autenticação do serviço oficial de CNPJ falhou no servidor.",
-   SERPRO_ACCESS_DENIED:"O contrato do serviço oficial não autorizou esta consulta.",SERPRO_CREDENTIALS_NOT_CONFIGURED:"A integração oficial de CNPJ ainda não foi configurada no servidor.",SERPRO_ENDPOINT_TEMPLATE_NOT_CONFIGURED:"O endpoint contratado do serviço de CNPJ ainda não foi configurado.",LOOKUP_SIGNING_NOT_CONFIGURED:"A assinatura da consulta empresarial ainda não foi configurada."};
+   SERPRO_ACCESS_DENIED:"O contrato do provedor SERPRO não autorizou esta consulta.",SERPRO_CREDENTIALS_NOT_CONFIGURED:"A integração SERPRO ainda não foi configurada no servidor.",SERPRO_ENDPOINT_TEMPLATE_NOT_CONFIGURED:"O endpoint contratado do SERPRO ainda não foi configurado.",CNPJ_PROVIDER_RATE_LIMITED:"O limite temporário da consulta cadastral foi atingido. Aguarde um minuto e tente novamente.",CNPJ_PROVIDER_NOT_CONFIGURED:"O provedor de consulta CNPJ não está configurado.",LOOKUP_SIGNING_NOT_CONFIGURED:"A assinatura da consulta empresarial ainda não foi configurada."};
    throw new Error(messages[data.error]||"Não foi possível validar esta empresa agora.")
   }
   lookupToken=data.lookupToken;renderCompany(data.company);setLookupMessage("Empresa validada. Confirme a atividade antes de calcular.","success")

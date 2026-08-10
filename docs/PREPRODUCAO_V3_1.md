@@ -19,8 +19,8 @@
 
 ## Dependências externas ainda necessárias para liberar produção
 
-1. Contratar/configurar API Consulta CNPJ do SERPRO.
-2. Informar o endpoint exato do contrato em `SERPRO_CNPJ_ENDPOINT_TEMPLATE`.
+1. Configurar `CNPJ_PROVIDER=cnpjws` para a fase inicial; SERPRO permanece como migração futura.
+2. Aplicar `003_cnpj_provider_provenance.sql` no PostgreSQL.
 3. Configurar banco PostgreSQL e `DATABASE_URL`.
 4. Criar secrets fortes para consulta empresarial e proposta.
 5. Criar widget Cloudflare Turnstile e configurar site key/secret.

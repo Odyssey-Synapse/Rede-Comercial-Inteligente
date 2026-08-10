@@ -32,8 +32,9 @@ test("api de aceite recusa proposta vencida",()=>{
   assert.match(s,/QUOTE_EXPIRED/);
   assert.match(s,/accepted/);
 });
-test("migrate script exige banco",()=>{
+test("migrate script exige DATABASE_URL e não depende de @vercel/postgres",()=>{
   const s=read("scripts/migrate.mjs");
-  assert.match(s,/POSTGRES_URL/);
   assert.match(s,/DATABASE_URL/);
+  assert.match(s,/from "postgres"/);
+  assert.doesNotMatch(s,/@vercel\/postgres/);
 });

@@ -106,3 +106,16 @@ Configure na Vercel:
 O endpoint inclui validação de campos, honeypot, limite básico por IP e reaproveita o Turnstile quando `TURNSTILE_REQUIRED=true`.
 
 Importante: para enviar para destinatários diferentes do e-mail da própria conta de teste, o Resend exige domínio próprio verificado. O domínio precisa ser controlado por você e ter SPF/DKIM configurados no DNS.
+
+## V3.1.7 — Provedor CNPJ atual
+
+```env
+CNPJ_PROVIDER=cnpjws
+CNPJWS_BASE_URL=https://publica.cnpj.ws
+CNPJWS_TIMEOUT_MS=8000
+CNPJ_CACHE_TTL_SECONDS=900
+```
+
+Não é necessária credencial SERPRO enquanto `CNPJ_PROVIDER=cnpjws`.
+
+Aplique também `migrations/003_cnpj_provider_provenance.sql` no Neon.

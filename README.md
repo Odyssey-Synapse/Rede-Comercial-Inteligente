@@ -84,3 +84,16 @@ npm run db:migrate
 ```
 
 Leia `docs/FOUNDER_ACEITE.md`.
+
+## V3.1.7 — CNPJ.ws + persistência unificada
+
+- CNPJ.ws público como provedor inicial.
+- SERPRO preservado como opção futura.
+- CNPJ numérico e alfanumérico.
+- Cache server-side.
+- Interface sem alegação de consulta oficial em tempo real.
+- Emissão e aceite usam a mesma tabela `quotes`.
+- IDs novos de proposta usam prefixo `AA-Q-`.
+- Provedor, data de atualização e lookup ficam rastreáveis na proposta.
+
+Aplicar no Neon: `migrations/003_cnpj_provider_provenance.sql`.
