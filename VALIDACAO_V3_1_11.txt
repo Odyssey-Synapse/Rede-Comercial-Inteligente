@@ -1,0 +1,42 @@
+ACHEI AQUI — VALIDAÇÃO V3.1.11
+Data: 2026-08-10
+Base: V3.1.10 / commit e70173e
+
+ESCOPO
+- Demo automatizada integrada à home.
+- Três cenários hipotéticos: elétrica residencial, climatização comercial e chaveiro emergencial.
+- Cenários exibidos um por vez em loop contínuo; após o terceiro, retorno automático ao primeiro.
+- Ritmo e transições acelerados, com controles de pausar, avançar, voltar, reiniciar e velocidade.
+- Identificação explícita: "DEMONSTRAÇÃO — cenário hipotético".
+- Bloco completo Programa Parceiros Fundadores.
+- Limite comercial de 25 vagas.
+- Participação total de R$ 400 por Fundador em duas etapas: R$ 150 + R$ 250.
+- Mensalidade Founder de R$ 0 enquanto a condição permanecer válida.
+- 1ª etapa descrita como estruturação e continuidade: tecnologia, infraestrutura, operação, desenvolvimento e demais despesas de implantação.
+- 2ª etapa descrita como marketing e lançamento em massa da Rede.
+- Regra pós-25 vagas: novas empresas seguem condições comerciais vigentes para parceiros convencionais.
+- Programa identificado como condição comercial, sem participação societária.
+
+REGRESSÃO
+Comando: npm test
+Resultado: 77 testes aprovados / 0 falhas.
+
+ARQUIVOS V3.1.11
+MODIFICADOS
+- index.html
+- assets/styles.css
+- package.json
+- package-lock.json
+
+CRIADOS
+- assets/home-demo.js
+- tests/home-v3-1-11.test.mjs
+- VALIDACAO_V3_1_11.txt
+
+NÃO ALTERADO NESTA VERSÃO
+- APIs
+- migrations
+- banco de dados
+- cálculo contratual
+- consulta CNPJ
+- fluxo de aceite comercial V3.1.10

@@ -21,8 +21,82 @@
 <section class="trust-strip" aria-label="Princípios do Achei Aqui"><div class="trust-item"><strong>Comece pela necessidade</strong><span>não por uma lista interminável</span></div><div class="trust-item"><strong>Considere o contexto</strong><span>horário, região e restrições importam</span></div><div class="trust-item"><strong>Priorize pertinência</strong><span>promoção não substitui compatibilidade</span></div><div class="trust-item"><strong>Aprenda com resultados</strong><span>a Rede melhora a partir do que acontece</span></div></section>
 <section class="section"><div class="container"><div class="section-head reveal"><div><span class="eyebrow">Um problema cotidiano</span><h2 class="h2">Encontrar empresas é fácil. Encontrar quem consegue resolver, naquele momento, é outra história.</h2></div><p>Uma pessoa pode abrir vários perfis, mandar mensagens e ainda descobrir tarde demais que ninguém atende o que ela precisa. O Achei Aqui organiza essa procura de outra forma.</p></div><div class="grid-3"><article class="card reveal"><span class="icon-square">01</span><h3>Você explica a necessidade.</h3><p>“Preciso de um eletricista hoje depois das 18h.” É melhor ponto de partida do que pesquisar empresa por empresa.</p></article><article class="card reveal" data-delay="1"><span class="icon-square">02</span><h3>A Rede considera o contexto.</h3><p>O tipo de serviço, a região, a urgência e outras condições ajudam a filtrar alternativas que realmente façam sentido.</p></article><article class="card reveal" data-delay="2"><span class="icon-square">03</span><h3>Você chega mais perto de uma solução.</h3><p>O objetivo não é exibir o maior número de empresas. É reduzir o caminho até quem pode atender aquela necessidade.</p></article></div></div></section>
 <section class="human-band"><div class="container human-grid"><div class="reveal"><span class="eyebrow eyebrow-light">Uma ideia simples por fora</span><p class="quote-big">A tecnologia deve trabalhar nos bastidores. Para quem usa, o importante é conseguir explicar o que precisa e entender quais caminhos existem.</p></div><div class="human-list reveal" data-delay="2"><div><strong>Para quem procura</strong><span>menos pesquisa fragmentada</span></div><div><strong>Para quem oferece</strong><span>mais contexto sobre oportunidades compatíveis</span></div><div><strong>Para a Rede</strong><span>mais clareza sobre onde precisa melhorar</span></div></div></div></section>
+<section class="section demo-network-section" id="demonstracao">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><span class="eyebrow">Veja a Rede funcionando</span><h2 class="h2">Da necessidade ao aceite, com consumidor e empresa interagindo pela Rede.</h2></div>
+      <p>O objetivo não é apenas mostrar empresas. É compreender a necessidade do usuário, interpretar o contexto e encontrar uma solução comercial relevante. Todos os exemplos abaixo são fictícios.</p>
+    </div>
+    <div class="network-demo reveal" data-delay="1" id="network-demo" aria-label="Demonstração automatizada da Rede Achei Aqui">
+      <div class="demo-toolbar">
+        <div class="demo-identity"><span class="demo-hypothetical">DEMONSTRAÇÃO — cenário hipotético</span><strong id="demo-scenario-label">Exemplo 1 de 3 · elétrica residencial</strong></div>
+        <div class="demo-controls" aria-label="Controles da demonstração">
+          <button class="icon-button" id="demo-prev" type="button" aria-label="Voltar etapa">←</button>
+          <button class="button button-primary button-small" id="demo-play" type="button">Pausar</button>
+          <button class="icon-button" id="demo-next" type="button" aria-label="Avançar etapa">→</button>
+          <button class="icon-button" id="demo-restart" type="button" aria-label="Reiniciar exemplos">↻</button>
+          <select class="demo-speed" id="demo-speed" aria-label="Velocidade da demonstração"><option value="1">Suave</option><option value=".78" selected>Normal</option><option value=".58">Rápida</option></select>
+        </div>
+      </div>
+      <div class="demo-progress"><span id="demo-step-label">Etapa 1 de 10</span><div><i id="demo-progress-bar"></i></div><span id="demo-loop-label">loop contínuo</span></div>
+      <div class="demo-stage">
+        <article class="demo-side consumer active" id="demo-consumer">
+          <div class="demo-side-head"><div class="demo-avatar">P</div><div><strong>Consumidor</strong><small>experiência demonstrativa</small></div><span>ativo</span></div>
+          <div class="demo-feed">
+            <div class="demo-message user show" id="demo-request"><small>Você</small><p></p></div>
+            <div class="demo-ai" id="demo-ai"><div class="demo-ai-head"><i></i><div><strong>Assistente Achei Aqui</strong><small id="demo-ai-status">entendendo sua mensagem…</small></div></div><div class="demo-ai-steps"><span id="demo-ai-1">Entender</span><span id="demo-ai-2">Contexto</span><span id="demo-ai-3">Organizar</span></div></div>
+            <div class="demo-parsed" id="demo-parsed"><small>O QUE FOI ENTENDIDO</small><div class="parsed-tags" id="demo-tags"></div></div>
+            <div class="demo-message" id="demo-assistant"><small>Assistente Achei Aqui</small><p id="demo-assistant-text"></p></div>
+            <div class="demo-solutions" id="demo-solutions"></div>
+            <div class="demo-message" id="demo-company-question"><small id="demo-company-question-name"></small><p></p></div>
+            <div class="demo-message user" id="demo-consumer-answer"><small>Você</small><p></p></div>
+            <div class="demo-message" id="demo-consumer-quote"><small id="demo-quote-name"></small><p></p></div>
+            <div class="demo-message user" id="demo-consumer-accept"><small>Você</small><p>Aceito o orçamento.</p></div>
+            <div class="demo-message" id="demo-consumer-done"><small>Assistente Achei Aqui</small><p></p></div>
+          </div>
+        </article>
+        <div class="demo-bridge" aria-hidden="true"><div class="demo-bridge-line"></div><div class="demo-packet" id="demo-packet"></div><div class="demo-bridge-core" id="demo-bridge-core"><span>REDE<br>ACHEI AQUI</span></div></div>
+        <article class="demo-side company inactive" id="demo-company">
+          <div class="demo-side-head"><div class="demo-avatar">E</div><div><strong id="demo-company-name">Empresa demonstrativa</strong><small>painel da empresa</small></div><span>disponível</span></div>
+          <div class="demo-company-body">
+            <div class="demo-metrics"><div><small>ABERTAS</small><strong id="demo-open">0</strong></div><div><small>HOJE</small><strong id="demo-today">0</strong></div><div><small>CAPACIDADE</small><strong>68%</strong></div></div>
+            <div class="demo-opportunity" id="demo-opportunity"><small>NOVA OPORTUNIDADE DEMONSTRATIVA</small><h3 id="demo-opportunity-title"></h3><p id="demo-opportunity-meta"></p><div class="demo-match-tags"><span>✓ serviço</span><span>✓ região</span><span>✓ horário</span></div></div>
+            <div class="demo-company-chat" id="demo-company-chat"><small>CONVERSA COM O CLIENTE</small><div class="demo-neg company" id="demo-n1"></div><div class="demo-neg" id="demo-n2"></div><div class="demo-neg company" id="demo-n3"></div></div>
+            <div class="demo-quote" id="demo-quote"><small>ORÇAMENTO DEMONSTRATIVO</small><div><span id="demo-quote-service"></span><strong id="demo-quote-price"></strong></div><div><span>Horário</span><strong id="demo-quote-time"></strong></div><div class="demo-quote-total"><span>TOTAL DEMONSTRATIVO</span><strong id="demo-quote-total"></strong></div><b id="demo-quote-state">✓ Orçamento aceito pelo cliente</b></div>
+          </div>
+        </article>
+      </div>
+      <div class="demo-caption"><small id="demo-caption-kicker">ETAPA 1</small><strong id="demo-caption-title">A necessidade começa em linguagem natural.</strong><p id="demo-caption-text">O consumidor explica o que precisa sem escolher uma categoria antes.</p></div>
+    </div>
+    <p class="fine demo-disclaimer">Empresas, nomes, valores, horários, disponibilidade, negociação e resultados desta demonstração são fictícios. O exemplo não representa cliente, parceiro ativo, venda realizada ou resultado comprovado.</p>
+  </div>
+</section>
+<section class="section section-alt founders-section" id="fundadores">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><span class="eyebrow">Programa Parceiros Fundadores</span><h2 class="h2">25 empresas para participar da fase inicial de construção e lançamento da Rede.</h2></div>
+      <p>O Programa de Parceiros Fundadores é uma condição comercial limitada às primeiras 25 empresas participantes. A demonstração acima mostra o produto; este bloco explica como uma empresa pode participar da construção inicial dele.</p>
+    </div>
+    <div class="founder-overview reveal" data-delay="1">
+      <div class="founder-number"><small>VAGAS DO PROGRAMA</small><strong>25</strong><span>Parceiros Fundadores</span></div>
+      <div class="founder-copy"><h3>Ser Fundador é entrar na fase de implantação da Rede.</h3><p>O Parceiro Fundador ajuda a viabilizar a estruturação e o lançamento do Achei Aqui e mantém uma condição comercial diferenciada enquanto sua condição de Fundador permanecer válida.</p><div class="founder-benefits"><span><i>✓</i> participação total de R$ 400 em duas etapas</span><span><i>✓</i> mensalidade Founder de R$ 0 enquanto a condição permanecer válida</span><span><i>✓</i> condição limitada às 25 vagas do programa</span></div><p class="fine">A condição de Parceiro Fundador é comercial e não representa participação societária no Achei Aqui.</p></div>
+    </div>
+    <div class="founder-stages">
+      <article class="founder-stage reveal"><div class="founder-stage-top"><span>1ª ETAPA</span><strong>R$ 150</strong></div><h3>Estruturação inicial da Rede</h3><p>O aporte inicial de R$ 150 por Parceiro Fundador será destinado à estruturação e continuidade do projeto, incluindo tecnologia, infraestrutura, operação, desenvolvimento e demais despesas necessárias à implantação do Achei Aqui.</p></article>
+      <article class="founder-stage reveal" data-delay="1"><div class="founder-stage-top"><span>2ª ETAPA</span><strong>R$ 250</strong></div><h3>Lançamento em massa</h3><p>O segundo aporte de R$ 250 por Parceiro Fundador será destinado às ações de marketing e lançamento em massa da Rede.</p></article>
+    </div>
+    <div class="founder-destination reveal">
+      <div><span class="eyebrow">Destinação dos aportes</span><h3>R$ 400 por Fundador, com finalidade explicada antes da participação.</h3></div>
+      <div class="founder-totals"><div><small>1ª ETAPA · ATÉ 25 FUNDADORES</small><strong>R$ 3.750</strong><span>estruturação e continuidade</span></div><div><small>2ª ETAPA · ATÉ 25 FUNDADORES</small><strong>R$ 6.250</strong><span>marketing e lançamento em massa</span></div><div class="founder-total"><small>TOTAL PREVISTO · 25 VAGAS</small><strong>R$ 10.000</strong><span>somadas as duas etapas</span></div></div>
+    </div>
+    <div class="after-founders reveal">
+      <div><span class="eyebrow">Depois das 25 vagas</span><h3>Novas empresas entram pelas condições comerciais vigentes para parceiros convencionais.</h3><p>Quando as 25 vagas de Parceiros Fundadores forem preenchidas, a condição de Fundador não será automaticamente estendida a novas empresas. A entrada seguirá as regras comerciais vigentes da Rede, incluindo a mensalidade proposta pela calculadora quando aplicável.</p></div>
+      <div class="after-founder-action"><strong>Quer verificar a condição da sua empresa?</strong><p>Consulte primeiro a proposta e, se houver vaga de Fundador disponível, siga o fluxo comercial informado pela Rede.</p><a class="button button-primary" href="/calculadora.html">Calcular proposta →</a></div>
+    </div>
+  </div>
+</section>
 <section class="section section-alt"><div class="container"><div class="section-head reveal"><div><span class="eyebrow">Uma Rede que aprende</span><h2 class="h2">O que não é resolvido também ensina onde a Rede precisa crescer.</h2></div><p>Quando certas necessidades aparecem e a capacidade disponível não acompanha, isso pode orientar a busca por novos parceiros com o perfil certo.</p></div><div class="scenario-grid"><article class="scenario reveal"><small>EXEMPLO</small><h3>Procura crescente por atendimento veterinário à noite.</h3><p>Se os parceiros disponíveis não conseguem absorver essa procura, a prioridade pode ser ampliar a capacidade da Rede naquele tipo de atendimento.</p><strong>Melhor decisão: buscar capacidade.</strong></article><article class="scenario reveal" data-delay="1"><small>OUTRO EXEMPLO</small><h3>Há procura e capacidade, mas a decisão de compra não acontece.</h3><p>Nesse caso, uma condição comercial pode fazer sentido — desde que exista capacidade para atender o aumento esperado de procura.</p><strong>Melhor decisão: avaliar oportunidade comercial.</strong></article></div></div></section>
 <section class="section"><div class="container split-feature"><div class="reveal"><span class="eyebrow">Para empresas</span><h2 class="h2">Sua empresa pode estar disponível justamente quando alguém procura o que ela sabe fazer.</h2><p class="lead">Participar da Rede não é comprar exposição vazia. É informar com clareza o que sua empresa oferece e permitir que oportunidades compatíveis sejam avaliadas com mais contexto.</p><div class="hero-actions"><a class="button button-primary" href="/empresas.html">Veja para sua empresa →</a><a class="button button-ghost" href="/calculadora.html">Calcule a mensalidade</a></div></div><div class="benefit-list reveal" data-delay="1"><div><span>01</span><p><strong>Oportunidades pertinentes</strong><br>Relacionadas ao que sua empresa efetivamente consegue atender.</p></div><div><span>02</span><p><strong>Decisões com contexto</strong><br>Procura, capacidade e resultados ajudam a orientar a evolução da Rede.</p></div><div><span>03</span><p><strong>Relação comercial transparente</strong><br>Antes de contratar, a empresa pode consultar a mensalidade proposta e entender suas condições.</p></div></div></div></section>
 <section class="section section-alt"><div class="container"><div class="section-head reveal"><div><span class="eyebrow">Confiança também é regra</span><h2 class="h2">Algumas coisas precisam continuar verdadeiras mesmo quando a Rede crescer.</h2></div></div><div class="grid-3"><article class="card reveal"><h3>Pagar mais não compra relevância.</h3><p>Uma solução deve aparecer porque é pertinente à necessidade apresentada — não porque alguém pagou para parecer mais adequada.</p></article><article class="card reveal" data-delay="1"><h3>Quando não sabemos, não fingimos saber.</h3><p>Ausência de informação deve continuar sendo ausência de informação. A Rede não precisa inventar certeza para parecer inteligente.</p></article><article class="card reveal" data-delay="2"><h3>Uma nova análise não reescreve um contrato.</h3><p>O que foi proposto e contratado segue suas próprias condições. Mudanças futuras podem orientar novas propostas, não alterar silenciosamente o passado.</p></article></div></div></section>
 <section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Para empresas</span><h2>Saiba quanto sua empresa pagaria antes de contratar.</h2><p>Consulte a mensalidade proposta e entenda as condições antes de decidir.</p></div><a class="button button-light" href="/calculadora.html">Calcular mensalidade →</a></div></section>
-<div id="site-footer"></div><script type="module" src="/assets/site.js"></script></body></html>
+<div id="site-footer"></div><script type="module" src="/assets/site.js"></script><script type="module" src="/assets/home-demo.js"></script></body></html>
