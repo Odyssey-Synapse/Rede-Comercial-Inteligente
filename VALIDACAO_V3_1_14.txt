@@ -1,0 +1,39 @@
+ACHEI AQUI — VALIDAÇÃO V3.1.14
+
+Escopo:
+- copy institucional da home elevada de venda curta para visão de Rede e utilidade local;
+- exemplos iniciais reescritos em situações reais com urgência, orçamento e restrições;
+- demos automatizados alinhados ao novo copy;
+- 3 demos: urgência residencial, resolução composta e restrição de deslocamento;
+- resolução composta mostra 2 parceiros + logística em cenário conceitual;
+- horizonte de Pix/logística/múltiplos parceiros explicitamente separado do que está disponível hoje;
+- bloco de crescimento do Achei Aqui por camadas;
+- bloco de crescimento da empresa dentro da Rede;
+- Programa de Fundadores reposicionado como participação na fase inicial de construção, sem participação societária ou promessa de faturamento;
+- página Para Empresas atualizada no mesmo posicionamento;
+- Contato da V3.1.11 preservado na navegação global;
+- velocidade, controles e loop contínuo da demo preservados.
+
+Arquivos modificados/criados:
+index.html
+empresas.html
+assets/site.js
+assets/home-demo.js
+package.json
+package-lock.json
+tests/home-v3-1-11.test.mjs
+tests/home-v3-1-13.test.mjs
+tests/home-v3-1-14.test.mjs
+VALIDACAO_V3_1_14.txt
+
+Resultado automatizado:
+- node --check assets/home-demo.js: OK
+- node --check assets/site.js: OK
+- npm test: 92 aprovados / 0 falhas
+
+Base esperada:
+- V3.1.13, incluindo a navegação Contato introduzida na V3.1.11.
+
+Observação:
+- nenhum arquivo CSS foi alterado; a atualização reutiliza os componentes visuais existentes.
+- smoke HTTP local: home, empresas, site.js, home-demo.js, calculadora e contato responderam 200.
