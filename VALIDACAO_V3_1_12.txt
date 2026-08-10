@@ -1,0 +1,17 @@
+ACHEI AQUI — V3.1.12
+
+Escopo:
+- continuidade clara entre Programa de Fundadores e ação;
+- resultado da calculadora contextualiza a condição Founder sem presumir adesão;
+- status das 25 vagas usa /api/founder-status quando há registro configurado;
+- fallback evita exibir disponibilidade fictícia;
+- preservados tom institucional, demo V3.1.11 e fluxo comercial existente.
+
+Arquivos de backend não foram alterados. A V3.1.12 reaproveita a API de status de Fundadores já existente.
+
+Validação automatizada:
+- npm test
+- 82 testes aprovados
+- 0 falhas
+
+Checkpoint de origem: V3.1.11.

@@ -1,3 +1,5 @@
+import { hydrateFounderStatus } from "./founder-status.js";
+
 const root=document.querySelector("#network-demo");
 
 if(root){
@@ -202,3 +204,6 @@ if(root){
   resetVisual();applyScenario();
   if(reduced){playing=false;els.play.textContent="Continuar"}else autoplay();
 }
+
+
+hydrateFounderStatus();

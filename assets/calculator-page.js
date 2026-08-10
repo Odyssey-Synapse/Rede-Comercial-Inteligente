@@ -1,4 +1,5 @@
 import { isValidCnpj, formatCnpj, normalizeCnpj } from "../lib/cnpj.mjs";
+import { fetchFounderStatus, founderStatusCopy } from "./founder-status.js";
 
 const lookupForm=document.querySelector("#company-lookup-form");
 const result=document.querySelector("#quote-result");
@@ -8,6 +9,7 @@ const confirmation=document.querySelector("#company-confirmation");
 const lookupButton=document.querySelector("#lookup-button");
 const quoteButton=document.querySelector("#quote-button");
 let lookupToken=null, companyData=null, selectedCategory=null, turnstileWidgetId=null, publicConfig=null;
+const founderStatusPromise=fetchFounderStatus();
 
 cnpj.addEventListener("input",()=>{cnpj.value=formatCnpj(cnpj.value); fieldInvalid("cnpj",false)});
 function fieldInvalid(id,invalid){document.querySelector(`#${id}`)?.closest(".field")?.classList.toggle("invalid",invalid)}
@@ -90,6 +92,34 @@ quoteButton.addEventListener("click",async()=>{
  finally{quoteButton.disabled=false;quoteButton.textContent="Calcular mensalidade"}
 });
 
+
+function founderQuoteContext(q){
+ if(q.founderVerified){
+  return `<div class="founder-quote-context recognized">
+   <span class="eyebrow">CONDIÇÃO FOUNDER</span>
+   <strong>Este CNPJ está reconhecido como Parceiro Fundador.</strong>
+   <p>A condição comercial Founder aplicada à proposta mantém mensalidade de <strong>R$ 0</strong> enquanto a condição de Fundador permanecer válida.</p>
+   <a href="/#fundadores">Rever o Programa de Fundadores →</a>
+  </div>`;
+ }
+ return `<div class="founder-quote-context">
+  <span class="eyebrow">PROGRAMA PARCEIROS FUNDADORES</span>
+  <strong>Este valor representa a condição comercial convencional.</strong>
+  <p>O Programa de Fundadores possui até 25 vagas e prevê mensalidade Founder de <strong>R$ 0</strong> enquanto a condição permanecer válida. A entrada no Programa é confirmada separadamente e não é presumida pela calculadora.</p>
+  <div class="founder-quote-status" id="quote-founder-status"><b>Verificando disponibilidade do Programa…</b><span>O status não altera esta proposta convencional.</span></div>
+  <div class="founder-quote-links"><a href="/#fundadores">Entender o Programa →</a><a href="/contato.html">Falar com a Rede →</a></div>
+ </div>`;
+}
+
+async function hydrateQuoteFounderStatus(){
+ const target=document.querySelector("#quote-founder-status");
+ if(!target)return;
+ const status=await founderStatusPromise;
+ const copy=founderStatusCopy(status);
+ target.dataset.tone=copy.tone;
+ target.innerHTML=`<b>${escapeHtml(copy.label)}</b><span>${escapeHtml(copy.detail)}</span>`;
+}
+
 function renderQuote(q,{signed=false,persisted=false,error=null}={}){
  if(q.status!=="QUOTABLE"){result.innerHTML='<div class="result-empty"><div><div class="orb">!</div><h3>Precisamos revisar esta situação.</h3><p>Não foi possível gerar uma mensalidade automática.</p></div></div>';return}
  const hasAdjustment=q.economicBasis==="EVIDENCED_IVE";
@@ -100,6 +130,7 @@ function renderQuote(q,{signed=false,persisted=false,error=null}={}){
  <div class="price-display"><small>Valor mensal</small><strong>${money(q.proposedMonthlyCents)}</strong><span>/ mês</span></div>
  <div class="price-lines"><div class="price-line"><span>Valor-base da Rede</span><strong>${money(q.vbcCents)}</strong></div><div class="price-line"><span>Ajuste econômico da atividade</span><strong>${money(q.premiumCents)}</strong></div><div class="price-line"><span>Recursos adicionais</span><strong>${money(q.resourceCents)}</strong></div><div class="price-line"><span>Mensalidade proposta</span><strong>${money(q.proposedMonthlyCents)}</strong></div></div>
  <div class="basis-note"><strong>Como este valor foi formado:</strong> ${basis}</div>
+ ${founderQuoteContext(q)}
  ${error?`<div class="quote-warning"><strong>Esta prévia não é uma proposta oficial.</strong><span>Motivo técnico: ${escapeHtml(error)}</span></div>`:""}
  <div class="quote-meta"><div><small>Regra aplicada</small><strong>Política comercial vigente</strong></div><div><small>Calculado em</small><strong>${fmtDate(q.computedAt)}</strong></div><div><small>Válida até</small><strong>${fmtDate(q.validUntil)}</strong></div><div><small>Identificação</small><strong>${escapeHtml(q.quoteId.slice(0,8))}…</strong></div></div>
  <p class="fine">A atividade utilizada na proposta veio da consulta cadastral do CNPJ. Durante a validade, uma proposta oficial permanece vinculada às condições apresentadas.</p>
@@ -137,6 +168,7 @@ function renderQuote(q,{signed=false,persisted=false,error=null}={}){
    </form>
   </div>`:''}`;
  document.querySelector("#print-quote")?.addEventListener("click",()=>window.print());
+ if(!q.founderVerified) hydrateQuoteFounderStatus();
  if(signed&&persisted) setupQuoteAcceptance(q);
 }
 

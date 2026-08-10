@@ -8,9 +8,9 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,"..");
 const read=f=>fs.readFileSync(path.join(root,f),"utf8");
 
-test("versão do pacote é 3.1.11",()=>{
+test("versão do pacote acompanha a evolução após V3.1.11",()=>{
   const pkg=JSON.parse(read("package.json"));
-  assert.equal(pkg.version,"3.1.11");
+  assert.equal(pkg.version,"3.1.12");
 });
 
 test("home integra demo multi-cenário claramente hipotética",()=>{
