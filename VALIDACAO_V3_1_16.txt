@@ -1,0 +1,11 @@
+PROJETO RLI — V3.1.16 — COPY FOUNDER
+
+ESCOPO
+- Reescrita do bloco de Parceiros Fundadores na home.
+- Remove a frase de baixo impacto sobre “entramos quando...” e reposiciona Fundador como posição exclusiva da fase inicial.
+- Preserva R$400 em duas etapas, mensalidade Founder R$0 enquanto condição válida e limite de 25 vagas.
+- Mantém trava jurídica: sem participação societária e sem promessa de resultado financeiro.
+
+VALIDAÇÃO
+- Suite automatizada completa deve permanecer verde.
+- Nenhuma alteração de API, calculadora, demos, CNPJ ou regras comerciais.

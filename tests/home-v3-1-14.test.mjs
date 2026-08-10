@@ -26,10 +26,10 @@ test("home separa horizonte de produto de funcionalidade disponível hoje",()=>{
 
 test("Founder ganha narrativa de construção sem virar participação societária ou promessa financeira",()=>{
   const html=read("index.html");
-  assert.match(html,/Os Fundadores entram enquanto ela ainda está sendo construída/);
-  assert.match(html,/entramos quando isso ainda precisava ser construído/);
+  assert.match(html,/Os Fundadores participam da fase que ajuda a colocá-la de pé/);
+  assert.match(html,/Fundador não é apenas quem chegou primeiro\. É quem fez parte do começo/);
   assert.match(html,/não representa participação societária/i);
-  assert.match(html,/sem promessa de resultado financeiro/i);
+  assert.match(html,/não constitui promessa de resultado financeiro/i);
   assert.match(html,/mensalidade Founder de R\$ 0 enquanto a condição permanecer válida/i);
 });
 

@@ -10,7 +10,7 @@ const read=f=>fs.readFileSync(path.join(root,f),"utf8");
 
 test("versão do pacote acompanha a evolução após V3.1.11",()=>{
   const pkg=JSON.parse(read("package.json"));
-  assert.equal(pkg.version,"3.1.15");
+  assert.equal(pkg.version,"3.1.16");
 });
 
 test("home integra demo multi-cenário claramente hipotética",()=>{
