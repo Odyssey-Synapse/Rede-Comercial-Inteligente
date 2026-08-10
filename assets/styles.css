@@ -32,3 +32,20 @@ html[data-theme="dark"]{--bg:#07111f;--surface:#0d1929;--surface-2:#111f32;--sur
 @media(max-width:600px){.company-confirmation-head{display:grid}.company-active-badge{width:max-content}.company-data-grid{grid-template-columns:1fr}.activity-item{grid-template-columns:1fr}}
 .contact-dynamic{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.contact-dynamic .card{padding:16px}.contact-dynamic small{display:block;color:var(--muted);font-size:.64rem}.contact-dynamic strong{display:block;margin-top:4px;font-size:.86rem;overflow-wrap:anywhere}.contact-dynamic p{margin:4px 0 0;color:var(--muted);font-size:.72rem}@media(max-width:600px){.contact-dynamic{grid-template-columns:1fr}}
 .contact-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.75fr);gap:22px;align-items:start}.field textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:11px;padding:12px;outline:none;resize:vertical;min-height:150px}.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 13%,transparent)}.field-help{display:flex;justify-content:space-between;gap:12px}.contact-consent{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;color:var(--muted);font-size:.78rem}.contact-consent input{margin-top:3px}.contact-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}.contact-feedback{min-height:22px;font-size:.78rem}.contact-feedback.success{color:var(--green)}.contact-feedback.error{color:var(--danger)}#contact-submit[disabled]{opacity:.65;cursor:wait;transform:none}@media(max-width:850px){.contact-layout{grid-template-columns:1fr}.contact-card{order:-1}}@media(max-width:520px){.field-help{display:grid;gap:4px}.contact-consent{font-size:.74rem}}
+
+
+/* V3.1.8 — atividade contratual automática pelo CNPJ */
+.identified-activity{
+  display:grid;
+  gap:.25rem;
+  padding:1rem;
+  border:1px solid var(--line, rgba(15,23,42,.12));
+  border-radius:16px;
+  background:var(--surface-soft, rgba(148,163,184,.08));
+  margin:1rem 0;
+}
+.identified-activity small{opacity:.72}
+.identified-activity strong{font-size:1.05rem}
+.identified-activity span{font-size:.9rem;opacity:.72}
+.company-confirmation-actions{display:grid;gap:.75rem;margin-top:1rem}
+.quote-confirmation-note{margin-top:.75rem}

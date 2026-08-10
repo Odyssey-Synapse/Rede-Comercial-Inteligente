@@ -1,5 +1,147 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Calcule a mensalidade proposta para sua empresa antes de contratar o Achei Aqui."><meta name="theme-color" content="#0b1f3a"><title>Calculadora de mensalidade — Achei Aqui</title><script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script><link rel="stylesheet" href="/assets/styles.css"></head><body><div id="site-header"></div>
-<section class="page-hero"><div class="container narrow"><div class="breadcrumb"><a href="/">Início</a><span>›</span>Calculadora</div><span class="eyebrow">Calculadora de mensalidade</span><h1 class="h1">Calcule antes de contratar.</h1><p class="lead">Informe os dados necessários da empresa e consulte a mensalidade proposta. Você vê o valor e as condições antes de tomar qualquer decisão.</p></div></section>
-<section class="section"><div class="container"><div class="calc-notice reveal"><div><span class="notice-icon">i</span></div><div><strong>Política atual</strong><p>Para as categorias disponíveis nesta versão, enquanto não existir um ajuste econômico aprovado, a proposta utiliza somente o valor-base de <strong>R$ 140,00 por mês</strong>. Nenhum dado ausente é tratado como justificativa para aumentar o preço.</p></div></div><div class="calculator-layout"><form class="form-card reveal" id="quote-form" novalidate><div><span class="eyebrow">Sua empresa</span><h2 class="h3">Dados para identificar a proposta</h2><p class="fine">Esses dados identificam a empresa e a categoria. O CNPJ não é usado para criar um preço individual diferente.</p></div><div class="field"><label for="companyName">Nome da empresa</label><input id="companyName" autocomplete="organization" placeholder="Ex.: Clínica Exemplo"><span class="input-error">Informe o nome da empresa.</span></div><div class="field"><label for="cnpj">CNPJ</label><input id="cnpj" inputmode="numeric" autocomplete="off" placeholder="00.000.000/0000-00"><span class="field-help">O número é validado antes do cálculo.</span><span class="input-error">Informe um CNPJ válido.</span></div><div class="field"><label for="category">Categoria principal</label><select id="category"><option value="">Selecione</option></select><span class="field-help">Escolha a categoria que melhor representa a atividade principal desta proposta.</span><span class="input-error">Selecione uma categoria disponível.</span></div><button class="button button-primary button-full" type="submit">Calcular mensalidade</button><p class="fine">Condições especiais, quando existirem, dependem de verificação própria e não podem ser ativadas pelo navegador.</p></form><aside class="result-card reveal" data-delay="1" id="quote-result"><div class="result-empty"><div><div class="orb">R$</div><h3>Seu valor aparecerá aqui.</h3><p>Preencha os dados ao lado para consultar a mensalidade proposta.</p></div></div></aside></div></div></section>
-<section class="section section-alt"><div class="container"><div class="grid-3"><article class="card reveal"><h3>Você vê antes de contratar.</h3><p>O cálculo apresenta o valor mensal para que a decisão comercial aconteça com clareza.</p></article><article class="card reveal" data-delay="1"><h3>A proposta tem validade definida.</h3><p>Na política atual, o valor apresentado permanece válido por sete dias.</p></article><article class="card reveal" data-delay="2"><h3>Contrato não muda silenciosamente.</h3><p>Uma nova análise econômica pode orientar propostas futuras, mas não altera automaticamente um contrato aceito.</p></article></div></div></section>
-<div id="site-footer"></div><script type="module" src="/assets/site.js"></script><script type="module" src="/assets/calculator-page.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Consulte o CNPJ e calcule a mensalidade proposta para sua empresa antes de contratar o Achei Aqui.">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Calculadora de mensalidade — Achei Aqui</title>
+  <script>
+    (function(){
+      try{
+        document.documentElement.dataset.theme =
+          localStorage.getItem("aa-theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      }catch(e){
+        document.documentElement.dataset.theme="light"
+      }
+    })()
+  </script>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <section class="page-hero">
+    <div class="container narrow">
+      <div class="breadcrumb"><a href="/">Início</a><span>›</span>Calculadora</div>
+      <span class="eyebrow">Calculadora de mensalidade</span>
+      <h1 class="h1">Calcule antes de contratar.</h1>
+      <p class="lead">Informe o CNPJ. O Achei Aqui consulta os dados cadastrais, identifica a atividade econômica vinculada e apresenta a mensalidade proposta antes de qualquer decisão.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="calc-notice reveal">
+        <div><span class="notice-icon">i</span></div>
+        <div>
+          <strong>Política atual</strong>
+          <p>Quando não existir um ajuste econômico aprovado para a atividade identificada, a proposta utiliza somente o valor-base de <strong>R$ 140,00 por mês</strong>. Nenhum dado ausente é tratado como justificativa para aumentar o preço.</p>
+        </div>
+      </div>
+
+      <div class="calculator-layout">
+        <div class="form-card reveal">
+          <form id="company-lookup-form" novalidate>
+            <div>
+              <span class="eyebrow">Sua empresa</span>
+              <h2 class="h3">Consulte o CNPJ</h2>
+              <p class="fine">Você não precisa escolher uma categoria. A atividade usada na proposta é identificada a partir do cadastro do próprio CNPJ.</p>
+            </div>
+
+            <div class="field">
+              <label for="cnpj">CNPJ</label>
+              <input id="cnpj" autocomplete="off" placeholder="00.000.000/0000-00">
+              <span class="field-help">Aceita CNPJ numérico e alfanumérico.</span>
+              <span class="input-error">Informe um CNPJ válido.</span>
+            </div>
+
+            <div id="turnstile-slot" class="turnstile-slot" hidden></div>
+
+            <button id="lookup-button" class="button button-primary button-full" type="submit">
+              Consultar empresa
+            </button>
+            <p id="lookup-message" class="lookup-message" aria-live="polite"></p>
+          </form>
+
+          <div id="company-confirmation" class="company-confirmation" hidden>
+            <div class="company-confirmation-head">
+              <div>
+                <span class="eyebrow">Empresa encontrada</span>
+                <h3 id="found-company-name">Empresa consultada</h3>
+                <p id="found-company-meta">Dados cadastrais consultados</p>
+              </div>
+              <span class="company-active-badge">ATIVA</span>
+            </div>
+
+            <div class="company-data-grid">
+              <div>
+                <small>CNPJ</small>
+                <strong id="found-cnpj">—</strong>
+              </div>
+              <div>
+                <small>Município / UF</small>
+                <strong id="found-location">—</strong>
+              </div>
+            </div>
+
+            <div class="identified-activity">
+              <small>Atividade usada na proposta</small>
+              <strong id="primary-activity-label">—</strong>
+              <span id="primary-activity-cnae">—</span>
+            </div>
+
+            <div id="secondary-activities-wrap" hidden>
+              <small class="fine">Outras atividades encontradas no cadastro</small>
+              <div id="activity-list" class="activity-list"></div>
+            </div>
+
+            <div class="quote-confirmation-note">
+              <p class="fine">A categoria contratual é definida automaticamente pela atividade principal retornada para este CNPJ. Atividades secundárias são exibidas apenas como informação cadastral.</p>
+            </div>
+
+            <div class="company-confirmation-actions">
+              <button id="quote-button" class="button button-primary button-full" type="button">Calcular mensalidade</button>
+              <button id="change-cnpj" class="button button-ghost button-full" type="button">Consultar outro CNPJ</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="result-card reveal" data-delay="1" id="quote-result">
+          <div class="result-empty">
+            <div>
+              <div class="orb">CNPJ</div>
+              <h3>A proposta começa pela empresa real.</h3>
+              <p>Consulte o CNPJ para identificar a empresa e a atividade utilizada no cálculo.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="grid-3">
+        <article class="card reveal">
+          <h3>A atividade vem do cadastro.</h3>
+          <p>O empresário não precisa escolher uma categoria manualmente para calcular a mensalidade.</p>
+        </article>
+        <article class="card reveal" data-delay="1">
+          <h3>Você vê antes de contratar.</h3>
+          <p>O cálculo apresenta o valor mensal e as condições antes da decisão comercial.</p>
+        </article>
+        <article class="card reveal" data-delay="2">
+          <h3>A proposta tem validade definida.</h3>
+          <p>Na política atual, o valor apresentado permanece válido por sete dias.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script type="module" src="/assets/site.js"></script>
+  <script type="module" src="/assets/calculator-page.js"></script>
+</body>
+</html>

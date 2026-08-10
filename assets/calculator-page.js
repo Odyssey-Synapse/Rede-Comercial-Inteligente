@@ -2,13 +2,12 @@ import { isValidCnpj, formatCnpj, normalizeCnpj } from "../lib/cnpj.mjs";
 
 const lookupForm=document.querySelector("#company-lookup-form");
 const result=document.querySelector("#quote-result");
-const category=document.querySelector("#category");
 const cnpj=document.querySelector("#cnpj");
 const lookupMessage=document.querySelector("#lookup-message");
 const confirmation=document.querySelector("#company-confirmation");
 const lookupButton=document.querySelector("#lookup-button");
 const quoteButton=document.querySelector("#quote-button");
-let lookupToken=null, companyData=null, turnstileWidgetId=null, publicConfig=null;
+let lookupToken=null, companyData=null, selectedCategory=null, turnstileWidgetId=null, publicConfig=null;
 
 cnpj.addEventListener("input",()=>{cnpj.value=formatCnpj(cnpj.value); fieldInvalid("cnpj",false)});
 function fieldInvalid(id,invalid){document.querySelector(`#${id}`)?.closest(".field")?.classList.toggle("invalid",invalid)}
@@ -33,20 +32,28 @@ function turnstileToken(){return turnstileWidgetId!==null&&window.turnstile?wind
 function resetTurnstile(){if(turnstileWidgetId!==null&&window.turnstile)window.turnstile.reset(turnstileWidgetId)}
 
 function renderCompany(company){
- companyData=company;confirmation.hidden=false;
+ companyData=company;
+ selectedCategory=company.categories?.[0]||null;
+ confirmation.hidden=false;
  document.querySelector("#found-company-name").textContent=company.tradeName||company.legalName||"Empresa consultada";
  document.querySelector("#found-company-meta").textContent=company.tradeName&&company.legalName?company.legalName:"Dados cadastrais consultados";
  document.querySelector("#found-cnpj").textContent=formatCnpj(company.cnpj);
  document.querySelector("#found-location").textContent=[company.city,company.state].filter(Boolean).join(" — ")||"Não informado";
- category.innerHTML="";
- company.categories.forEach(item=>{const o=document.createElement("option");o.value=item.id;o.textContent=`${item.label} · CNAE ${item.cnaeCode}`;category.appendChild(o)});
- category.disabled=company.categories.length===1;
- document.querySelector("#category-help").textContent=company.categories.length===1?"Esta é a atividade contratual identificada para a proposta.":"O CNPJ possui mais de uma atividade elegível. Escolha somente entre as atividades retornadas para esse cadastro.";
- document.querySelector("#activity-list").innerHTML=company.categories.map((item,index)=>`<div class="activity-item ${index===0?'principal':''}"><span>${index===0?'atividade principal/primeira elegível':'atividade elegível'}</span><strong>${escapeHtml(item.label)}</strong><small>CNAE ${escapeHtml(item.cnaeCode)}</small></div>`).join("");
+
+ const primaryLabel=document.querySelector("#primary-activity-label");
+ const primaryCnae=document.querySelector("#primary-activity-cnae");
+ primaryLabel.textContent=selectedCategory?.label||"Atividade não identificada";
+ primaryCnae.textContent=selectedCategory?.cnaeCode?`CNAE ${selectedCategory.cnaeCode}`:"";
+
+ const secondary=(company.categories||[]).slice(1);
+ const wrap=document.querySelector("#secondary-activities-wrap");
+ const list=document.querySelector("#activity-list");
+ wrap.hidden=secondary.length===0;
+ list.innerHTML=secondary.map(item=>`<div class="activity-item"><span>atividade secundária</span><strong>${escapeHtml(item.label)}</strong><small>CNAE ${escapeHtml(item.cnaeCode)}</small></div>`).join("");
 }
 
 lookupForm.addEventListener("submit",async e=>{
- e.preventDefault();lookupToken=null;companyData=null;confirmation.hidden=true;
+ e.preventDefault();lookupToken=null;companyData=null;selectedCategory=null;confirmation.hidden=true;
  const valid=isValidCnpj(cnpj.value);fieldInvalid("cnpj",!valid);if(!valid)return;
  if(publicConfig?.turnstileRequired&&!turnstileToken()){setLookupMessage("Conclua a verificação de segurança antes de consultar.","error");return}
  lookupButton.disabled=true;lookupButton.textContent="Consultando…";setLookupMessage("Consultando situação cadastral e atividades econômicas…","loading");
@@ -62,18 +69,18 @@ lookupForm.addEventListener("submit",async e=>{
    SERPRO_ACCESS_DENIED:"O contrato do provedor SERPRO não autorizou esta consulta.",SERPRO_CREDENTIALS_NOT_CONFIGURED:"A integração SERPRO ainda não foi configurada no servidor.",SERPRO_ENDPOINT_TEMPLATE_NOT_CONFIGURED:"O endpoint contratado do SERPRO ainda não foi configurado.",CNPJ_PROVIDER_RATE_LIMITED:"O limite temporário da consulta cadastral foi atingido. Aguarde um minuto e tente novamente.",CNPJ_PROVIDER_NOT_CONFIGURED:"O provedor de consulta CNPJ não está configurado.",LOOKUP_SIGNING_NOT_CONFIGURED:"A assinatura da consulta empresarial ainda não foi configurada."};
    throw new Error(messages[data.error]||"Não foi possível validar esta empresa agora.")
   }
-  lookupToken=data.lookupToken;renderCompany(data.company);setLookupMessage("Empresa validada. Confirme a atividade antes de calcular.","success")
+  lookupToken=data.lookupToken;renderCompany(data.company);setLookupMessage("Empresa validada. A atividade principal foi identificada automaticamente.","success")
  }catch(err){setLookupMessage(err.message||"Falha na consulta.","error")}
  finally{lookupButton.disabled=false;lookupButton.textContent="Consultar empresa"}
 });
 
-document.querySelector("#change-cnpj").addEventListener("click",()=>{lookupToken=null;companyData=null;confirmation.hidden=true;result.innerHTML='<div class="result-empty"><div><div class="orb">CNPJ</div><h3>A proposta começa pela empresa real.</h3><p>Consulte o CNPJ para validar a situação cadastral e identificar as atividades elegíveis.</p></div></div>';cnpj.focus()});
+document.querySelector("#change-cnpj").addEventListener("click",()=>{lookupToken=null;companyData=null;selectedCategory=null;confirmation.hidden=true;result.innerHTML='<div class="result-empty"><div><div class="orb">CNPJ</div><h3>A proposta começa pela empresa real.</h3><p>Consulte o CNPJ para validar a situação cadastral e identificar as atividades elegíveis.</p></div></div>';cnpj.focus()});
 
 quoteButton.addEventListener("click",async()=>{
- if(!lookupToken||!category.value)return;
+ if(!lookupToken||!selectedCategory?.id)return;
  quoteButton.disabled=true;quoteButton.textContent="Gerando proposta…";
  try{
-  const r=await fetch("/api/quote",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({lookupToken,categoryId:category.value,resourceIds:[]})});
+  const r=await fetch("/api/quote",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({lookupToken,categoryId:selectedCategory.id,resourceIds:[]})});
   const data=await r.json().catch(()=>({}));
   if(r.ok&&data.quote)return renderQuote(data.quote,{signed:true,persisted:!!data.persisted});
   if(data.preview)return renderQuote(data.preview,{signed:false,persisted:false,error:data.error});
