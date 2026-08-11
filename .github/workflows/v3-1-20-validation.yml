@@ -1,0 +1,69 @@
+name: V3.1.20 validation
+
+on:
+  push:
+    branches:
+      - agent/uai-perto-v3.1.20-jornadas-formularios-acessibilidade
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Syntax checks
+        run: |
+          node --check assets/site.js
+          node --check assets/participacao.js
+          node --check assets/contact-page.js
+          node --check assets/public-pages.js
+          node --check api/contact.js
+
+      - name: Run branch tests
+        shell: bash
+        run: |
+          set +e
+          npm test > /tmp/branch-tests.log 2>&1
+          code=$?
+          echo "BRANCH_TEST_EXIT=$code"
+          cat /tmp/branch-tests.log
+          exit 0
+
+      - name: Checkout main baseline
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: baseline
+
+      - name: Install baseline dependencies
+        working-directory: baseline
+        run: npm ci
+
+      - name: Run main baseline tests
+        shell: bash
+        working-directory: baseline
+        run: |
+          set +e
+          npm test > /tmp/main-tests.log 2>&1
+          code=$?
+          echo "MAIN_TEST_EXIT=$code"
+          cat /tmp/main-tests.log
+          exit 0
+
+      - name: Compare test summaries
+        shell: bash
+        run: |
+          echo "--- V3.1.20 summary ---"
+          grep -E '^# (tests|pass|fail|duration_ms)' /tmp/branch-tests.log || true
+          echo "--- main summary ---"
+          grep -E '^# (tests|pass|fail|duration_ms)' /tmp/main-tests.log || true
