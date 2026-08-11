@@ -1,0 +1,73 @@
+:root{
+  --bg:#F2E8D9;
+  --surface:#fffaf1;
+  --surface-2:#eadfce;
+  --surface-3:#e1d4c1;
+  --ink:#29483d;
+  --muted:#65766f;
+  --line:#d3c9b9;
+  --navy:#335749;
+  --navy-deep:#29483d;
+  --accent:#D39237;
+  --accent-2:#B55A30;
+  --green:#335749;
+  --green-soft:#e4eadf;
+  --blue-soft:#f3e4c8;
+  --warm:#efe0ca;
+  --danger:#B55A30;
+  --shadow:0 24px 70px rgba(51,87,73,.13);
+}
+html[data-theme="dark"]{
+  --bg:#203d33;
+  --surface:#29483d;
+  --surface-2:#315247;
+  --surface-3:#3a5d51;
+  --ink:#F2E8D9;
+  --muted:#d0c9bb;
+  --line:#527064;
+  --navy:#F2E8D9;
+  --navy-deep:#173128;
+  --accent:#D39237;
+  --accent-2:#c56a3d;
+  --green:#D39237;
+  --green-soft:#355f50;
+  --blue-soft:#4a593f;
+  --warm:#5d4938;
+  --danger:#d37a54;
+  --shadow:0 26px 80px rgba(0,0,0,.28);
+}
+body{font-family:"Nunito Sans","Poppins","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif}
+.brand{letter-spacing:-.02em;gap:12px}
+.brand-mark{width:44px;height:44px;flex:0 0 44px;border-radius:13px;background:#F2E8D9 url("/assets/uai-perto-symbol.png") center/34px auto no-repeat;box-shadow:inset 0 0 0 1px rgba(51,87,73,.10)}
+.brand-mark::before,.brand-mark::after{content:none!important;display:none!important}
+.brand-name{font-size:1.26rem;font-weight:850;color:var(--ink)}
+.brand small{letter-spacing:.015em;font-size:.62rem;font-weight:720;text-transform:none;color:var(--muted)}
+.button-primary{background:#D39237;color:#29483d;box-shadow:0 10px 26px rgba(211,146,55,.22)}
+.button-primary:hover{background:#B55A30;color:#F2E8D9}
+.button-ghost{background:#335749;border-color:#335749;color:#F2E8D9}
+.button-ghost:hover{background:#29483d}
+.button-light{background:#F2E8D9;color:#29483d}
+.eyebrow{color:#B55A30}
+.eyebrow-light,.eyebrow-cta{color:#F2E8D9}
+.icon-square{background:#f0dfbf;color:#B55A30}
+.hero{background:radial-gradient(circle at 76% 28%,rgba(211,146,55,.20),transparent 38%),linear-gradient(180deg,rgba(255,250,241,.34),transparent)}
+.human-band{background:#29483d}
+.cta-panel{background:linear-gradient(135deg,#335749,#29483d);color:#F2E8D9}
+.cta-panel p{color:#ddd3c2}
+.human-list span{color:#d3cab9}
+.live-pill,.demo-tag{background:#e4eadf;color:#335749}
+.example-chip.active{background:#D39237;color:#29483d;border-color:#D39237}
+.route-line{background:linear-gradient(#D39237,transparent)}
+.solution-card em{color:#335749}
+html[data-theme="dark"] .solution-card em{color:#D39237}
+.uai-hero-brand{display:inline-flex;align-items:center;max-width:min(390px,88vw);padding:14px 18px;margin:0 0 18px;border-radius:18px;background:#F2E8D9;box-shadow:0 12px 38px rgba(51,87,73,.10)}
+.uai-hero-brand img{display:block;width:100%;height:auto}
+[data-brand="uai-perto"] .site-header{border-bottom-color:rgba(51,87,73,.16)}
+[data-brand="uai-perto"] .experience-card,[data-brand="uai-perto"] .card,[data-brand="uai-perto"] .scenario{box-shadow:0 12px 36px rgba(51,87,73,.055)}
+[data-brand="uai-perto"] .demo-bridge-core{border-color:#D39237}
+[data-brand="uai-perto"] .demo-packet{background:#B55A30}
+@media(max-width:720px){
+  .brand small{display:none}
+  .brand-mark{width:40px;height:40px;flex-basis:40px;background-size:31px auto}
+  .uai-hero-brand{max-width:min(330px,92vw);padding:12px 14px}
+}
