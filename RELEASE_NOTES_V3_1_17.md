@@ -16,4 +16,8 @@ Atualização de identidade pública da Rede Comercial Inteligente de Uberaba.
 
 Não há alterações no modelo dos 54 parceiros iniciais, calculadora, valores, regras comerciais, formulários, APIs, banco, autenticação, Turnstile, integrações, rotas ou configuração de produção.
 
-A produção permanece na `main` até merge explícito do PR desta versão.
+## Publicação
+
+O PR `#1` foi mergeado na `main`. A V3.1.17 está publicada em produção. O deploy do commit de merge foi validado como **READY** na Vercel e o domínio principal respondeu HTTP `200` após a publicação.
+
+A observação sobre referências provisórias que permanecem apenas no HTML-base estático, mas são normalizadas pela camada pública JavaScript, está registrada em `VALIDACAO_V3_1_17.md`.
