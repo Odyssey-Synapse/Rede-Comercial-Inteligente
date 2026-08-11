@@ -24,7 +24,9 @@ jobs:
           cache: npm
 
       - name: Aplicar V3.1.18
-        run: python3 .github/v3-1-18-update.py
+        run: |
+          python3 .github/v3-1-18-update.py
+          python3 .github/v3-1-18-fix-copy.py
 
       - name: Auditar referencias publicas legadas
         run: |
