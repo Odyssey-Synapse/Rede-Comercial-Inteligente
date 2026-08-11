@@ -23,6 +23,21 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Medir baseline V3.1.17
+        shell: bash
+        run: |
+          git worktree add /tmp/baseline origin/main
+          cd /tmp/baseline
+          npm ci
+          set +e
+          npm test > /tmp/baseline.tap 2>&1
+          BASE_EXIT=$?
+          set -e
+          grep -E '^not ok [0-9]+ - ' /tmp/baseline.tap | sed -E 's/^not ok [0-9]+ - //' | sort > /tmp/baseline-fails.txt || true
+          echo "Baseline exit: $BASE_EXIT"
+          echo "Falhas baseline: $(wc -l < /tmp/baseline-fails.txt)"
+          cat /tmp/baseline-fails.txt
+
       - name: Aplicar V3.1.18
         run: |
           python3 .github/v3-1-18-update.py
@@ -35,12 +50,32 @@ jobs:
             exit 1
           fi
 
-      - name: Verificar sintaxe e testes
+      - name: Verificar sintaxe
         run: |
           npm ci
           node --check assets/site.js
           node --check assets/capacity-calculator.js
-          npm test
+
+      - name: Comparar testes com baseline
+        shell: bash
+        run: |
+          set +e
+          npm test > /tmp/v318.tap 2>&1
+          NEW_EXIT=$?
+          set -e
+          grep -E '^not ok [0-9]+ - ' /tmp/v318.tap | sed -E 's/^not ok [0-9]+ - //' | sort > /tmp/v318-fails.txt || true
+          echo "V3.1.18 exit: $NEW_EXIT"
+          echo "Falhas V3.1.18: $(wc -l < /tmp/v318-fails.txt)"
+          cat /tmp/v318-fails.txt
+          echo '--- Diferenca de falhas versus baseline ---'
+          diff -u /tmp/baseline-fails.txt /tmp/v318-fails.txt || true
+          comm -13 /tmp/baseline-fails.txt /tmp/v318-fails.txt > /tmp/new-regressions.txt
+          echo "Novas falhas: $(wc -l < /tmp/new-regressions.txt)"
+          cat /tmp/new-regressions.txt
+          if [ -s /tmp/new-regressions.txt ]; then
+            echo 'A V3.1.18 introduziu falhas novas. Bloqueando commit.'
+            exit 1
+          fi
 
       - name: Confirmar escopo do diff
         run: |
