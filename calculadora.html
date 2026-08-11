@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Entenda a regra comercial atual dos parceiros iniciais e dos futuros parceiros do Projeto RLI enquanto a nova calculadora por capacidade operacional é finalizada.">
+  <meta name="description" content="Simule o enquadramento comercial da sua empresa no Projeto RLI a partir da estrutura operacional utilizada na Rede.">
   <meta name="theme-color" content="#0b1f3a">
-  <title>Participação comercial — Projeto RLI (nome provisório)</title>
+  <title>Simulador de participação — Projeto RLI (nome provisório)</title>
   <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
@@ -14,45 +14,10 @@
 
   <section class="page-hero">
     <div class="container narrow">
-      <div class="breadcrumb"><a href="/">Início</a><span>›</span>Participação comercial</div>
-      <span class="eyebrow">Modelo comercial em atualização</span>
-      <h1 class="h1">A nova calculadora está sendo ajustada ao modelo atual da Rede.</h1>
-      <p class="lead">A antiga regra de mensalidade única de R$ 140 não representa mais o modelo econômico em construção. Por isso, propostas automáticas com essa regra estão temporariamente suspensas enquanto a nova calculadora por capacidade operacional é finalizada.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="grid-2">
-        <article class="card reveal">
-          <span class="demo-tag">REDE INICIAL</span>
-          <h3>54 parceiros iniciais</h3>
-          <p>Os 54 parceiros da rede de lançamento pagam adesão e não pagam mensalidade recorrente dentro desta regra inicial.</p>
-          <p class="fine">A adesão será calculada conforme o enquadramento comercial da empresa. O valor definitivo depende da classificação correta antes do aceite.</p>
-        </article>
-        <article class="card reveal" data-delay="1">
-          <span class="demo-tag">DEPOIS DOS 54</span>
-          <h3>Adesão + dois meses incluídos</h3>
-          <p>Novos parceiros pagam adesão, participam durante os dois primeiros meses sem cobrança mensal adicional e decidem ao final do segundo mês se desejam continuar.</p>
-          <p class="fine">Se continuarem, a mensalidade correspondente passa a valer a partir do terceiro mês.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container split-feature">
-      <div class="reveal">
-        <span class="eyebrow">Como será calculada a mensalidade</span>
-        <h2 class="h2">A mensalidade deve refletir a estrutura operacional usada na Rede.</h2>
-        <p class="lead">A nova lógica considera o porte operacional da participação sem transformar quantidade de produtos, informação fornecida, faturamento ou pagamento em relevância.</p>
-        <p>O objetivo é enquadrar a empresa por elementos como núcleos operacionais ativos, simultaneidade, unidades e complexidade de integração.</p>
-      </div>
-      <div class="benefit-list reveal" data-delay="1">
-        <div><span>01</span><p><strong>Conhecimento não é punido</strong><br>Informar mais sobre o que a empresa consegue fazer melhora a inteligência da Rede.</p></div>
-        <div><span>02</span><p><strong>Complexidade real importa</strong><br>A cobrança acompanha a estrutura operacional utilizada.</p></div>
-        <div><span>03</span><p><strong>Pagamento não compra relevância</strong><br>Oportunidades continuam subordinadas à compatibilidade real.</p></div>
-      </div>
+      <div class="breadcrumb"><a href="/">Início</a><span>›</span>Participação</div>
+      <span class="eyebrow">Simulador de enquadramento</span>
+      <h1 class="h1">Entenda como a estrutura da sua empresa pode influenciar sua participação.</h1>
+      <p class="lead">A referência atual considera a complexidade operacional usada dentro da Rede. Quantidade de produtos cadastrados, faturamento, número de clientes e pagamento não compram relevância e não entram diretamente no enquadramento.</p>
     </div>
   </section>
 
@@ -61,18 +26,98 @@
       <div class="calc-notice reveal">
         <div><span class="notice-icon">i</span></div>
         <div>
-          <strong>Por que a calculadora automática está suspensa?</strong>
-          <p>Manter a antiga proposta de R$ 140 enquanto o modelo comercial já mudou poderia apresentar uma condição incorreta. A calculadora volta quando o novo enquadramento estiver implementado e validado.</p>
+          <strong>Simulação, não proposta contratual</strong>
+          <p>Os valores abaixo são referências do modelo comercial atualmente em validação. O enquadramento definitivo precisa ser confirmado pela Rede antes de qualquer adesão ou aceite.</p>
         </div>
       </div>
-      <div class="cta-panel reveal">
-        <div><span class="eyebrow eyebrow-cta">Quer participar?</span><h2>Converse com a Rede para avaliar sua empresa nesta fase.</h2><p>A condição correta será explicada antes de qualquer adesão ou aceite comercial.</p></div>
-        <div class="after-founder-buttons"><a class="button button-light" href="/contato.html">Falar com a Rede →</a><a class="button founder-contact-button" href="/">Voltar ao início</a></div>
+
+      <div class="calculator-layout">
+        <div class="form-card reveal">
+          <form id="capacity-calculator" novalidate>
+            <div>
+              <span class="eyebrow">Estrutura operacional</span>
+              <h2 class="h3">Conte como sua empresa pretende operar na Rede</h2>
+              <p class="fine">Considere somente a estrutura que realmente ficará ativa na Rede. Informações comerciais e catálogo podem ser amplos sem, por isso, aumentar automaticamente o valor.</p>
+            </div>
+
+            <div class="field">
+              <label for="operational-cores">Núcleos operacionais ativos</label>
+              <select id="operational-cores" required>
+                <option value="">Selecione</option>
+                <option value="0">1–2 núcleos</option>
+                <option value="1">3–5 núcleos</option>
+                <option value="2">6–10 núcleos</option>
+                <option value="3">11–20 núcleos</option>
+                <option value="4">21–40 núcleos</option>
+                <option value="5">41+ núcleos</option>
+              </select>
+              <span class="field-help">Núcleo operacional é uma frente real de operação, não cada produto ou conhecimento cadastrado.</span>
+            </div>
+
+            <div class="field">
+              <label for="simultaneous-operations">Operações simultâneas</label>
+              <select id="simultaneous-operations" required>
+                <option value="">Selecione</option>
+                <option value="0">1 operação por vez</option>
+                <option value="2">2 simultâneas</option>
+                <option value="4">3–5 simultâneas</option>
+                <option value="6">6 ou mais simultâneas</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="active-units">Unidades operacionais ativas</label>
+              <select id="active-units" required>
+                <option value="">Selecione</option>
+                <option value="0">1 unidade</option>
+                <option value="3">2 unidades</option>
+                <option value="6">3–4 unidades</option>
+                <option value="enterprise">5 ou mais unidades</option>
+              </select>
+              <span class="field-help">Conte unidades que realmente participarão da operação da Rede.</span>
+            </div>
+
+            <div class="field">
+              <label for="integration-level">Integração necessária</label>
+              <select id="integration-level" required>
+                <option value="">Selecione</option>
+                <option value="0">Manual / sem integração</option>
+                <option value="1">Integração padrão</option>
+                <option value="3">Integração avançada</option>
+                <option value="enterprise">Integração customizada</option>
+              </select>
+            </div>
+
+            <button class="button button-primary button-full" type="submit">Simular enquadramento</button>
+            <p class="fine">A classificação pode ser revista quando a estrutura operacional real for diferente da informada. Nenhuma mudança contratual deve acontecer silenciosamente.</p>
+          </form>
+        </div>
+
+        <aside class="result-card reveal" data-delay="1" id="capacity-result">
+          <div class="result-empty"><div><div class="orb">RLI</div><h3>Veja sua referência antes de decidir.</h3><p>Preencha os quatro pontos da operação para visualizar o enquadramento estimado, a adesão de referência e como funcionam os dois regimes de entrada.</p></div></div>
+        </aside>
       </div>
     </div>
   </section>
 
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head reveal"><div><span class="eyebrow">Duas regras de entrada</span><h2 class="h2">O mesmo enquadramento gera condições diferentes conforme a fase da Rede.</h2></div><p>A Rede inicial e os parceiros que entram depois dela não possuem o mesmo tratamento de mensalidade.</p></div>
+      <div class="grid-2">
+        <article class="card reveal"><span class="demo-tag">REDE INICIAL</span><h3>54 parceiros iniciais</h3><p>Pagam a adesão correspondente ao enquadramento confirmado e permanecem com <strong>mensalidade recorrente de R$ 0</strong> dentro da regra de lançamento.</p><p class="fine">A inclusão entre os 54 é confirmada pela Rede; a simulação não reserva uma posição.</p></article>
+        <article class="card reveal" data-delay="1"><span class="demo-tag">DEPOIS DOS 54</span><h3>Adesão + dois meses incluídos</h3><p>A adesão inclui os dois primeiros meses de participação. No fim do segundo mês, a empresa decide se quer continuar. Se continuar, a mensalidade do enquadramento começa no terceiro mês.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container"><div class="section-head reveal"><div><span class="eyebrow">O que não aumenta o preço sozinho</span><h2 class="h2">Quanto melhor a Rede conhece sua capacidade, melhor — informação não deve virar punição.</h2></div></div><div class="grid-3"><article class="card reveal"><h3>Quantidade de produtos</h3><p>Ter milhares de itens ou serviços informados não deve, por si só, empurrar a empresa para uma faixa mais alta.</p></article><article class="card reveal" data-delay="1"><h3>Faturamento ou vendas</h3><p>A cobrança não é percentual sobre receita e não cresce simplesmente porque a empresa vendeu mais.</p></article><article class="card reveal" data-delay="2"><h3>Relevância e ranking</h3><p>Uma faixa maior não compra prioridade. Compatibilidade com a necessidade continua vindo primeiro.</p></article></div></div>
+  </section>
+
+  <section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Quer avaliar a entrada?</span><h2>Use a simulação como referência e converse com a Rede para confirmar sua condição.</h2><p>Antes de qualquer pagamento, a empresa precisa conhecer seu enquadramento e as condições aplicáveis à sua fase de entrada.</p></div><a class="button button-light" href="/contato.html">Falar com a Rede →</a></div></section>
+
   <div id="site-footer"></div>
   <script type="module" src="/assets/site.js"></script>
+  <script type="module" src="/assets/capacity-calculator.js"></script>
 </body>
 </html>
