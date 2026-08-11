@@ -8,8 +8,10 @@ if(channels){
  if(c.contactWhatsapp)items.push(`<div class="card"><small>WhatsApp oficial</small><strong>${esc(c.contactWhatsapp)}</strong></div>`);
  if(c.privacyEmail)items.push(`<div class="card"><small>Privacidade</small><strong>${esc(c.privacyEmail)}</strong></div>`);
  channels.innerHTML=items.join("");
- document.querySelector("#contact-title").textContent=items.length?"Escolha o canal adequado.":(c.contactFormEnabled?"Contato pelo site.":"O contato público ainda precisa ser configurado.");
- document.querySelector("#contact-blocker").hidden=!!(c.contactEmail||c.contactWhatsapp||c.contactFormEnabled);
+ const title=document.querySelector("#contact-title");
+ if(title?.dataset.dynamicContactTitle==="true")title.textContent=items.length?"Escolha o canal adequado.":(c.contactFormEnabled?"Contato pelo site.":"O contato público ainda precisa ser configurado.");
+ const blocker=document.querySelector("#contact-blocker");
+ if(blocker)blocker.hidden=!!(c.contactEmail||c.contactWhatsapp||c.contactFormEnabled);
 }
 const privacy=document.querySelector("#privacy-status");
 if(privacy){
