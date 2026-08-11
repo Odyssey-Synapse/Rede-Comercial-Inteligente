@@ -6,6 +6,8 @@
 - Base funcional/comercial congelada: `3416530903379f9d19b70f5a9a86709cdea5af3c`
 - Versão anterior: `3.1.16`
 - Versão desta atualização: `3.1.17`
+- PR de implementação: `#1`
+- Commit de merge do código: `04f3179324a5f37ab3f5e6815d884edd637cc28e`
 
 ## Escopo
 
@@ -29,7 +31,7 @@ A implementação não reconstrói a landing page.
 - `assets/uai-perto.css` funciona como camada de tokens/acabamento sobre o CSS existente, evitando refatoração ampla de `assets/styles.css`.
 - O header, hero e footer utilizam o logotipo oficial.
 - O favicon utiliza apenas o símbolo U/P oficial.
-- Referências públicas legadas (`Projeto RLI`, `RLI`, `Achei Aqui` e `nome provisório`) são tratadas apenas na camada visível ao usuário. Identificadores técnicos, nomes internos, rotas, APIs e persistência não foram renomeados.
+- Referências públicas legadas (`Projeto RLI`, `RLI`, `Achei Aqui` e `nome provisório`) são normalizadas na camada visível ao usuário. Identificadores técnicos, nomes internos, rotas, APIs e persistência não foram renomeados.
 
 ## Arquivos alterados ou criados
 
@@ -44,7 +46,7 @@ A implementação não reconstrói a landing page.
 
 ## O que não foi alterado
 
-A comparação da branch com `main` não contém mudanças em:
+O diff de implementação não contém mudanças em:
 
 - número, regras, valores, adesão ou mensalidades dos 54 parceiros iniciais;
 - calculadora e lógica de enquadramento;
@@ -68,12 +70,24 @@ A comparação da branch com `main` não contém mudanças em:
 
 ## Verificações executadas
 
-- Git diff contra `main`: restrito aos arquivos de branding, versão e documentação listados acima.
+- O diff de implementação foi restrito aos arquivos de branding, versão e documentação listados acima.
 - O diff final de `package-lock.json` altera somente os dois campos de versão `3.1.16` para `3.1.17`; dependência, URL e `integrity` de `postgres` permanecem iguais à baseline.
-- Preview automático Vercel do commit `aaa6b7185f55a34442aeea17ed99e5259e99930d`: **success / READY**.
-- Build Vercel desse commit: **concluído sem erros**; logs filtrados por erros mostram apenas a conclusão do build.
-- A suíte existente `npm test` foi identificada em `package.json` e os arquivos em `tests/` permanecem intactos. O ambiente de ferramentas desta manutenção não conseguiu materializar um checkout completo do repositório para executar localmente essa suíte; portanto, não é registrado falsamente um resultado de testes que não foi obtido.
+- A sintaxe das adições de branding em `assets/site.js` foi verificada com `node --check` no ambiente de manutenção.
+- Preview automático Vercel da branch: **success / READY**.
+- Build Vercel da branch: **concluído sem erros** após restauração exata do `integrity` original do lockfile.
+- Deploy de produção do commit de merge `04f3179324a5f37ab3f5e6815d884edd637cc28e`: **READY**, `target: production`.
+- Domínio principal `rede-comercial-inteligente.vercel.app`: resposta HTTP **200** após o merge.
+- Assets `site.js`, `uai-perto.css`, logotipo horizontal e símbolo U/P: resposta HTTP **200** em produção.
+- `/contato.html` e `/calculadora.html`: resposta HTTP **200** em produção.
+- `/api/public-config`: resposta HTTP **200**, com `contactFormEnabled: true` e `turnstileRequired: true`.
+- A suíte existente `npm test` foi identificada em `package.json` e os arquivos em `tests/` permanecem intactos. O ambiente de ferramentas desta manutenção não conseguiu materializar um checkout completo do repositório para executar localmente a suíte integral; portanto, não é registrado falsamente um resultado de testes que não foi obtido.
+
+## Observação sobre templates estáticos
+
+Para preservar a estrutura validada com o menor risco possível, os arquivos HTML-base não foram reescritos em massa. Algumas referências provisórias permanecem no **código-fonte estático** dos templates e são normalizadas por `assets/site.js` no carregamento da experiência pública, incluindo título, descrição, marca visível e favicon.
+
+Isso preserva a arquitetura e reduz a superfície de regressão, mas significa que um consumidor que leia apenas o HTML cru sem executar JavaScript pode encontrar a nomenclatura provisória. Uma eventual limpeza SEO/source-level pode ser feita em etapa separada, alterando individualmente os templates HTML, sem necessidade de mexer em regras de negócio.
 
 ## Produção
 
-Enquanto o PR não for mergeado, a `main` e a produção permanecem no checkpoint funcional/comercial congelado. O merge só deve promover a camada pública de branding descrita neste documento.
+O PR `#1` foi mergeado na `main`. A V3.1.17 está publicada em produção com a camada pública de branding Uai Perto e o baseline funcional/comercial preservado.
