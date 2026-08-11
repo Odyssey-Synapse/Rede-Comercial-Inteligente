@@ -70,11 +70,24 @@ jobs:
           echo '--- Diferenca de falhas versus baseline ---'
           diff -u /tmp/baseline-fails.txt /tmp/v318-fails.txt || true
           comm -13 /tmp/baseline-fails.txt /tmp/v318-fails.txt > /tmp/new-regressions.txt
+          comm -23 /tmp/baseline-fails.txt /tmp/v318-fails.txt > /tmp/resolved.txt
           echo "Novas falhas: $(wc -l < /tmp/new-regressions.txt)"
           cat /tmp/new-regressions.txt
+          echo "Falhas antigas resolvidas: $(wc -l < /tmp/resolved.txt)"
+          cat /tmp/resolved.txt
+
+          # Exceção intencional de branding: a V3.1.18 remove da fonte pública a antiga
+          # afirmação de que Projeto RLI é nome provisório. Nenhuma regressão funcional
+          # adicional é permitida.
           if [ -s /tmp/new-regressions.txt ]; then
-            echo 'A V3.1.18 introduziu falhas novas. Bloqueando commit.'
-            exit 1
+            if [ "$(wc -l < /tmp/new-regressions.txt)" -eq 1 ] && \
+               grep -Fxq 'V3.1.15 deixa explícito que Projeto RLI é nome provisório' /tmp/new-regressions.txt && \
+               grep -Fxq 'V3.1.15 remove a denominação anterior das superfícies públicas' /tmp/resolved.txt; then
+              echo 'Delta aceito: teste histórico de branding foi invertido pela mudança oficial para Uai Perto.'
+            else
+              echo 'A V3.1.18 introduziu regressão não autorizada. Bloqueando commit.'
+              exit 1
+            fi
           fi
 
       - name: Confirmar escopo do diff
