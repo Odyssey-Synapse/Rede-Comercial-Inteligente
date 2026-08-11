@@ -1,0 +1,80 @@
+/* V3.1.20 — conforto visual e leitura em telas pequenas e grandes */
+html[data-theme="light"]{
+  --bg:#FAF6EF;
+  --surface:#FFFDF8;
+  --surface-2:#F5EEE4;
+  --surface-3:#EEE4D8;
+  --ink:#263D34;
+  --muted:#52665E;
+  --line:#D8CEC0;
+  --shadow:0 14px 34px rgba(38,61,52,.08);
+  color-scheme:light;
+}
+html[data-theme="dark"]{
+  --bg:#263832;
+  --surface:#30443E;
+  --surface-2:#374C45;
+  --surface-3:#40564E;
+  --ink:#F4EEE5;
+  --muted:#DDD6CC;
+  --line:rgba(244,238,229,.22);
+  --shadow:0 16px 40px rgba(0,0,0,.20);
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink)}
+html[data-theme="light"] .eyebrow{color:#8A472B}
+html[data-theme="light"] .lead{color:#3E574D}
+html[data-theme="light"] .fine,
+html[data-theme="light"] .section-head>p,
+html[data-theme="light"] .card p,
+html[data-theme="light"] .scenario p,
+html[data-theme="light"] .story-panel p,
+html[data-theme="light"] .decision-card p,
+html[data-theme="light"] .language-card p,
+html[data-theme="light"] .fact-card p,
+html[data-theme="light"] .contact-card p,
+html[data-theme="light"] .legal-note p{color:#52665E}
+.card,.scenario,.story-panel,.decision-card,.language-card,.fact-card,.contact-card,.legal-note,.experience-card,.form-card,.result-card{background:var(--surface);box-shadow:var(--shadow)}
+.section-alt{background:#F7F1E8;border-block-color:var(--line)}
+.page-hero{background:radial-gradient(circle at 76% 8%,rgba(211,146,55,.09),transparent 42%)}
+.hero{background:radial-gradient(circle at 76% 28%,rgba(211,146,55,.09),transparent 40%),linear-gradient(180deg,rgba(255,253,248,.44),transparent)}
+.human-band,.cta-panel{background:#45665A;color:#F7F0E6}
+.human-band .quote-big,.human-band strong,.cta-panel h2{color:#F7F0E6}
+.human-list{border-color:rgba(247,240,230,.24)}
+.human-list div{border-bottom-color:rgba(247,240,230,.18)}
+.human-list span,.cta-panel p{color:#E8DED0}
+.eyebrow-light,.eyebrow-cta{color:#F3E8D9!important}
+.button-light{background:#F7F0E6;color:#29473B;border-color:#F7F0E6}
+html[data-theme="light"] .button-ghost{background:#FFFDF8;color:#2B463B;border-color:#CFC4B5}
+input,select,textarea{background:var(--surface);color:var(--ink);border-color:var(--line)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.82}
+input:focus,select:focus,textarea:focus{border-color:#45665A;box-shadow:0 0 0 3px rgba(69,102,90,.14)}
+[data-brand="uai-perto"] .site-header{background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
+.site-footer{background:var(--bg);color:var(--ink);border-top-color:var(--line)}
+.site-footer .footer-col a,.site-footer .footer-brand-text,.site-footer .footer-bottom{color:var(--muted)}
+.site-footer .footer-col strong{color:var(--ink)}
+html[data-theme="dark"] .human-band,html[data-theme="dark"] .cta-panel{background:#39564C}
+html[data-theme="dark"] .section-alt{background:#2C4039}
+html[data-theme="dark"] .page-hero{background:radial-gradient(circle at 76% 8%,rgba(211,146,55,.08),transparent 42%)}
+html[data-theme="dark"] .hero{background:radial-gradient(circle at 76% 28%,rgba(211,146,55,.08),transparent 40%)}
+html[data-theme="dark"] .eyebrow{color:#E3A85A}
+html[data-theme="dark"] .lead{color:#EEE7DD}
+html[data-theme="dark"] .button-ghost{background:#344B43;color:#F4EEE5;border-color:rgba(244,238,229,.28)}
+html[data-theme="dark"] .site-footer .footer-col a,html[data-theme="dark"] .site-footer .footer-brand-text,html[data-theme="dark"] .site-footer .footer-bottom{color:#DDD6CC}
+html[data-theme="dark"] .site-footer .footer-col strong{color:#F4EEE5}
+@media(max-width:720px){
+  body{font-size:16px;line-height:1.62}
+  .container{width:min(var(--max),calc(100% - 30px))}
+  .human-band,.cta-panel{background:#4A695E}
+  .human-band{padding-block:58px}
+  .cta-panel{padding:28px 22px}
+  .quote-big{line-height:1.13}
+  .card,.scenario,.story-panel,.decision-card,.language-card,.fact-card,.contact-card,.legal-note,.form-card{padding:22px}
+  .fine{font-size:.9rem;line-height:1.58}
+  .nav-links{background:var(--surface)}
+}
+@media(prefers-contrast:more){
+  html[data-theme="light"]{--ink:#193128;--muted:#40574E;--line:#BFB3A3}
+  html[data-theme="dark"]{--ink:#FFF8EE;--muted:#EEE7DE;--line:rgba(255,248,238,.34)}
+  .button,.card,.form-card,input,select,textarea{border-width:2px}
+}
