@@ -1,8 +1,22 @@
+const BRAND_NAME="Uai Perto";
+const BRAND_TAGLINE="Uberaba mais perto de você.";
+
+function ensureBrandStyles(){
+  if(document.querySelector('link[data-uai-perto-brand]'))return;
+  const link=document.createElement("link");
+  link.rel="stylesheet";
+  link.href="/assets/uai-perto.css?v=3.1.17";
+  link.dataset.uaiPertoBrand="3.1.17";
+  document.head.append(link);
+}
+ensureBrandStyles();
+document.documentElement.dataset.brand="uai-perto";
+
 const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/calculadora.html","Participação"],["/contato.html","Contato"]];
 const currentPath=location.pathname.endsWith("/")&&location.pathname!=="/"?location.pathname.slice(0,-1):location.pathname;
 const header=document.querySelector("#site-header"),footer=document.querySelector("#site-footer");
-if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand" href="/" aria-label="Projeto RLI, nome provisório — início"><span class="brand-mark" aria-hidden="true"></span><span><span class="brand-name">projeto RLI</span><small>REDE LOCAL INTELIGENTE · NOME PROVISÓRIO</small></span></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/calculadora.html">Ver participação</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
-if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand" href="/"><span class="brand-mark"></span><span><span class="brand-name">projeto RLI</span><small>REDE LOCAL INTELIGENTE · NOME PROVISÓRIO</small></span></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/calculadora.html">Participação comercial</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Projeto RLI · nome provisório.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
+if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/calculadora.html">Ver participação</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
+if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/calculadora.html">Participação comercial</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
 function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}setTheme(getTheme());
 document.querySelector("#theme-toggle")?.addEventListener("click",()=>setTheme(getTheme()==="dark"?"light":"dark"));
@@ -24,3 +38,68 @@ const stepData={
 const stepContent=document.querySelector("#step-content");function renderStep(key){const d=stepData[key];if(!d||!stepContent)return;stepContent.innerHTML=`<span class="step-kicker">${d.k}</span><h3 class="h2">${d.title}</h3><p class="lead">${d.text}</p><div class="step-visual"><div class="mini-panel"><small>Entrada</small><strong>${d.left}</strong></div><span>→</span><div class="mini-panel"><small>Resultado</small><strong>${d.right}</strong></div></div>`;document.querySelectorAll(".step-button").forEach(b=>b.classList.toggle("active",b.dataset.step===key))}document.querySelectorAll(".step-button").forEach(b=>b.addEventListener("click",()=>renderStep(b.dataset.step)));if(stepContent)renderStep("understand");
 
 const canvas=document.querySelector("#network-canvas");if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,pointer={x:-999,y:-999};const count=innerWidth<720?18:32;const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener("resize",resize,{passive:true});canvas.addEventListener("pointermove",e=>{const r=canvas.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top}});canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});function draw(){ctx.clearRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}for(const n of nodes){const x=n.x*w,y=n.y*h,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?n.r*1.6:n.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
+
+function replacePublicBrandText(value){
+  if(!value)return value;
+  return value
+    .replace(/Projeto RLI é um nome provisório\. Marca, nome fantasia e razão social da operadora ainda serão definidos\./gi,"Uai Perto é a identidade pública da Rede Comercial Inteligente em Uberaba.")
+    .replace(/NOME PROVISÓRIO\s*·\s*Rede Comercial Inteligente em construção/gi,"UBERABA · Rede Comercial Inteligente")
+    .replace(/REDE LOCAL INTELIGENTE\s*·\s*NOME PROVISÓRIO/gi,BRAND_TAGLINE)
+    .replace(/Projeto RLI\s*[—–·-]\s*nome provisório/gi,BRAND_NAME)
+    .replace(/Projeto RLI/gi,BRAND_NAME)
+    .replace(/projeto RLI/gi,BRAND_NAME)
+    .replace(/Rede RLI/gi,BRAND_NAME)
+    .replace(/REDE RLI/g,"UAI PERTO")
+    .replace(/Achei Aqui/gi,BRAND_NAME)
+    .replace(/\bRLI\b/g,BRAND_NAME)
+    .replace(/\s*·\s*nome provisório\.?/gi,"")
+    .replace(/\s*—\s*nome provisório\b/gi,"");
+}
+
+function applyPublicBrandText(){
+  const skip=new Set(["SCRIPT","STYLE","NOSCRIPT","CODE","PRE"]);
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){
+    const parent=node.parentElement;
+    if(!parent||skip.has(parent.tagName))return NodeFilter.FILTER_REJECT;
+    return /RLI|Projeto RLI|Achei Aqui|nome provisório/i.test(node.nodeValue||"")?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+  }});
+  const nodes=[];
+  while(walker.nextNode())nodes.push(walker.currentNode);
+  nodes.forEach(node=>{node.nodeValue=replacePublicBrandText(node.nodeValue)});
+  document.querySelectorAll("[aria-label],[title],[alt],[placeholder]").forEach(el=>{
+    ["aria-label","title","alt","placeholder"].forEach(attr=>{
+      const current=el.getAttribute(attr);
+      if(current&&/RLI|Projeto RLI|Achei Aqui|nome provisório/i.test(current))el.setAttribute(attr,replacePublicBrandText(current));
+    });
+  });
+}
+
+function applyBrandMetadata(){
+  const currentTitle=replacePublicBrandText(document.title);
+  document.title=currentTitle.includes(BRAND_NAME)?currentTitle:`${BRAND_NAME} · ${currentTitle}`;
+  let description=document.querySelector('meta[name="description"]');
+  if(!description){description=document.createElement("meta");description.name="description";document.head.append(description)}
+  description.content=replacePublicBrandText(description.content||"Uai Perto é uma Rede Comercial Inteligente em Uberaba: começa pela necessidade da pessoa e trabalha para aproximá-la de soluções locais relevantes.");
+  let theme=document.querySelector('meta[name="theme-color"]');
+  if(!theme){theme=document.createElement("meta");theme.name="theme-color";document.head.append(theme)}
+  theme.content="#335749";
+  let icon=document.querySelector('link[rel~="icon"]');
+  if(!icon){icon=document.createElement("link");icon.rel="icon";document.head.append(icon)}
+  icon.type="image/png";
+  icon.href="/assets/uai-perto-symbol.png";
+}
+
+function ensureHeroBrand(){
+  const hero=document.querySelector(".hero-copy");
+  if(!hero||hero.querySelector(".uai-hero-brand"))return;
+  const lockup=document.createElement("div");
+  lockup.className="uai-hero-brand";
+  lockup.innerHTML=`<img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você.">`;
+  hero.prepend(lockup);
+}
+
+applyPublicBrandText();
+applyBrandMetadata();
+ensureHeroBrand();
+const bridge=document.querySelector("#demo-bridge-core span");
+if(bridge)bridge.innerHTML="UAI<br>PERTO";
