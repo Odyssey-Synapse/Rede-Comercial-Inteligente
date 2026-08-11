@@ -8,7 +8,7 @@
   --surface-2:#f7f1e8;
   --surface-3:#eee4d6;
   --ink:#335749;
-  --muted:#596a63;
+  --muted:#4f625a;
   --line:#d7cdbd;
   --navy:#335749;
   --navy-deep:#335749;
@@ -27,7 +27,7 @@ html[data-theme="dark"]{
   --surface-2:rgba(242,232,217,.08);
   --surface-3:rgba(242,232,217,.13);
   --ink:#F2E8D9;
-  --muted:#e0d7ca;
+  --muted:#e8e1d6;
   --line:rgba(242,232,217,.23);
   --navy:#F2E8D9;
   --navy-deep:#335749;
@@ -59,9 +59,9 @@ body{font-family:"Nunito Sans","Poppins","Avenir Next","Segoe UI",system-ui,-app
 .icon-square{background:#f0dfbf;color:#B55A30}
 .hero{background:radial-gradient(circle at 76% 28%,rgba(211,146,55,.16),transparent 38%),linear-gradient(180deg,rgba(255,255,255,.30),transparent)}
 .human-band{background:#335749;color:#F2E8D9}
-.human-list span{color:#e0d7ca}
+.human-list span{color:#e8e1d6}
 .cta-panel{background:#335749;color:#F2E8D9;box-shadow:0 14px 36px rgba(51,87,73,.16)}
-.cta-panel p{color:#e0d7ca}
+.cta-panel p{color:#e8e1d6}
 .live-pill,.demo-tag{background:#e9eee8;color:#335749}
 .example-chip.active{background:#D39237;color:#1a1a1a;border-color:#D39237}
 .route-line{background:linear-gradient(#D39237,transparent)}
@@ -74,7 +74,7 @@ input:focus,select:focus,textarea:focus{border-color:#335749;box-shadow:0 0 0 3p
 .uai-hero-brand{display:inline-flex;align-items:center;max-width:min(390px,88vw);padding:16px 18px;margin:0 0 20px;border-radius:18px;background:#F2E8D9;box-shadow:0 10px 30px rgba(51,87,73,.08)}
 .uai-hero-brand img{display:block;width:100%;height:auto}
 .site-footer{background:#F2E8D9;color:#335749;border-top:1px solid rgba(51,87,73,.16)}
-.site-footer .footer-col a,.site-footer .footer-brand-text,.site-footer .footer-bottom{color:#596a63}
+.site-footer .footer-col a,.site-footer .footer-brand-text,.site-footer .footer-bottom{color:#4f625a}
 .site-footer .footer-col strong{color:#335749}
 [data-brand="uai-perto"] .site-header{background:color-mix(in srgb,#F2E8D9 90%,transparent);border-bottom-color:rgba(51,87,73,.16)}
 [data-brand="uai-perto"] .demo-bridge-core{border-color:#D39237}
@@ -82,7 +82,7 @@ input:focus,select:focus,textarea:focus{border-color:#335749;box-shadow:0 0 0 3p
 [data-brand="uai-perto"] .demo-progress-bar,[data-brand="uai-perto"] #demo-progress-bar{background:#D39237}
 html[data-theme="dark"] .site-header{background:color-mix(in srgb,#335749 90%,transparent)}
 html[data-theme="dark"] .site-footer{background:#335749;color:#F2E8D9;border-top-color:rgba(242,232,217,.22)}
-html[data-theme="dark"] .site-footer .footer-col a,html[data-theme="dark"] .site-footer .footer-brand-text,html[data-theme="dark"] .site-footer .footer-bottom{color:#e0d7ca}
+html[data-theme="dark"] .site-footer .footer-col a,html[data-theme="dark"] .site-footer .footer-brand-text,html[data-theme="dark"] .site-footer .footer-bottom{color:#e8e1d6}
 html[data-theme="dark"] .site-footer .footer-col strong{color:#F2E8D9}
 html[data-theme="dark"] .uai-brand-lockup{background:#F2E8D9;border-radius:14px;padding:8px 10px}
 html[data-theme="dark"] .uai-brand-lockup-footer{display:inline-flex}
@@ -94,4 +94,35 @@ html[data-theme="dark"] .uai-brand-lockup-footer{display:inline-flex}
   .uai-brand-lockup img{width:154px}
   html[data-theme="dark"] .uai-brand-lockup{padding:6px 8px}
   .uai-hero-brand{max-width:min(330px,92vw);padding:12px 14px}
+}
+
+
+/* V3.1.18 — nitidez e hierarquia das copys */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
+body{font-weight:500;line-height:1.66;letter-spacing:-.006em}
+p,li,label,input,select,textarea{line-height:1.66}
+.display,.h1,.h2,.h3,h1,h2,h3{font-weight:850;letter-spacing:-.032em;line-height:1.08;text-wrap:balance}
+.display{line-height:1.02}
+.lead{font-weight:600;line-height:1.58;letter-spacing:-.012em;color:var(--ink)}
+.section-head>p,.page-hero .lead,.hero-copy .lead,.founder-copy>p,.split-feature>div>p{max-width:68ch}
+.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p{font-size:1rem;line-height:1.65;color:var(--muted)}
+.card h3,.scenario h3,.story-panel h3,.decision-card h3,.language-card h3,.fact-card h3{font-weight:820;line-height:1.2;letter-spacing:-.018em}
+.fine{font-size:.88rem;line-height:1.6;color:var(--muted);font-weight:550}
+.eyebrow{font-weight:850;letter-spacing:.075em;line-height:1.35}
+.button,.nav-links a,.footer-col strong{font-weight:800}
+.trust-item strong,.human-list strong,.benefit-list strong,.founder-benefits span{font-weight:800}
+.trust-item span,.human-list span,.benefit-list p,.hero-note span{font-weight:550;line-height:1.48}
+.demo-caption strong,.demo-message p,.demo-opportunity p,.demo-neg,.demo-quote{font-weight:570}
+input,select,textarea{font-size:1rem;font-weight:550;color:var(--ink);background:var(--surface)}
+input::placeholder,textarea::placeholder{opacity:.78;color:var(--muted)}
+.brand-orb{background:#F2E8D9 url("/assets/uai-perto-symbol.png") center/72% auto no-repeat!important;color:transparent!important;font-size:0!important}
+html[data-theme="dark"] .lead{color:#F2E8D9}
+html[data-theme="dark"] .section-head>p,html[data-theme="dark"] .card p,html[data-theme="dark"] .fine{color:#e8e1d6}
+@media(max-width:720px){
+  body{line-height:1.62}
+  .display,.h1{letter-spacing:-.026em}
+  .h2{letter-spacing:-.024em}
+  .lead{line-height:1.55}
+  .section-head>p,.card p{font-size:.98rem}
+  .fine{font-size:.86rem}
 }

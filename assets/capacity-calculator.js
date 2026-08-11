@@ -26,7 +26,7 @@ function enterpriseResult(reason){
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 }
 
-function reset(){form?.reset();result.innerHTML='<div class="result-empty"><div><div class="orb">RLI</div><h3>Veja sua referência antes de decidir.</h3><p>Preencha os quatro pontos da operação para visualizar o enquadramento estimado, a adesão de referência e como funcionam os dois regimes de entrada.</p></div></div>';form?.scrollIntoView({behavior:'smooth',block:'center'})}
+function reset(){form?.reset();result.innerHTML='<div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Veja sua referência antes de decidir.</h3><p>Preencha os quatro pontos da operação para visualizar o enquadramento estimado, a adesão de referência e como funcionam os dois regimes de entrada.</p></div></div>';form?.scrollIntoView({behavior:'smooth',block:'center'})}
 
 form?.addEventListener('submit',event=>{
   event.preventDefault();
