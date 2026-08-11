@@ -38,7 +38,7 @@ A implementação não reconstrói a landing page.
 - `assets/uai-perto-logo-horizontal.png` — logotipo oficial para uso institucional;
 - `assets/uai-perto-symbol.png` — símbolo oficial para favicon e usos reduzidos;
 - `package.json` — versão `3.1.17`;
-- `package-lock.json` — versão alinhada a `3.1.17`;
+- `package-lock.json` — versão alinhada a `3.1.17`, sem alteração de dependências ou hashes do lockfile;
 - `RELEASE_NOTES_V3_1_17.md` — notas da atualização;
 - `VALIDACAO_V3_1_17.md` — este registro.
 
@@ -69,9 +69,9 @@ A comparação da branch com `main` não contém mudanças em:
 ## Verificações executadas
 
 - Git diff contra `main`: restrito aos arquivos de branding, versão e documentação listados acima.
-- Preview automático da Vercel para a branch: **READY**.
-- Status de integração Vercel no commit da branch: **success**.
-- Build Vercel: **concluído sem erros**; a consulta de logs filtrada por erros não apresentou falha de build.
+- O diff final de `package-lock.json` altera somente os dois campos de versão `3.1.16` para `3.1.17`; dependência, URL e `integrity` de `postgres` permanecem iguais à baseline.
+- Preview automático Vercel do commit `aaa6b7185f55a34442aeea17ed99e5259e99930d`: **success / READY**.
+- Build Vercel desse commit: **concluído sem erros**; logs filtrados por erros mostram apenas a conclusão do build.
 - A suíte existente `npm test` foi identificada em `package.json` e os arquivos em `tests/` permanecem intactos. O ambiente de ferramentas desta manutenção não conseguiu materializar um checkout completo do repositório para executar localmente essa suíte; portanto, não é registrado falsamente um resultado de testes que não foi obtido.
 
 ## Produção
