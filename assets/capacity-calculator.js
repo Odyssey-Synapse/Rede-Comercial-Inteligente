@@ -21,8 +21,8 @@ function enterpriseResult(reason){
     <div class="price-display"><small>Faixa de referência</small><strong>Empresarial</strong></div>
     <div class="basis-note"><strong>Por que:</strong> ${escapeHtml(reason)} exige avaliação individual da estrutura operacional e da integração antes de formar uma referência comercial.</div>
     <div class="quote-meta"><div><small>Adesão</small><strong>Sob avaliação</strong></div><div><small>Rede inicial</small><strong>MRR R$ 0 se confirmado entre os 54</strong></div><div><small>Entrada posterior</small><strong>Condição definida antes do aceite</strong></div></div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html">Solicitar avaliação</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
-    <p class="fine">Este resultado não é proposta, contrato nem reserva de vaga.</p>`;
+    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Solicitar avaliação</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <p class="fine">Este resultado não é proposta, contrato nem reserva de posição na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 }
 
@@ -48,13 +48,12 @@ form?.addEventListener('submit',event=>{
   const adhesion=band.monthly*3;
   result.innerHTML=`
     <div class="quote-status"><span class="eyebrow">ENQUADRAMENTO ESTIMADO</span><span class="quote-badge preview">SIMULAÇÃO</span></div>
-    <div class="quote-company"><small>Faixa de referência</small><strong>${band.name}</strong><span>estrutura operacional informada · índice interno ${score}</span></div>
+    <div class="quote-company"><small>Faixa de referência</small><strong>${band.name}</strong><span>estimada a partir da estrutura operacional informada</span></div>
     <div class="price-display"><small>Mensalidade de referência</small><strong>${money(band.monthly)}</strong><span>/ mês</span></div>
     <div class="price-lines">
       <div class="price-line"><span>Adesão de referência</span><strong>${money(adhesion)}</strong></div>
-      <div class="price-line"><span>Relação usada na simulação</span><strong>3× mensalidade</strong></div>
     </div>
-    <div class="basis-note"><strong>Como a faixa foi estimada:</strong> ${escapeHtml(selectedText('#operational-cores'))}; ${escapeHtml(selectedText('#simultaneous-operations'))}; ${escapeHtml(selectedText('#active-units'))}; ${escapeHtml(selectedText('#integration-level'))}.</div>
+    <div class="basis-note"><strong>O que foi considerado:</strong> ${escapeHtml(selectedText('#operational-cores'))}; ${escapeHtml(selectedText('#simultaneous-operations'))}; ${escapeHtml(selectedText('#active-units'))}; ${escapeHtml(selectedText('#integration-level'))}.</div>
     <div class="founder-quote-context recognized">
       <span class="eyebrow">SE FOR CONFIRMADO ENTRE OS 54 INICIAIS</span>
       <strong>Adesão estimada: ${money(adhesion)} · mensalidade recorrente: R$ 0.</strong>
@@ -63,9 +62,9 @@ form?.addEventListener('submit',event=>{
     <div class="founder-quote-context">
       <span class="eyebrow">SE ENTRAR DEPOIS DOS 54</span>
       <strong>Adesão estimada: ${money(adhesion)}.</strong>
-      <p>A adesão inclui os dois primeiros meses. No fim do segundo mês, se a empresa decidir continuar, a referência mensal desta faixa passa a valer a partir do terceiro mês.</p>
+      <p>A adesão inclui entrada, preparação e os dois primeiros meses de participação. No fim do segundo mês, se a empresa decidir continuar, a referência mensal desta faixa passa a valer a partir do terceiro mês.</p>
     </div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html">Confirmar com a Rede</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Confirmar com a Rede</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
     <p class="fine">Modelo em validação. Este resultado não é proposta oficial, contrato, cobrança automática nem garantia de entrada na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 });
