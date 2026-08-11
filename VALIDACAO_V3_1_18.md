@@ -44,6 +44,23 @@ Os demais testes que já falhavam na baseline permanecem ligados a contratos his
 
 A checagem automatizada bloqueou mudanças em `api/`, `lib/`, `migrations/`, `tests/` e `vercel.json`. O diff líquido desta versão permanece restrito à camada pública, CSS de marca, scripts diretamente relacionados à apresentação, versionamento e documentação.
 
-## Preview e produção
+## Preview
 
-O preview Vercel deve ser validado no PR antes do merge. A produção só será promovida após o preview ficar `READY` e as verificações finais de HTML, assets e rotas públicas serem concluídas.
+- PR: `#2` — V3.1.18 consolida Uai Perto e melhora nitidez das copys;
+- head validado: `d4c1ca0d121d32040e66d515f6562e40209cf154`;
+- Vercel preview: **READY**;
+- build do preview: concluído sem erros;
+- HTML cru do preview já entrega `Uai Perto` no `<title>`, description, `theme-color`, favicon e CSS da V3.1.18.
+
+## Produção
+
+- PR `#2` mergeado na `main`;
+- commit de merge: `5cb79c022e2c4979424143e0b3996608b0f8ba76`;
+- Vercel: **READY**, `target: production`;
+- build de produção: concluído sem erros;
+- domínio principal `/`: HTTP **200** com Uai Perto gravado no HTML-base;
+- `/contato`: HTTP **200**, título e metadados Uai Perto;
+- `/calculadora`: HTTP **200**, título/metadados Uai Perto e símbolo oficial no estado vazio do simulador;
+- `/api/public-config`: HTTP **200**, `contactFormEnabled: true` e `turnstileRequired: true`.
+
+A V3.1.18 está publicada em produção. A identidade pública não depende mais da substituição da marca antiga em runtime, e a camada tipográfica global de nitidez/legibilidade está ativa.
