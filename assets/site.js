@@ -2,11 +2,11 @@ const BRAND_NAME="Uai Perto";
 const BRAND_TAGLINE="Uberaba mais perto de você.";
 
 function ensureBrandStyles(){
-  if(document.querySelector('link[data-uai-perto-brand]'))return;
+  if(document.querySelector('link[href^="/assets/uai-perto.css"]'))return;
   const link=document.createElement("link");
   link.rel="stylesheet";
-  link.href="/assets/uai-perto.css?v=3.1.17";
-  link.dataset.uaiPertoBrand="3.1.17";
+  link.href="/assets/uai-perto.css?v=3.1.18";
+  link.dataset.uaiPertoBrand="3.1.18";
   document.head.append(link);
 }
 ensureBrandStyles();
@@ -39,47 +39,13 @@ const stepContent=document.querySelector("#step-content");function renderStep(ke
 
 const canvas=document.querySelector("#network-canvas");if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,pointer={x:-999,y:-999};const count=innerWidth<720?18:32;const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener("resize",resize,{passive:true});canvas.addEventListener("pointermove",e=>{const r=canvas.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top}});canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});function draw(){ctx.clearRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}for(const n of nodes){const x=n.x*w,y=n.y*h,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?n.r*1.6:n.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
 
-function replacePublicBrandText(value){
-  if(!value)return value;
-  return value
-    .replace(/Projeto RLI é um nome provisório\. Marca, nome fantasia e razão social da operadora ainda serão definidos\./gi,"Uai Perto é a identidade pública da Rede Comercial Inteligente em Uberaba.")
-    .replace(/NOME PROVISÓRIO\s*·\s*Rede Comercial Inteligente em construção/gi,"UBERABA · Rede Comercial Inteligente")
-    .replace(/REDE LOCAL INTELIGENTE\s*·\s*NOME PROVISÓRIO/gi,BRAND_TAGLINE)
-    .replace(/Projeto RLI\s*[—–·-]\s*nome provisório/gi,BRAND_NAME)
-    .replace(/Projeto RLI/gi,BRAND_NAME)
-    .replace(/projeto RLI/gi,BRAND_NAME)
-    .replace(/Rede RLI/gi,BRAND_NAME)
-    .replace(/REDE RLI/g,"UAI PERTO")
-    .replace(/Achei Aqui/gi,BRAND_NAME)
-    .replace(/\bRLI\b/g,BRAND_NAME)
-    .replace(/\s*·\s*nome provisório\.?/gi,"")
-    .replace(/\s*—\s*nome provisório\b/gi,"");
-}
-
-function applyPublicBrandText(){
-  const skip=new Set(["SCRIPT","STYLE","NOSCRIPT","CODE","PRE"]);
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){
-    const parent=node.parentElement;
-    if(!parent||skip.has(parent.tagName))return NodeFilter.FILTER_REJECT;
-    return /RLI|Projeto RLI|Achei Aqui|nome provisório/i.test(node.nodeValue||"")?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
-  }});
-  const nodes=[];
-  while(walker.nextNode())nodes.push(walker.currentNode);
-  nodes.forEach(node=>{node.nodeValue=replacePublicBrandText(node.nodeValue)});
-  document.querySelectorAll("[aria-label],[title],[alt],[placeholder]").forEach(el=>{
-    ["aria-label","title","alt","placeholder"].forEach(attr=>{
-      const current=el.getAttribute(attr);
-      if(current&&/RLI|Projeto RLI|Achei Aqui|nome provisório/i.test(current))el.setAttribute(attr,replacePublicBrandText(current));
-    });
-  });
-}
 
 function applyBrandMetadata(){
-  const currentTitle=replacePublicBrandText(document.title);
+  const currentTitle=document.title;
   document.title=currentTitle.includes(BRAND_NAME)?currentTitle:`${BRAND_NAME} · ${currentTitle}`;
   let description=document.querySelector('meta[name="description"]');
   if(!description){description=document.createElement("meta");description.name="description";document.head.append(description)}
-  description.content=replacePublicBrandText(description.content||"Uai Perto é uma Rede Comercial Inteligente em Uberaba: começa pela necessidade da pessoa e trabalha para aproximá-la de soluções locais relevantes.");
+  description.content=description.content||"Uai Perto é uma Rede Comercial Inteligente em Uberaba: começa pela necessidade da pessoa e trabalha para aproximá-la de soluções locais relevantes.";
   let theme=document.querySelector('meta[name="theme-color"]');
   if(!theme){theme=document.createElement("meta");theme.name="theme-color";document.head.append(theme)}
   theme.content="#335749";
@@ -98,7 +64,6 @@ function ensureHeroBrand(){
   hero.prepend(lockup);
 }
 
-applyPublicBrandText();
 applyBrandMetadata();
 ensureHeroBrand();
 const bridge=document.querySelector("#demo-bridge-core span");
