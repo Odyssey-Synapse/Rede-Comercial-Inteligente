@@ -5,23 +5,44 @@ function ensureBrandStyles(){
   if(document.querySelector('link[href^="/assets/uai-perto.css"]'))return;
   const link=document.createElement("link");
   link.rel="stylesheet";
-  link.href="/assets/uai-perto.css?v=3.1.18";
-  link.dataset.uaiPertoBrand="3.1.18";
+  link.href="/assets/uai-perto.css?v=3.1.20";
+  link.dataset.uaiPertoBrand="3.1.20";
+  document.head.append(link);
+}
+function ensureAccessibilityStyles(){
+  if(document.querySelector('link[href^="/assets/uai-perto-accessibility.css"]'))return;
+  const link=document.createElement("link");
+  link.rel="stylesheet";
+  link.href="/assets/uai-perto-accessibility.css?v=3.1.20";
   document.head.append(link);
 }
 ensureBrandStyles();
+ensureAccessibilityStyles();
 document.documentElement.dataset.brand="uai-perto";
 
-const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/calculadora.html","Participação"],["/contato.html","Contato"]];
+const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/participar.html","Participar"],["/contato.html","Contato"]];
 const currentPath=location.pathname.endsWith("/")&&location.pathname!=="/"?location.pathname.slice(0,-1):location.pathname;
 const header=document.querySelector("#site-header"),footer=document.querySelector("#site-footer");
-if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/calculadora.html">Ver participação</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
-if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/calculadora.html">Participação comercial</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
+if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
+if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Participar</strong><a href="/participar.html?perfil=consumidor">Sou consumidor</a><a href="/participar.html?perfil=empresa">Tenho uma empresa</a><a href="/empresas.html">Entender a participação empresarial</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
 function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}setTheme(getTheme());
 document.querySelector("#theme-toggle")?.addEventListener("click",()=>setTheme(getTheme()==="dark"?"light":"dark"));
 const menu=document.querySelector("#menu-toggle"),nav=document.querySelector("#nav-links");menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open")||false;menu.setAttribute("aria-expanded",String(open));menu.textContent=open?"×":"☰"});nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");if(menu)menu.textContent="☰"}));
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+// V3.1.20 — a calculadora pertence somente à jornada empresarial.
+const businessOnlyPaths=new Set(["/empresas.html","/calculadora.html","/empresas","/calculadora"]);
+if(!businessOnlyPaths.has(currentPath)){
+  document.querySelectorAll('a[href="/calculadora.html"],a[href="/calculadora"]').forEach(link=>{
+    link.href="/participar.html?perfil=empresa";
+    if(/simular|participa/i.test(link.textContent||""))link.textContent="Tenho uma empresa →";
+  });
+}
+if(currentPath==="/"||currentPath==="/index.html"){
+  const homeParticipation=document.querySelector('.hero-actions a[href="#parceiros-iniciais"]');
+  if(homeParticipation){homeParticipation.href="/participar.html";homeParticipation.textContent="Quero participar";}
+}
 
 const examples={
  casa:{need:"Meu chuveiro queimou agora à noite. Preciso de alguém que venha hoje, porque tenho criança em casa.",tags:["urgência","hoje à noite","não pode esperar"],solution:"Entender o problema e buscar capacidade compatível com serviço, região e horário.",note:"A categoria é só uma parte. O contexto muda quem realmente consegue resolver."},
@@ -38,7 +59,6 @@ const stepData={
 const stepContent=document.querySelector("#step-content");function renderStep(key){const d=stepData[key];if(!d||!stepContent)return;stepContent.innerHTML=`<span class="step-kicker">${d.k}</span><h3 class="h2">${d.title}</h3><p class="lead">${d.text}</p><div class="step-visual"><div class="mini-panel"><small>Entrada</small><strong>${d.left}</strong></div><span>→</span><div class="mini-panel"><small>Resultado</small><strong>${d.right}</strong></div></div>`;document.querySelectorAll(".step-button").forEach(b=>b.classList.toggle("active",b.dataset.step===key))}document.querySelectorAll(".step-button").forEach(b=>b.addEventListener("click",()=>renderStep(b.dataset.step)));if(stepContent)renderStep("understand");
 
 const canvas=document.querySelector("#network-canvas");if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,pointer={x:-999,y:-999};const count=innerWidth<720?18:32;const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener("resize",resize,{passive:true});canvas.addEventListener("pointermove",e=>{const r=canvas.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top}});canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});function draw(){ctx.clearRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}for(const n of nodes){const x=n.x*w,y=n.y*h,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?n.r*1.6:n.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
-
 
 function applyBrandMetadata(){
   const currentTitle=document.title;
