@@ -3,6 +3,14 @@
 **Data:** 2026-08-11  
 **Escopo:** páginas públicas do Projeto RLI e fluxo de participação empresarial.
 
+## Status do checkpoint
+
+**BASELINE FUNCIONAL E COMERCIAL CONGELADA.**
+
+Este checkpoint fecha a estrutura, a narrativa funcional, o modelo comercial público, o simulador, o contato e a publicação atual antes da etapa de identidade de marca.
+
+A próxima etapa visual deverá alterar **nome, marca, paleta, tipografia/identidade e acabamentos visuais**, preservando as regras funcionais e comerciais registradas aqui, salvo decisão expressa em contrário.
+
 ## Estado validado
 
 - Home alinhada ao Projeto RLI / Rede Comercial Inteligente.
@@ -30,14 +38,36 @@
 - Informação ausente não é convertida em certeza.
 - Logística/orquestração não é apresentada como operação comercial plenamente disponível antes das validações correspondentes.
 
-## Deploy
+## Produção validada
 
-O commit final do ajuste do simulador foi publicado pela integração Vercel com status **success**.
+- Projeto Vercel: `rede-comercial-inteligente`.
+- Domínio principal: `rede-comercial-inteligente.vercel.app`.
+- O domínio principal foi consultado diretamente pela Vercel e devolveu a home atual com os 54 parceiros iniciais, a demonstração interativa e o modelo comercial vigente neste checkpoint.
+- O último deployment validado estava em estado **READY / production**.
+- O simulador atual foi confirmado no domínio principal.
 
-## Pendência externa que não pode ser validada apenas pelo repositório
+## Contato validado
 
-O formulário de contato depende das variáveis de produção `RESEND_API_KEY`, `RESEND_FROM_EMAIL` e `CONTACT_DESTINATION_EMAIL`. O código detecta essas variáveis por `/api/public-config` e bloqueia/avisa quando o canal não está configurado. A existência efetiva dessas credenciais no ambiente da Vercel deve ser confirmada no próprio ambiente de produção.
+A configuração pública de produção confirmou:
+
+- `contactFormEnabled: true`;
+- Turnstile habilitado;
+- `turnstileRequired: true`.
+
+Isso confirma que as credenciais necessárias para o envio pelo formulário estão presentes no ambiente de produção. E-mail e WhatsApp públicos permanecem não expostos, o que não impede o uso do formulário institucional.
 
 ## Observação de governança
 
 As faixas e valores exibidos no simulador permanecem apresentados como **referências de modelo em validação**, não como tabela contratual automaticamente vigente. A promoção para regra comercial definitiva deve ocorrer de forma expressa e versionada.
+
+## Próxima etapa — identidade de marca
+
+Fica deliberadamente fora deste checkpoint:
+
+- substituição do nome provisório `Projeto RLI` pelo nome de marca escolhido;
+- aplicação das cores oficiais da marca;
+- aplicação/ajuste de logotipo e símbolo;
+- refinamento tipográfico e visual decorrente da identidade definitiva;
+- revisão de microcopy apenas quando necessária para acomodar o nome e a voz da marca.
+
+**Regra da próxima etapa:** branding não deve reabrir silenciosamente o modelo comercial, as regras dos 54 parceiros, a lógica de recorrência, o simulador ou os princípios de relevância validados neste documento.
