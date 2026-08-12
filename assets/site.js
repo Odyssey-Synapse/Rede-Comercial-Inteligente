@@ -1,6 +1,18 @@
 const BRAND_NAME="Uai Perto";
 const BRAND_TAGLINE="Uberaba mais perto de você.";
 
+function ensureVercelAnalytics(){
+  if(window.__uaiVercelAnalyticsLoaded)return;
+  window.__uaiVercelAnalyticsLoaded=true;
+  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+  const script=document.createElement("script");
+  script.defer=true;
+  script.src="/_vercel/insights/script.js";
+  script.dataset.uaiAnalytics="vercel";
+  document.head.append(script);
+}
+ensureVercelAnalytics();
+
 function ensureBrandStyles(){
   if(document.querySelector('link[href^="/assets/uai-perto.css"]'))return;
   const link=document.createElement("link");
