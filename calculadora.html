@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Simule o enquadramento comercial da sua empresa no Uai Perto a partir da estrutura operacional utilizada na Rede.">
+  <meta name="description" content="Responda quatro perguntas simples e veja uma referência de participação da sua empresa no Uai Perto.">
   <meta name="theme-color" content="#335749">
   <title>Simulador de participação — Uai Perto</title>
   <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
@@ -13,151 +13,89 @@
   <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
 </head>
 <body>
-  <div id="site-header"></div>
+<div id="site-header"></div>
 
-  <section class="page-hero">
-    <div class="container narrow">
-      <div class="breadcrumb"><a href="/">Início</a><span>›</span>Participação</div>
-      <span class="eyebrow">Simulador de enquadramento</span>
-      <h1 class="h1">Entenda como a estrutura da sua empresa pode influenciar sua participação.</h1>
-      <p class="lead">A referência atual considera a complexidade operacional usada dentro da Rede. Quantidade de produtos cadastrados, faturamento, número de clientes e pagamento não compram relevância e não entram diretamente no enquadramento.</p>
-    </div>
-  </section>
+<section class="page-hero">
+  <div class="container narrow">
+    <div class="breadcrumb"><a href="/">Início</a><span>›</span>Simulador</div>
+    <span class="eyebrow">Simulador para empresas</span>
+    <h1 class="h1">Responda quatro coisas sobre sua operação e veja sua referência de participação.</h1>
+    <p class="lead">A simulação ajuda você a entender a faixa estimada, a adesão e a diferença entre entrar na rede inicial ou depois dela. Leva poucos minutos.</p>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container">
-      <div class="calc-notice reveal">
-        <div><span class="notice-icon">i</span></div>
-        <div>
-          <strong>Simulação, não proposta contratual</strong>
-          <p>Os valores abaixo são referências do modelo comercial atualmente em validação. O enquadramento definitivo precisa ser confirmado pela Rede antes de qualquer adesão ou aceite.</p>
-        </div>
+<section class="section">
+  <div class="container">
+    <div class="calc-notice reveal"><div><span class="notice-icon">i</span></div><div><strong>É uma estimativa, não uma cobrança.</strong><p>O resultado serve para orientar sua decisão. A condição definitiva precisa ser confirmada pelo Uai Perto antes de qualquer adesão ou aceite.</p></div></div>
+
+    <div class="calculator-layout">
+      <div class="form-card reveal">
+        <form id="capacity-calculator" novalidate>
+          <div><span class="eyebrow">Sua operação</span><h2 class="h3">Quatro perguntas rápidas</h2><p class="fine">Pense apenas na parte da empresa que realmente vai atender oportunidades pelo Uai Perto.</p></div>
+
+          <div class="field calculator-question">
+            <label for="operational-cores">1. Quantas áreas de atendimento funcionam de forma separada?</label>
+            <p class="question-hint">Conte frentes de trabalho com equipe, agenda ou rotina própria — não cada produto ou serviço.</p>
+            <select id="operational-cores" required><option value="">Selecione</option><option value="0">1–2 áreas de atendimento</option><option value="1">3–5 áreas de atendimento</option><option value="2">6–10 áreas de atendimento</option><option value="3">11–20 áreas de atendimento</option><option value="4">21–40 áreas de atendimento</option><option value="5">41 ou mais áreas de atendimento</option></select>
+            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Uma oficina com mecânica e elétrica funcionando como duas frentes diferentes pode contar 2 áreas. Uma loja com milhares de produtos, mas uma única operação de venda, pode continuar contando 1.</p></div></details>
+          </div>
+
+          <div class="field calculator-question">
+            <label for="simultaneous-operations">2. Quantos atendimentos sua empresa consegue realizar ao mesmo tempo?</label>
+            <p class="question-hint">Considere um dia normal, não a capacidade máxima de uma situação excepcional.</p>
+            <select id="simultaneous-operations" required><option value="">Selecione</option><option value="0">1 por vez</option><option value="2">2 ao mesmo tempo</option><option value="4">3–5 ao mesmo tempo</option><option value="6">6 ou mais ao mesmo tempo</option></select>
+            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Se uma pessoa atende um cliente por vez, marque 1. Se duas equipes conseguem atender duas oportunidades ao mesmo tempo, marque 2.</p></div></details>
+          </div>
+
+          <div class="field calculator-question">
+            <label for="active-units">3. Quantas lojas, filiais ou locais de atendimento vão participar?</label>
+            <p class="question-hint">Conte somente os locais que realmente receberão ou atenderão oportunidades do Uai Perto.</p>
+            <select id="active-units" required><option value="">Selecione</option><option value="0">1 local</option><option value="3">2 locais</option><option value="6">3–4 locais</option><option value="enterprise">5 ou mais locais</option></select>
+            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Uma matriz e duas filiais que vão atender pelo Uai Perto contam como 3 locais. Um depósito que não atende oportunidades não precisa ser contado.</p></div></details>
+          </div>
+
+          <div class="field calculator-question">
+            <label for="integration-level">4. Como sua empresa pretende trocar informações com o Uai Perto?</label>
+            <p class="question-hint">Escolha o cenário mais próximo da operação que você imagina usar no dia a dia.</p>
+            <select id="integration-level" required><option value="">Selecione</option><option value="0">Minha equipe pode fazer tudo manualmente</option><option value="1">Quero conectar um sistema de forma simples</option><option value="3">Preciso conectar vários processos ou sistemas</option><option value="enterprise">Preciso de uma conexão feita especificamente para minha empresa</option></select>
+            <details class="question-help"><summary>Qual opção escolher?</summary><div class="question-help-body integration-definitions"><p><strong>Manual:</strong> sua equipe consegue acompanhar e atualizar as informações sem integração.</p><p><strong>Conexão simples:</strong> você quer usar uma integração que a Rede já consiga suportar sem desenvolvimento específico.</p><p><strong>Vários processos:</strong> a operação depende de mais automação ou troca de dados com sistemas diferentes.</p><p><strong>Conexão específica:</strong> seria necessário desenvolver algo próprio para seu ERP ou processo.</p></div></details>
+          </div>
+
+          <button class="button button-primary button-full" type="submit">Ver minha referência</button>
+          <p class="fine calculator-closing-note">Se alguma resposta não representar bem a sua operação, o enquadramento pode ser revisto antes de qualquer contratação.</p>
+        </form>
       </div>
 
-      <div class="calculator-layout">
-        <div class="form-card reveal">
-          <form id="capacity-calculator" novalidate>
-            <div>
-              <span class="eyebrow">Sobre sua empresa</span>
-              <h2 class="h3">Conte um pouco sobre como sua empresa funciona</h2>
-              <p class="fine">São 4 perguntas rápidas para estimarmos a forma de participação da sua empresa. Responda pensando apenas na parte da empresa que realmente atenderá oportunidades pelo Uai Perto.</p>
-            </div>
-
-            <div class="field calculator-question">
-              <label for="operational-cores">1. Quantas áreas de atendimento da sua empresa funcionam de forma separada?</label>
-              <p class="question-hint">Conte áreas que conseguem trabalhar de forma separada, com equipe, agenda ou rotina própria.</p>
-              <select id="operational-cores" required>
-                <option value="">Selecione</option>
-                <option value="0">1–2 áreas de atendimento</option>
-                <option value="1">3–5 áreas de atendimento</option>
-                <option value="2">6–10 áreas de atendimento</option>
-                <option value="3">11–20 áreas de atendimento</option>
-                <option value="4">21–40 áreas de atendimento</option>
-                <option value="5">41 ou mais áreas de atendimento</option>
-              </select>
-              <details class="question-help">
-                <summary>Como contar as áreas de atendimento?</summary>
-                <div class="question-help-body">
-                  <p>Conte frentes reais de trabalho que conseguem atender oportunidades de forma separada. Não conte cada produto, serviço ou item do catálogo.</p>
-                  <p class="question-example"><strong>Exemplo:</strong> uma oficina com mecânica e elétrica funcionando como duas frentes diferentes pode contar 2 áreas. Já uma loja com milhares de produtos, mas uma única operação de venda, pode continuar contando apenas 1.</p>
-                  <p class="question-rule"><strong>Regra prática:</strong> conte áreas de trabalho separadas, não itens do catálogo.</p>
-                </div>
-              </details>
-            </div>
-
-            <div class="field calculator-question">
-              <label for="simultaneous-operations">2. Quantos atendimentos sua empresa consegue realizar ao mesmo tempo?</label>
-              <p class="question-hint">Pense em um dia normal e em quantos clientes, pedidos ou serviços podem ser atendidos ao mesmo tempo.</p>
-              <select id="simultaneous-operations" required>
-                <option value="">Selecione</option>
-                <option value="0">1 por vez</option>
-                <option value="2">2 ao mesmo tempo</option>
-                <option value="4">3–5 ao mesmo tempo</option>
-                <option value="6">6 ou mais ao mesmo tempo</option>
-              </select>
-              <details class="question-help">
-                <summary>Como contar os atendimentos ao mesmo tempo?</summary>
-                <div class="question-help-body">
-                  <p>Considere quantos atendimentos, serviços ou pedidos sua empresa consegue executar ao mesmo tempo sem precisar terminar um para começar o outro.</p>
-                  <p class="question-example"><strong>Exemplo:</strong> se uma pessoa atende um cliente por vez, marque 1. Se duas equipes conseguem atender duas oportunidades ao mesmo tempo, marque 2.</p>
-                  <p class="question-rule"><strong>Regra prática:</strong> considere um dia normal, não o máximo excepcional que a empresa conseguiria suportar.</p>
-                </div>
-              </details>
-            </div>
-
-            <div class="field calculator-question">
-              <label for="active-units">3. Quantas lojas, filiais ou locais de atendimento vão participar do Uai Perto?</label>
-              <p class="question-hint">Conte somente os locais que realmente vão receber ou atender oportunidades do Uai Perto.</p>
-              <select id="active-units" required>
-                <option value="">Selecione</option>
-                <option value="0">1 local</option>
-                <option value="3">2 locais</option>
-                <option value="6">3–4 locais</option>
-                <option value="enterprise">5 ou mais locais</option>
-              </select>
-              <details class="question-help">
-                <summary>Quais locais devo contar?</summary>
-                <div class="question-help-body">
-                  <p>Conte cada loja, filial, base ou ponto que realmente participará dos atendimentos pelo Uai Perto.</p>
-                  <p class="question-example"><strong>Exemplo:</strong> uma empresa com matriz e duas filiais atendendo pelo Uai Perto deve contar 3 locais. Um escritório administrativo ou depósito que não atende oportunidades não precisa ser contado.</p>
-                  <p class="question-rule"><strong>Regra prática:</strong> conte somente os locais que terão participação real nos atendimentos.</p>
-                </div>
-              </details>
-            </div>
-
-            <div class="field calculator-question">
-              <label for="integration-level">4. Como sua empresa pretende enviar e receber informações do Uai Perto?</label>
-              <p class="question-hint">Escolha a opção que mais se aproxima de como sua empresa gostaria de trabalhar no dia a dia.</p>
-              <select id="integration-level" required>
-                <option value="">Selecione</option>
-                <option value="0">Minha equipe pode fazer tudo manualmente</option>
-                <option value="1">Quero conectar um sistema de forma simples</option>
-                <option value="3">Preciso conectar vários processos ou sistemas</option>
-                <option value="enterprise">Preciso de uma conexão feita especificamente para minha empresa</option>
-              </select>
-              <details class="question-help">
-                <summary>Qual opção devo escolher?</summary>
-                <div class="question-help-body integration-definitions">
-                  <p><strong>Minha equipe pode fazer tudo manualmente:</strong> não é necessário conectar outro sistema; a equipe consegue acompanhar e atualizar as informações manualmente.</p>
-                  <p><strong>Quero conectar um sistema de forma simples:</strong> a empresa quer uma conexão simples usando recursos que a Rede já consiga suportar sem desenvolvimento específico.</p>
-                  <p><strong>Preciso conectar vários processos ou sistemas:</strong> a operação depende de mais automação ou precisa trocar informações com vários processos ou sistemas.</p>
-                  <p><strong>Preciso de uma conexão feita especificamente para minha empresa:</strong> seria necessário desenvolver uma solução específica para o sistema, ERP ou processo particular da empresa.</p>
-                  <p class="question-example"><strong>Exemplo:</strong> uma pequena empresa que consegue confirmar tudo manualmente tende a escolher a primeira opção. Uma empresa com ERP próprio e automações específicas pode precisar de uma das opções seguintes.</p>
-                  <p class="question-rule"><strong>Regra prática:</strong> escolha a opção que mais se aproxima da necessidade atual. A parte técnica pode ser confirmada com a Rede antes de qualquer contratação.</p>
-                </div>
-              </details>
-            </div>
-
-            <button class="button button-primary button-full" type="submit">Simular enquadramento</button>
-            <p class="fine calculator-closing-note"><strong>Importante:</strong> o simulador é uma referência. Se alguma resposta não representar a realidade da empresa, o enquadramento pode ser corrigido antes da contratação. Nenhuma condição contratual deve mudar silenciosamente depois do aceite.</p>
-          </form>
-        </div>
-
-        <aside class="result-card reveal" data-delay="1" id="capacity-result">
-          <div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Veja sua referência antes de decidir.</h3><p>Preencha os quatro pontos da operação para visualizar o enquadramento estimado, a adesão de referência e como funcionam os dois regimes de entrada.</p></div></div>
-        </aside>
-      </div>
+      <aside class="result-card reveal" data-delay="1" id="capacity-result"><div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Seu resultado aparece aqui.</h3><p>Preencha as quatro respostas para ver a faixa estimada, a adesão de referência e as condições de entrada.</p></div></div></aside>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section section-alt">
-    <div class="container">
-      <div class="section-head reveal"><div><span class="eyebrow">Duas regras de entrada</span><h2 class="h2">O mesmo enquadramento gera condições diferentes conforme a fase da Rede.</h2></div><p>A Rede inicial e os parceiros que entram depois dela não possuem o mesmo tratamento de mensalidade.</p></div>
-      <div class="grid-2">
-        <article class="card reveal"><span class="demo-tag">REDE INICIAL</span><h3>54 parceiros iniciais</h3><p>Pagam a adesão correspondente ao enquadramento confirmado e permanecem com <strong>mensalidade recorrente de R$ 0</strong> dentro da regra de lançamento.</p><p class="fine">A inclusão entre os 54 é confirmada pela Rede; a simulação não reserva uma posição.</p></article>
-        <article class="card reveal" data-delay="1"><span class="demo-tag">DEPOIS DOS 54</span><h3>Adesão + dois meses incluídos</h3><p>A adesão inclui os dois primeiros meses de participação. No fim do segundo mês, a empresa decide se quer continuar. Se continuar, a mensalidade do enquadramento começa no terceiro mês.</p></article>
-      </div>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal"><div><span class="eyebrow">Duas formas de entrada</span><h2 class="h2">A mesma faixa pode ter condições diferentes conforme o momento em que a empresa entra.</h2></div></div>
+    <div class="grid-2">
+      <article class="card reveal"><span class="demo-tag">54 INICIAIS</span><h3>Adesão + mensalidade recorrente de R$ 0.</h3><p>A posição entre os 54 precisa ser confirmada pela Rede. A simulação sozinha não reserva vaga.</p></article>
+      <article class="card reveal" data-delay="1"><span class="demo-tag">DEPOIS DOS 54</span><h3>Adesão + dois primeiros meses incluídos.</h3><p>Se a empresa decidir continuar depois desse período, a mensalidade da faixa começa no terceiro mês.</p></article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container"><div class="section-head reveal"><div><span class="eyebrow">O que não aumenta o preço sozinho</span><h2 class="h2">Quanto melhor a Rede conhece sua capacidade, melhor — informação não deve virar punição.</h2></div></div><div class="grid-3"><article class="card reveal"><h3>Quantidade de produtos</h3><p>Ter milhares de itens ou serviços informados não deve, por si só, empurrar a empresa para uma faixa mais alta.</p></article><article class="card reveal" data-delay="1"><h3>Faturamento ou vendas</h3><p>A cobrança não é percentual sobre receita e não cresce simplesmente porque a empresa vendeu mais.</p></article><article class="card reveal" data-delay="2"><h3>Relevância e ranking</h3><p>Uma faixa maior não compra prioridade. Compatibilidade com a necessidade continua vindo primeiro.</p></article></div></div>
-  </section>
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal"><div><span class="eyebrow">O que não aumenta o preço sozinho</span><h2 class="h2">Vender mais ou informar mais produtos não deveria virar punição.</h2></div></div>
+    <div class="grid-3">
+      <article class="card reveal"><h3>Quantidade de produtos</h3><p>Um catálogo grande, por si só, não empurra a empresa para uma faixa maior.</p></article>
+      <article class="card reveal" data-delay="1"><h3>Faturamento ou vendas</h3><p>A referência não é um percentual da receita da empresa.</p></article>
+      <article class="card reveal" data-delay="2"><h3>Prioridade na busca</h3><p>Pagar uma faixa maior não transforma uma empresa incompatível em uma solução melhor.</p></article>
+    </div>
+  </div>
+</section>
 
-  <section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Quer avaliar a entrada?</span><h2>Use a simulação como referência e converse com a Rede para confirmar sua condição.</h2><p>Antes de qualquer pagamento, a empresa precisa conhecer seu enquadramento e as condições aplicáveis à sua fase de entrada.</p></div><a class="button button-light" href="/contato.html">Falar com a Rede →</a></div></section>
+<section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Gostou da referência?</span><h2>Apresente sua empresa para a Rede.</h2><p>O formulário empresarial ajuda o Uai Perto a entender o que sua operação consegue resolver.</p></div><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário →</a></div></section>
 
-  <div id="site-footer"></div>
-  <script type="module" src="/assets/site.js"></script>
-  <script type="module" src="/assets/capacity-calculator.js"></script>
+<div id="site-footer"></div>
+<script type="module" src="/assets/site.js"></script>
+<script type="module" src="/assets/capacity-calculator.js"></script>
 </body>
 </html>

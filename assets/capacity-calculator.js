@@ -20,13 +20,17 @@ function enterpriseResult(reason){
     <div class="quote-status"><span class="eyebrow">ENQUADRAMENTO ESTIMADO</span><span class="quote-badge preview">SIMULAÇÃO</span></div>
     <div class="price-display"><small>Faixa de referência</small><strong>Empresarial</strong></div>
     <div class="basis-note"><strong>Por que:</strong> ${escapeHtml(reason)} exige avaliação individual da estrutura operacional e da integração antes de formar uma referência comercial.</div>
-    <div class="quote-meta"><div><small>Adesão</small><strong>Sob avaliação</strong></div><div><small>Rede inicial</small><strong>MRR R$ 0 se confirmado entre os 54</strong></div><div><small>Entrada posterior</small><strong>Condição definida antes do aceite</strong></div></div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Solicitar avaliação</a><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário da empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
-    <p class="fine">Este resultado não é proposta, contrato nem reserva de posição na rede inicial.</p>`;
+    <div class="quote-meta"><div><small>Adesão</small><strong>Sob avaliação</strong></div><div><small>Se entrar entre os 54 iniciais</small><strong>Mensalidade recorrente de R$ 0</strong></div><div><small>Se entrar depois</small><strong>Condição definida antes do aceite</strong></div></div>
+    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Solicitar avaliação</a><a class="button button-light" href="/participar.html?perfil=empresa">Apresentar minha empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <p class="fine">Este resultado é uma referência e não representa contrato, cobrança automática ou reserva de posição entre os 54 iniciais.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 }
 
-function reset(){form?.reset();result.innerHTML='<div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Veja sua referência antes de decidir.</h3><p>Preencha os quatro pontos da operação para visualizar o enquadramento estimado, a adesão de referência e como funcionam os dois regimes de entrada.</p></div></div>';form?.scrollIntoView({behavior:'smooth',block:'center'})}
+function reset(){
+  form?.reset();
+  result.innerHTML='<div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Seu resultado aparece aqui.</h3><p>Preencha as quatro respostas para ver a faixa estimada, a adesão de referência e as condições de entrada.</p></div></div>';
+  form?.scrollIntoView({behavior:'smooth',block:'center'});
+}
 
 form?.addEventListener('submit',event=>{
   event.preventDefault();
@@ -35,7 +39,7 @@ form?.addEventListener('submit',event=>{
   const units=selectedValue('#active-units');
   const integration=selectedValue('#integration-level');
   if([cores,simultaneous,units,integration].some(v=>v==='')){
-    result.innerHTML='<div class="result-empty"><div><div class="orb">!</div><h3>Faltam informações.</h3><p>Selecione os quatro pontos da estrutura operacional para calcular a referência.</p></div></div>';
+    result.innerHTML='<div class="result-empty"><div><div class="orb">!</div><h3>Faltam respostas.</h3><p>Selecione os quatro pontos da operação para ver a referência.</p></div></div>';
     return;
   }
   if(units==='enterprise')return enterpriseResult('Cinco ou mais unidades operacionais ativas');
@@ -47,24 +51,22 @@ form?.addEventListener('submit',event=>{
 
   const adhesion=band.monthly*3;
   result.innerHTML=`
-    <div class="quote-status"><span class="eyebrow">ENQUADRAMENTO ESTIMADO</span><span class="quote-badge preview">SIMULAÇÃO</span></div>
-    <div class="quote-company"><small>Faixa de referência</small><strong>${band.name}</strong><span>estimada a partir da estrutura operacional informada</span></div>
-    <div class="price-display"><small>Mensalidade de referência</small><strong>${money(band.monthly)}</strong><span>/ mês</span></div>
-    <div class="price-lines">
-      <div class="price-line"><span>Adesão de referência</span><strong>${money(adhesion)}</strong></div>
-    </div>
+    <div class="quote-status"><span class="eyebrow">SUA REFERÊNCIA</span><span class="quote-badge preview">SIMULAÇÃO</span></div>
+    <div class="quote-company"><small>Faixa estimada</small><strong>${band.name}</strong><span>calculada a partir da operação informada</span></div>
+    <div class="price-display"><small>Mensalidade de referência para entradas futuras</small><strong>${money(band.monthly)}</strong><span>/ mês</span></div>
+    <div class="price-lines"><div class="price-line"><span>Adesão de referência</span><strong>${money(adhesion)}</strong></div></div>
     <div class="basis-note"><strong>O que foi considerado:</strong> ${escapeHtml(selectedText('#operational-cores'))}; ${escapeHtml(selectedText('#simultaneous-operations'))}; ${escapeHtml(selectedText('#active-units'))}; ${escapeHtml(selectedText('#integration-level'))}.</div>
     <div class="founder-quote-context recognized">
       <span class="eyebrow">SE FOR CONFIRMADO ENTRE OS 54 INICIAIS</span>
       <strong>Adesão estimada: ${money(adhesion)} · mensalidade recorrente: R$ 0.</strong>
-      <p>A simulação não reserva posição entre os 54; essa condição precisa ser confirmada pela Rede antes do aceite.</p>
+      <p>A simulação não reserva posição. Essa condição precisa ser confirmada pelo Uai Perto antes do aceite.</p>
     </div>
     <div class="founder-quote-context">
       <span class="eyebrow">SE ENTRAR DEPOIS DOS 54</span>
       <strong>Adesão estimada: ${money(adhesion)}.</strong>
-      <p>A adesão inclui entrada, preparação e os dois primeiros meses de participação. No fim do segundo mês, se a empresa decidir continuar, a referência mensal desta faixa passa a valer a partir do terceiro mês.</p>
+      <p>A adesão inclui os dois primeiros meses. Se a empresa decidir continuar, a mensalidade de ${money(band.monthly)} passa a valer a partir do terceiro mês.</p>
     </div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Confirmar com a Rede</a><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário da empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <div class="quote-actions"><a class="button button-primary" href="/participar.html?perfil=empresa">Apresentar minha empresa</a><a class="button button-light" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Falar com o Uai Perto</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
     <p class="fine">Modelo em validação. Este resultado não é proposta oficial, contrato, cobrança automática nem garantia de entrada na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 });
