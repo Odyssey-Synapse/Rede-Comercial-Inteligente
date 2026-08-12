@@ -111,7 +111,7 @@ if(root){
   };
 
   let scenarioIndex=0,step=0,playing=true,runId=0;
-  const base=950;
+  const base=1120;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function rate(){return Number(els.speed?.value||1)}
