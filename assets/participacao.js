@@ -19,9 +19,7 @@ if(config.turnstileRequired&&config.turnstileSiteKey){
   });
 }
 
-function setFeedback(profile,text,type=""){
-  const el=feedbacks[profile];if(!el)return;el.textContent=text;el.className=`participation-feedback ${type}`.trim();
-}
+function setFeedback(profile,text,type=""){const el=feedbacks[profile];if(!el)return;el.textContent=text;el.className=`participation-feedback ${type}`.trim()}
 function setSuccess(profile,html){const el=feedbacks[profile];if(!el)return;el.innerHTML=html;el.className="participation-feedback success"}
 async function ensureTurnstile(profile){
   if(!config.turnstileRequired||!config.turnstileSiteKey||widgetIds[profile]!==null)return;
@@ -82,30 +80,35 @@ syncConsumerContact();
 function consumerMessage(form){
   const notify=radioValue(form,"consumerNotify");
   const contact=notify==="Sim"?`${cleanText(form.elements.consumerContactType.value)}: ${cleanText(form.elements.consumerContact.value)}`:"Não solicitou aviso";
+  const referralName=cleanText(form.elements.consumerReferralName.value);
+  const referralCategory=cleanText(form.elements.consumerReferralCategory.value);
   return [
-    "PESQUISA DE PRÉ-LANÇAMENTO — CONSUMIDOR","",
-    `Como se sente com a novidade: ${radioValue(form,"consumerFeeling")}`,
-    `Intenção de uso hoje: ${radioValue(form,"consumerUse")}`,
-    `O que espera conseguir fazer: ${groupValues(form,"consumerExpectation").join("; ")}`,
-    `Pedido que faria hoje: ${cleanText(form.elements.consumerNeed.value)}`,
-    `Categorias que mais gostaria de encontrar: ${groupValues(form,"consumerCategory").join("; ")}`,
-    `O que geraria confiança: ${groupValues(form,"consumerTrust").join("; ")}`,
-    `Dificuldade atual em Uberaba: ${cleanText(form.elements.consumerDifficulty.value)||"Não informou"}`,
+    "MAPA INICIAL DE DEMANDA — CONSUMIDOR","",
+    `Pedido real: ${cleanText(form.elements.consumerNeed.value)}`,
+    `Bairro/região aproximada: ${cleanText(form.elements.consumerNeighborhood.value)}`,
+    `Quando precisaria resolver: ${radioValue(form,"consumerWhen")}`,
+    `Áreas que mais fariam diferença: ${groupValues(form,"consumerCategory").join("; ")}`,
+    `Indicação local: ${referralName||"Não informou"}`,
+    `O que a indicação faz: ${referralCategory||"Não informou"}`,
+    `O que faria usar/confiar: ${groupValues(form,"consumerTrust").join("; ")}`,
+    `Usaria se resolvesse o caso descrito: ${radioValue(form,"consumerUse")}`,
     `Deseja aviso de lançamento: ${notify}`,
     `Contato para aviso: ${contact}`
   ].join("\n");
 }
 function companyMessage(form){
   return [
-    "INTERESSE EMPRESARIAL — REDE UAI PERTO","",
+    "MAPA INICIAL DE CAPACIDADE — EMPRESA","",
     `Empresa: ${cleanText(form.elements.companyName.value)}`,
     `Responsável: ${cleanText(form.elements.companyContact.value)}`,
     `WhatsApp: ${cleanText(form.elements.companyWhatsapp.value)||"Não informou"}`,
     `Área principal: ${cleanText(form.elements.companyCategory.value)}`,
-    `O que a empresa realmente consegue resolver: ${cleanText(form.elements.companyCapability.value)}`,
+    `O que realmente consegue resolver: ${cleanText(form.elements.companyCapability.value)}`,
     `Formas de atendimento: ${groupValues(form,"companyChannels").join("; ")}`,
+    `Área de atendimento: ${cleanText(form.elements.companyCoverage.value)}`,
+    `Bairros/regiões informados: ${cleanText(form.elements.companyCoverageDetail.value)||"Não informou"}`,
     `Velocidade normal de resposta: ${radioValue(form,"companyResponse")}`,
-    `Capacidade atual para novas oportunidades: ${radioValue(form,"companyCapacity")}`,
+    `Conseguiria atender oportunidade compatível amanhã: ${radioValue(form,"companyTomorrow")}`,
     `Entrega/logística: ${cleanText(form.elements.companyDelivery.value)}`,
     `Principais limitações: ${groupValues(form,"companyConstraints").join("; ")}`,
     `Momento de participação: ${radioValue(form,"companyStage")}`,
@@ -140,9 +143,9 @@ async function submitParticipation(profile,event){
   if(isCompany)email=cleanText(form.elements.companyEmail.value);
   else if(radioValue(form,"consumerNotify")==="Sim"&&cleanText(form.elements.consumerContactType.value)==="E-mail")email=cleanText(form.elements.consumerContact.value);
   const body={
-    name:isCompany?`${cleanText(form.elements.companyContact.value)} — ${cleanText(form.elements.companyName.value)}`:"Consumidor — pesquisa de pré-lançamento",
+    name:isCompany?`${cleanText(form.elements.companyContact.value)} — ${cleanText(form.elements.companyName.value)}`:"Consumidor — mapa inicial de demanda",
     email,
-    subject:isCompany?"Interesse empresarial — participação na Rede":"Pesquisa do consumidor — pré-lançamento",
+    subject:isCompany?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor",
     message:isCompany?companyMessage(form):consumerMessage(form),
     website:form.elements.website?.value||"",consent:true,turnstileToken:tokens[profile]
   };
@@ -150,8 +153,8 @@ async function submitParticipation(profile,event){
     const response=await fetch("/api/contact",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
     const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"SEND_FAILED");
     resetFormState(profile,form);
-    if(isCompany)setSuccess(profile,'Informações enviadas. Obrigado por apresentar sua capacidade à Rede. <a href="/calculadora.html">Se quiser, simule agora o enquadramento empresarial.</a>');
-    else setSuccess(profile,"Resposta enviada. Obrigado por ajudar a mostrar o que Uberaba espera encontrar no Uai Perto.");
+    if(isCompany)setSuccess(profile,'Informações enviadas. Agora sabemos melhor onde sua empresa pode entrar na primeira Rede. <a href="/calculadora.html">Se quiser, simule sua referência de participação.</a>');
+    else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     const friendly=error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
   }finally{submit.disabled=false;submit.textContent=originalText}
