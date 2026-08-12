@@ -5,18 +5,18 @@ function ensureBrandStyles(){
   if(document.querySelector('link[href^="/assets/uai-perto.css"]'))return;
   const link=document.createElement("link");
   link.rel="stylesheet";
-  link.href="/assets/uai-perto.css?v=3.1.18";
-  link.dataset.uaiPertoBrand="3.1.18";
+  link.href="/assets/uai-perto.css?v=3.1.20";
+  link.dataset.uaiPertoBrand="3.1.20";
   document.head.append(link);
 }
 ensureBrandStyles();
 document.documentElement.dataset.brand="uai-perto";
 
-const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/calculadora.html","Participação"],["/contato.html","Contato"]];
+const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/contato.html","Contato"]];
 const currentPath=location.pathname.endsWith("/")&&location.pathname!=="/"?location.pathname.slice(0,-1):location.pathname;
 const header=document.querySelector("#site-header"),footer=document.querySelector("#site-footer");
-if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/calculadora.html">Ver participação</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
-if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/calculadora.html">Participação comercial</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
+if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" srcset="/assets/uai-perto-logo-horizontal.png 1x, /assets/uai-perto-logo-horizontal-hd.png 4x" width="240" height="62" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
+if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.png" srcset="/assets/uai-perto-logo-horizontal.png 1x, /assets/uai-perto-logo-horizontal-hd.png 4x" width="240" height="62" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
 function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}setTheme(getTheme());
 document.querySelector("#theme-toggle")?.addEventListener("click",()=>setTheme(getTheme()==="dark"?"light":"dark"));
@@ -60,7 +60,7 @@ function ensureHeroBrand(){
   if(!hero||hero.querySelector(".uai-hero-brand"))return;
   const lockup=document.createElement("div");
   lockup.className="uai-hero-brand";
-  lockup.innerHTML=`<img src="/assets/uai-perto-logo-horizontal.png" width="240" height="63" alt="Uai Perto — Uberaba mais perto de você.">`;
+  lockup.innerHTML=`<img src="/assets/uai-perto-logo-horizontal.png" srcset="/assets/uai-perto-logo-horizontal.png 1x, /assets/uai-perto-logo-horizontal-hd.png 4x" width="240" height="62" alt="Uai Perto — Uberaba mais perto de você.">`;
   hero.prepend(lockup);
 }
 
