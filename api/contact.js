@@ -2,6 +2,7 @@ import { verifyTurnstileToken } from "../lib/turnstile.mjs";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const buckets = new Map();
+const CONSUMER_SURVEY_SUBJECT = "Pesquisa do consumidor — pré-lançamento";
 
 function clean(value, max = 500) {
   return String(value || "").replace(/\u0000/g, "").trim().slice(0, max);
@@ -28,7 +29,7 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   const body = req.body || {};
-  if (clean(body.website, 200)) return res.status(200).json({ ok: true }); // honeypot
+  if (clean(body.website, 200)) return res.status(200).json({ ok: true });
 
   const ip = clientIp(req);
   if (rateLimited(ip)) return res.status(429).json({ error: "RATE_LIMITED", message: "Muitas tentativas. Tente novamente mais tarde." });
@@ -38,9 +39,10 @@ export default async function handler(req, res) {
   const subject = clean(body.subject, 120);
   const message = clean(body.message, 4000);
   const consent = body.consent === true || body.consent === "true";
+  const isConsumerSurvey = subject === CONSUMER_SURVEY_SUBJECT;
 
   if (name.length < 2) return res.status(400).json({ error: "INVALID_NAME" });
-  if (!emailRe.test(email)) return res.status(400).json({ error: "INVALID_EMAIL" });
+  if ((!isConsumerSurvey && !emailRe.test(email)) || (isConsumerSurvey && email && !emailRe.test(email))) return res.status(400).json({ error: "INVALID_EMAIL" });
   if (subject.length < 3) return res.status(400).json({ error: "INVALID_SUBJECT" });
   if (message.length < 10) return res.status(400).json({ error: "INVALID_MESSAGE" });
   if (!consent) return res.status(400).json({ error: "CONSENT_REQUIRED" });
@@ -53,14 +55,16 @@ export default async function handler(req, res) {
   const to = process.env.CONTACT_DESTINATION_EMAIL;
   if (!apiKey || !from || !to) return res.status(503).json({ error: "CONTACT_NOT_CONFIGURED" });
 
+  const emailLine = email ? `\nE-mail: ${email}` : "";
+  const emailHtml = email ? `<br><strong>E-mail:</strong> ${esc(email)}` : "";
   const payload = {
     from,
     to: [to],
-    reply_to: email,
-    subject: `[Projeto RLI — nome provisório] ${subject}`,
-    text: `Nova mensagem pelo site do Projeto RLI (nome provisório)\n\nNome: ${name}\nE-mail: ${email}\nAssunto: ${subject}\n\nMensagem:\n${message}\n`,
-    html: `<div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827"><h2>Nova mensagem pelo site do Projeto RLI (nome provisório)</h2><p><strong>Nome:</strong> ${esc(name)}<br><strong>E-mail:</strong> ${esc(email)}<br><strong>Assunto:</strong> ${esc(subject)}</p><hr><p style="white-space:pre-wrap">${esc(message)}</p><hr><p style="font-size:12px;color:#6b7280">Enviado pelo formulário institucional do Projeto RLI (nome provisório).</p></div>`
+    subject: `[Uai Perto] ${subject}`,
+    text: `Nova mensagem pelo site do Uai Perto\n\nNome: ${name}${emailLine}\nAssunto: ${subject}\n\nMensagem:\n${message}\n`,
+    html: `<div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827"><h2>Nova mensagem pelo site do Uai Perto</h2><p><strong>Nome:</strong> ${esc(name)}${emailHtml}<br><strong>Assunto:</strong> ${esc(subject)}</p><hr><p style="white-space:pre-wrap">${esc(message)}</p><hr><p style="font-size:12px;color:#6b7280">Enviado pelo site do Uai Perto.</p></div>`
   };
+  if (emailRe.test(email)) payload.reply_to = email;
 
   let rr;
   try {
