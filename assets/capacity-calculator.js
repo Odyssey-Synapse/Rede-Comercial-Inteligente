@@ -21,7 +21,7 @@ function enterpriseResult(reason){
     <div class="price-display"><small>Faixa de referência</small><strong>Empresarial</strong></div>
     <div class="basis-note"><strong>Por que:</strong> ${escapeHtml(reason)} exige avaliação individual da estrutura operacional e da integração antes de formar uma referência comercial.</div>
     <div class="quote-meta"><div><small>Adesão</small><strong>Sob avaliação</strong></div><div><small>Rede inicial</small><strong>MRR R$ 0 se confirmado entre os 54</strong></div><div><small>Entrada posterior</small><strong>Condição definida antes do aceite</strong></div></div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Solicitar avaliação</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Solicitar avaliação</a><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário da empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
     <p class="fine">Este resultado não é proposta, contrato nem reserva de posição na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 }
@@ -64,7 +64,7 @@ form?.addEventListener('submit',event=>{
       <strong>Adesão estimada: ${money(adhesion)}.</strong>
       <p>A adesão inclui entrada, preparação e os dois primeiros meses de participação. No fim do segundo mês, se a empresa decidir continuar, a referência mensal desta faixa passa a valer a partir do terceiro mês.</p>
     </div>
-    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Confirmar com a Rede</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <div class="quote-actions"><a class="button button-primary" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Confirmar com a Rede</a><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário da empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
     <p class="fine">Modelo em validação. Este resultado não é proposta oficial, contrato, cobrança automática nem garantia de entrada na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 });
