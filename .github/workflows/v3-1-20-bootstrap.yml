@@ -1,0 +1,116 @@
+name: V3.1.20 bootstrap
+
+on:
+  push:
+    branches:
+      - agent/uai-perto-v3.1.20-foco-mobile-participacao
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          python -m pip install --quiet pillow
+
+      - name: Baseline tests
+        shell: bash
+        run: |
+          set +e
+          npm test > /tmp/tests-baseline.log 2>&1
+          echo $? > /tmp/tests-baseline-exit
+          set -e
+          echo "Baseline exit: $(cat /tmp/tests-baseline-exit)"
+          grep '^not ok ' /tmp/tests-baseline.log || true
+
+      - name: Apply V3.1.20
+        run: python .github/v3-1-20-update.py
+
+      - name: Generate exact HD logo asset
+        shell: bash
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          src=Image.open('assets/uai-perto-logo-horizontal.png').convert('RGBA')
+          out=src.resize((src.width*4,src.height*4),Image.Resampling.LANCZOS)
+          out.save('assets/uai-perto-logo-horizontal-hd.png',optimize=True)
+          print('logo source',src.size,'-> hd',out.size)
+          PY
+
+      - name: Syntax checks
+        run: |
+          node --check assets/site.js
+          node --check assets/home-demo.js
+          node --check assets/capacity-calculator.js
+
+      - name: Release tests
+        shell: bash
+        run: |
+          set +e
+          npm test > /tmp/tests-release.log 2>&1
+          echo $? > /tmp/tests-release-exit
+          set -e
+          echo "Release exit: $(cat /tmp/tests-release-exit)"
+          echo "Baseline failures: $(grep -c '^not ok ' /tmp/tests-baseline.log || true)"
+          echo "Release failures: $(grep -c '^not ok ' /tmp/tests-release.log || true)"
+          echo '--- Baseline failing tests ---'
+          grep '^not ok ' /tmp/tests-baseline.log || true
+          echo '--- Release failing tests ---'
+          grep '^not ok ' /tmp/tests-release.log || true
+
+      - name: Scope guard
+        shell: bash
+        run: |
+          git status --short
+          python - <<'PY'
+          import subprocess,sys
+          allowed={
+            'index.html','rede.html','empresas.html','tecnologia.html','transparencia.html','calculadora.html','contato.html','privacidade.html','participar.html',
+            'assets/site.js','assets/home-demo.js','assets/uai-perto.css','assets/uai-perto-logo-horizontal-hd.png',
+            'package.json','package-lock.json','RELEASE_NOTES_V3_1_20.md',
+            '.github/v3-1-20-update.py','.github/workflows/v3-1-20-bootstrap.yml'
+          }
+          names=subprocess.check_output(['git','status','--porcelain'],text=True).splitlines()
+          changed={line[3:] for line in names if len(line)>3}
+          bad=sorted(changed-allowed)
+          if bad:
+            print('Arquivos fora do escopo:',bad)
+            sys.exit(1)
+          protected=('api/','lib/','migrations/','tests/','vercel.json')
+          for item in changed:
+            if item=='vercel.json' or item.startswith(('api/','lib/','migrations/','tests/')):
+              print('Escopo protegido alterado:',item)
+              sys.exit(1)
+          print('Scope guard OK:',sorted(changed))
+          PY
+
+      - name: Commit release files
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html rede.html empresas.html tecnologia.html transparencia.html calculadora.html contato.html privacidade.html participar.html \
+            assets/site.js assets/home-demo.js assets/uai-perto.css assets/uai-perto-logo-horizontal-hd.png \
+            package.json package-lock.json RELEASE_NOTES_V3_1_20.md
+          git commit -m 'V3.1.20 — corrige participação, toque e foco visual'
+          git push
