@@ -6,7 +6,7 @@
   <meta name="description" content="Conte o que você precisaria resolver hoje ou mostre onde sua empresa consegue atender em Uberaba.">
   <meta name="theme-color" content="#335749">
   <title>Quero participar — Uai Perto</title>
-  <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":="light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
+  <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/uai-perto.css?v=3.1.20">
   <link rel="stylesheet" href="/assets/participacao.css?v=3.1.21">
@@ -15,203 +15,121 @@
 <body>
 <div id="site-header"></div>
 
-<section class="page-hero">
-  <div class="container narrow">
-    <div class="breadcrumb"><a href="/">Início</a><span>›</span>Participar</div>
-    <span class="eyebrow">Pré-lançamento em Uberaba</span>
-    <h1 class="h1">Ajude o Uai Perto a começar pelos problemas reais de Uberaba.</h1>
-    <p class="lead">Consumidores mostram onde está a demanda. Empresas mostram onde existe capacidade para atender.</p>
+<section class="page-hero"><div class="container narrow"><div class="breadcrumb"><a href="/">Início</a><span>›</span>Participar</div><span class="eyebrow">Pré-lançamento em Uberaba</span><h1 class="h1">Ajude o Uai Perto a começar pelos problemas reais de Uberaba.</h1><p class="lead">Consumidores mostram onde está a demanda. Empresas mostram onde existe capacidade para atender.</p></div></section>
+
+<section class="section"><div class="container participation-shell">
+  <div class="profile-choice" aria-label="Escolha seu perfil">
+    <button type="button" data-profile-target="consumidor" aria-pressed="false"><small>Quero resolver algo</small><strong>Sou consumidor</strong><span>Conte o que precisa, onde e para quando.</span></button>
+    <button type="button" data-profile-target="empresa" aria-pressed="false"><small>Quero atender</small><strong>Tenho uma empresa</strong><span>Mostre o que resolve, onde atende e se conseguiria assumir uma oportunidade real.</span></button>
   </div>
-</section>
 
-<section class="section">
-  <div class="container participation-shell">
-    <div class="profile-choice" aria-label="Escolha seu perfil">
-      <button type="button" data-profile-target="consumidor" aria-pressed="false"><small>Quero resolver algo</small><strong>Sou consumidor</strong><span>Conte o que precisa, onde e para quando.</span></button>
-      <button type="button" data-profile-target="empresa" aria-pressed="false"><small>Quero atender</small><strong>Tenho uma empresa</strong><span>Mostre o que resolve, onde atende e se conseguiria assumir uma oportunidade real.</span></button>
-    </div>
+  <section class="profile-panel" id="consumer-panel" hidden>
+    <form class="survey-form" id="consumer-form" novalidate>
+      <div class="survey-intro"><span class="eyebrow">Consumidor</span><h2 class="h3">Comece pelo que você realmente precisaria resolver.</h2><p>Pense numa situação real e conte do seu jeito.</p></div>
 
-    <section class="profile-panel" id="consumer-panel" hidden>
-      <form class="survey-form" id="consumer-form" novalidate>
-        <div class="survey-intro">
-          <span class="eyebrow">Consumidor</span>
-          <h2 class="h3">Comece pelo que você realmente precisaria resolver.</h2>
-          <p>Não precisa entender o Uai Perto. Pense numa situação real e conte do seu jeito.</p>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">1</span><div><h3>O que você pediria agora?</h3><p>É essa resposta que mostra o que a Rede precisa aprender a resolver.</p></div></div>
+        <div class="survey-field full"><label for="consumer-need">Se o Uai Perto estivesse funcionando agora, o que você pediria?</label><textarea id="consumer-need" name="consumerNeed" maxlength="900" minlength="10" required placeholder="Ex.: meu chuveiro queimou e preciso de alguém que consiga vir hoje à noite."></textarea><span class="survey-help">Pode ser produto, serviço, urgência ou algo que envolva mais de uma empresa.</span></div>
+      </div>
+
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">2</span><div><h3>Onde e para quando?</h3><p>Isso mostra onde a demanda está aparecendo em Uberaba.</p></div></div>
+        <div class="survey-field full"><label for="consumer-neighborhood">Bairro ou região aproximada</label><input id="consumer-neighborhood" name="consumerNeighborhood" minlength="2" maxlength="100" required placeholder="Ex.: Centro, Abadia, Fabrício..."><span class="survey-help">Não informe endereço completo.</span></div>
+        <fieldset class="survey-question"><legend>Para quando você precisaria resolver?</legend><div class="choice-grid">
+          <label class="choice-option"><input type="radio" name="consumerWhen" value="Agora ou hoje" required><span>Agora ou hoje</span></label>
+          <label class="choice-option"><input type="radio" name="consumerWhen" value="Nos próximos dias"><span>Nos próximos dias</span></label>
+          <label class="choice-option"><input type="radio" name="consumerWhen" value="Sem urgência"><span>Sem urgência</span></label>
+          <label class="choice-option"><input type="radio" name="consumerWhen" value="É para uma data específica"><span>É para uma data específica</span></label>
+        </div></fieldset>
+      </div>
+
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">3</span><div><h3>O que precisa existir na primeira Rede?</h3><p>Escolha até 3 áreas e, se quiser, indique alguém que você já confia.</p></div></div>
+        <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="3"><legend>Quais áreas mais fariam diferença para você?</legend><div class="choice-grid cols-3">
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Casa, construção e manutenção"><span>Casa, construção e manutenção</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Automóveis e mobilidade"><span>Automóveis e mobilidade</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Alimentação"><span>Alimentação</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Saúde e bem-estar"><span>Saúde e bem-estar</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Beleza e cuidados pessoais"><span>Beleza e cuidados pessoais</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Tecnologia e eletrônicos"><span>Tecnologia e eletrônicos</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Comércio e compras"><span>Comércio e compras</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Pets"><span>Pets</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Educação"><span>Educação</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Serviços profissionais"><span>Serviços profissionais</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Eventos e lazer"><span>Eventos e lazer</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Entregas e logística"><span>Entregas e logística</span></label>
+        </div><div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos uma área.</span></fieldset>
+        <div class="survey-grid" style="margin-top:18px">
+          <div class="survey-field"><label for="consumer-referral-name">Conhece uma empresa ou profissional que seria bom ter no Uai Perto? <span class="survey-help">(opcional)</span></label><input id="consumer-referral-name" name="consumerReferralName" maxlength="140" placeholder="Nome da empresa ou profissional"></div>
+          <div class="survey-field"><label for="consumer-referral-category">O que essa pessoa ou empresa faz? <span class="survey-help">(opcional)</span></label><input id="consumer-referral-category" name="consumerReferralCategory" maxlength="140" placeholder="Ex.: eletricista, oficina, padaria..."></div>
         </div>
+      </div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">1</span><div><h3>O que você pediria agora?</h3><p>É essa resposta que mostra o que a Rede precisa aprender a resolver.</p></div></div>
-          <div class="survey-field full">
-            <label for="consumer-need">Se o Uai Perto estivesse funcionando agora, o que você pediria?</label>
-            <textarea id="consumer-need" name="consumerNeed" maxlength="900" minlength="10" required placeholder="Ex.: meu chuveiro queimou e preciso de alguém que consiga vir hoje à noite."></textarea>
-            <span class="survey-help">Pode ser produto, serviço, urgência ou algo que envolva mais de uma empresa.</span>
-          </div>
-        </div>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">4</span><div><h3>O que faria você realmente usar?</h3><p>Agora que você imaginou uma necessidade real, diga o que precisa funcionar bem.</p></div></div>
+        <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="2"><legend>Escolha até 2 fatores.</legend><div class="choice-grid">
+          <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Encontrar quem realmente consegue atender meu pedido"><span>Encontrar quem realmente consegue atender</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Chegar a uma solução rápido"><span>Chegar a uma solução rápido</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Saber prazo e disponibilidade antes de perder tempo"><span>Saber prazo e disponibilidade</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Avaliações e reputação"><span>Avaliações e reputação</span></label>
+          <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Facilidade para conversar com a empresa"><span>Facilidade para conversar</span></label>
+        </div><div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos um fator.</span></fieldset>
+        <fieldset class="survey-question"><legend>Se resolvesse uma situação como a que você escreveu, você usaria?</legend><div class="choice-grid">
+          <label class="choice-option"><input type="radio" name="consumerUse" value="Sim, usaria" required><span>Sim, usaria</span></label>
+          <label class="choice-option"><input type="radio" name="consumerUse" value="Provavelmente usaria"><span>Provavelmente usaria</span></label>
+          <label class="choice-option"><input type="radio" name="consumerUse" value="Talvez"><span>Talvez</span></label>
+          <label class="choice-option"><input type="radio" name="consumerUse" value="Ainda não sei"><span>Ainda não sei</span></label>
+        </div></fieldset>
+      </div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">2</span><div><h3>Onde e para quando?</h3><p>Isso ajuda a enxergar onde a demanda está aparecendo em Uberaba.</p></div></div>
-          <div class="survey-grid">
-            <div class="survey-field"><label for="consumer-neighborhood">Bairro ou região aproximada</label><input id="consumer-neighborhood" name="consumerNeighborhood" minlength="2" maxlength="100" required placeholder="Ex.: Centro, Abadia, Fabrício..."><span class="survey-help">Não informe endereço completo.</span></div>
-            <fieldset class="survey-question"><legend>Para quando você precisaria resolver?</legend><div class="choice-grid">
-              <label class="choice-option"><input type="radio" name="consumerWhen" value="Agora ou hoje" required><span>Agora ou hoje</span></label>
-              <label class="choice-option"><input type="radio" name="consumerWhen" value="Nos próximos dias"><span>Nos próximos dias</span></label>
-              <label class="choice-option"><input type="radio" name="consumerWhen" value="Sem urgência"><span>Sem urgência</span></label>
-              <label class="choice-option"><input type="radio" name="consumerWhen" value="É para uma data específica"><span>É para uma data específica</span></label>
-            </div></fieldset>
-          </div>
-        </div>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">5</span><div><h3>Quer saber quando estiver funcionando?</h3><p>Você pode enviar tudo sem deixar contato.</p></div></div>
+        <fieldset class="survey-question"><legend>Quer receber um aviso de lançamento?</legend><div class="choice-grid"><label class="choice-option"><input type="radio" name="consumerNotify" value="Sim" required><span>Sim, quero receber o aviso</span></label><label class="choice-option"><input type="radio" name="consumerNotify" value="Não"><span>Não, só quero contribuir</span></label></div></fieldset>
+        <div class="consumer-contact-fields" id="consumer-contact-fields" hidden><div class="survey-grid"><div class="survey-field"><label for="consumer-contact-type">Como prefere receber?</label><select id="consumer-contact-type" name="consumerContactType" disabled><option value="">Selecione</option><option>E-mail</option><option>WhatsApp</option></select></div><div class="survey-field"><label for="consumer-contact">Seu contato</label><input id="consumer-contact" name="consumerContact" maxlength="254" disabled placeholder="Digite seu e-mail ou WhatsApp"></div></div></div>
+        <div class="participation-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><div class="turnstile-slot" id="consumidor-turnstile"></div>
+        <div class="survey-actions"><label class="survey-consent"><input type="checkbox" required><span>Concordo com o uso das respostas para mapear necessidades e planejar a formação inicial do Uai Perto em Uberaba. Se eu deixar uma indicação, ela será usada como referência de prospecção. Se eu escolher receber o aviso, autorizo o uso do contato para essa comunicação.</span></label><button class="button button-primary button-full" id="consumer-submit" type="submit">Enviar minha necessidade</button><div class="participation-feedback" id="consumer-feedback" role="status" aria-live="polite"></div></div>
+      </div>
+    </form>
+  </section>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">3</span><div><h3>O que precisa existir na primeira Rede?</h3><p>Escolha até 3 áreas e, se quiser, indique alguém que você já confia.</p></div></div>
-          <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="3">
-            <legend>Quais tipos de empresa ou serviço mais fariam diferença para você?</legend>
-            <div class="choice-grid cols-3">
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Casa, construção e manutenção"><span>Casa, construção e manutenção</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Automóveis e mobilidade"><span>Automóveis e mobilidade</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Alimentação"><span>Alimentação</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Saúde e bem-estar"><span>Saúde e bem-estar</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Beleza e cuidados pessoais"><span>Beleza e cuidados pessoais</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Tecnologia e eletrônicos"><span>Tecnologia e eletrônicos</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Comércio e compras"><span>Comércio e compras</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Pets"><span>Pets</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Educação"><span>Educação</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Serviços profissionais"><span>Serviços profissionais</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Eventos e lazer"><span>Eventos e lazer</span></label>
-              <label class="choice-option"><input type="checkbox" name="consumerCategory" value="Entregas e logística"><span>Entregas e logística</span></label>
-            </div>
-            <div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos uma área.</span>
-          </fieldset>
-          <div class="survey-grid" style="margin-top:18px">
-            <div class="survey-field"><label for="consumer-referral-name">Conhece uma empresa ou profissional que seria bom ter no Uai Perto? <span class="survey-help">(opcional)</span></label><input id="consumer-referral-name" name="consumerReferralName" maxlength="140" placeholder="Nome da empresa ou profissional"></div>
-            <div class="survey-field"><label for="consumer-referral-category">O que essa pessoa ou empresa faz? <span class="survey-help">(opcional)</span></label><input id="consumer-referral-category" name="consumerReferralCategory" maxlength="140" placeholder="Ex.: eletricista, oficina, padaria..."></div>
-          </div>
-        </div>
+  <section class="profile-panel" id="company-panel" hidden>
+    <form class="survey-form" id="company-form" novalidate>
+      <div class="survey-intro"><span class="eyebrow">Empresa</span><h2 class="h3">Mostre onde sua empresa consegue virar solução.</h2><p>Queremos saber o que você resolve, onde atende e se conseguiria responder a uma oportunidade compatível de verdade.</p><div class="company-calculator-note">Quer ver preço primeiro? <a href="/calculadora.html">Simule sua referência de participação.</a></div></div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">4</span><div><h3>O que faria você realmente usar?</h3><p>Agora que você imaginou uma necessidade real, queremos saber o que precisaria funcionar bem.</p></div></div>
-          <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="2"><legend>Escolha até 2 fatores.</legend><div class="choice-grid">
-            <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Encontrar quem realmente consegue atender meu pedido"><span>Encontrar quem realmente consegue atender</span></label>
-            <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Chegar a uma solução rápido"><span>Chegar a uma solução rápido</span></label>
-            <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Saber prazo e disponibilidade antes de perder tempo"><span>Saber prazo e disponibilidade</span></label>
-            <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Avaliações e reputação"><span>Avaliações e reputação</span></label>
-            <label class="choice-option"><input type="checkbox" name="consumerTrust" value="Facilidade para conversar com a empresa"><span>Facilidade para conversar</span></label>
-          </div><div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos um fator.</span></fieldset>
-          <fieldset class="survey-question"><legend>Se o Uai Perto resolvesse uma situação como a que você escreveu, você usaria?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="radio" name="consumerUse" value="Sim, usaria" required><span>Sim, usaria</span></label>
-            <label class="choice-option"><input type="radio" name="consumerUse" value="Provavelmente usaria"><span>Provavelmente usaria</span></label>
-            <label class="choice-option"><input type="radio" name="consumerUse" value="Talvez"><span>Talvez</span></label>
-            <label class="choice-option"><input type="radio" name="consumerUse" value="Ainda não sei"><span>Ainda não sei</span></label>
-          </div></fieldset>
-        </div>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">1</span><div><h3>O que você resolve e onde atende?</h3><p>Isso ajuda a cruzar necessidade com capacidade local.</p></div></div>
+        <div class="survey-field full"><label for="company-capability">Em uma frase, o que sua empresa consegue resolver?</label><textarea id="company-capability" name="companyCapability" minlength="10" maxlength="700" required placeholder="Ex.: instalamos e fazemos manutenção de ar-condicionado residencial e comercial."></textarea><span class="survey-help">Descreva capacidade real, não slogan.</span></div>
+        <fieldset class="survey-question" data-checkbox-group data-required="true"><legend>Como sua empresa consegue atender?</legend><div class="choice-grid"><label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento no próprio estabelecimento"><span>No próprio estabelecimento</span></label><label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento no endereço do cliente"><span>No endereço do cliente</span></label><label class="choice-option"><input type="checkbox" name="companyChannels" value="Entrega de produtos"><span>Com entrega de produtos</span></label><label class="choice-option"><input type="checkbox" name="companyChannels" value="Retirada no local"><span>Com retirada no local</span></label><label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento online"><span>Também online</span></label></div><span class="group-error">Escolha pelo menos uma forma de atendimento.</span></fieldset>
+        <div class="survey-grid"><div class="survey-field"><label for="company-coverage">Qual é sua área de atendimento?</label><select id="company-coverage" name="companyCoverage" required><option value="">Selecione</option><option>Somente no estabelecimento</option><option>Alguns bairros de Uberaba</option><option>Toda Uberaba</option><option>Uberaba e região</option><option>Online ou sem dependência de localização</option></select></div><div class="survey-field"><label for="company-coverage-detail">Quais bairros ou regiões? <span class="survey-help">(quando fizer sentido)</span></label><input id="company-coverage-detail" name="companyCoverageDetail" maxlength="300" placeholder="Ex.: Centro, Abadia, Fabrício..."></div></div>
+      </div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">5</span><div><h3>Quer saber quando estiver funcionando?</h3><p>Você pode enviar tudo sem deixar contato.</p></div></div>
-          <fieldset class="survey-question"><legend>Quer receber um aviso de lançamento?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="radio" name="consumerNotify" value="Sim" required><span>Sim, quero receber o aviso</span></label>
-            <label class="choice-option"><input type="radio" name="consumerNotify" value="Não"><span>Não, só quero contribuir</span></label>
-          </div></fieldset>
-          <div class="consumer-contact-fields" id="consumer-contact-fields" hidden><div class="survey-grid">
-            <div class="survey-field"><label for="consumer-contact-type">Como prefere receber?</label><select id="consumer-contact-type" name="consumerContactType" disabled><option value="">Selecione</option><option>E-mail</option><option>WhatsApp</option></select></div>
-            <div class="survey-field"><label for="consumer-contact">Seu contato</label><input id="consumer-contact" name="consumerContact" maxlength="254" disabled placeholder="Digite seu e-mail ou WhatsApp"></div>
-          </div></div>
-          <div class="participation-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-          <div class="turnstile-slot" id="consumidor-turnstile"></div>
-          <div class="survey-actions">
-            <label class="survey-consent"><input type="checkbox" required><span>Concordo com o uso das respostas para mapear necessidades e planejar a formação inicial do Uai Perto em Uberaba. Se eu deixar uma indicação, ela será usada somente como referência de prospecção. Se eu escolher receber o aviso, autorizo o uso do contato informado para essa comunicação.</span></label>
-            <button class="button button-primary button-full" id="consumer-submit" type="submit">Enviar minha necessidade</button>
-            <div class="participation-feedback" id="consumer-feedback" role="status" aria-live="polite"></div>
-          </div>
-        </div>
-      </form>
-    </section>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">2</span><div><h3>Quem é a empresa?</h3><p>Dados para identificar e responder ao interesse.</p></div></div>
+        <div class="survey-grid"><div class="survey-field"><label for="company-name">Nome da empresa</label><input id="company-name" name="companyName" minlength="2" maxlength="120" required></div><div class="survey-field"><label for="company-contact">Seu nome</label><input id="company-contact" name="companyContact" autocomplete="name" minlength="2" maxlength="120" required></div><div class="survey-field"><label for="company-email">E-mail</label><input id="company-email" name="companyEmail" type="email" autocomplete="email" maxlength="254" required></div><div class="survey-field"><label for="company-whatsapp">WhatsApp <span class="survey-help">(opcional)</span></label><input id="company-whatsapp" name="companyWhatsapp" autocomplete="tel" maxlength="40" placeholder="(34) 9....-...."></div><div class="survey-field full"><label for="company-category">Área principal</label><select id="company-category" name="companyCategory" required><option value="">Selecione</option><option>Casa, construção e manutenção</option><option>Automóveis e mobilidade</option><option>Alimentação</option><option>Saúde e bem-estar</option><option>Beleza e cuidados pessoais</option><option>Tecnologia e eletrônicos</option><option>Comércio e compras</option><option>Pets</option><option>Educação</option><option>Serviços profissionais</option><option>Eventos e lazer</option><option>Entregas e logística</option><option>Outro</option></select></div></div>
+      </div>
 
-    <section class="profile-panel" id="company-panel" hidden>
-      <form class="survey-form" id="company-form" novalidate>
-        <div class="survey-intro">
-          <span class="eyebrow">Empresa</span>
-          <h2 class="h3">Mostre onde sua empresa consegue virar solução.</h2>
-          <p>Queremos saber o que você resolve, onde atende e se conseguiria responder a uma oportunidade compatível de verdade.</p>
-          <div class="company-calculator-note">Quer ver preço primeiro? <a href="/calculadora.html">Simule sua referência de participação.</a></div>
-        </div>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">3</span><div><h3>Se uma oportunidade chegasse amanhã?</h3><p>Não queremos só empresas cadastradas. Queremos saber quem consegue responder.</p></div></div>
+        <fieldset class="survey-question"><legend>Em quanto tempo sua empresa normalmente consegue dizer se pode atender?</legend><div class="choice-grid"><label class="choice-option"><input type="radio" name="companyResponse" value="Em minutos ou poucas horas" required><span>Em minutos ou poucas horas</span></label><label class="choice-option"><input type="radio" name="companyResponse" value="No mesmo dia"><span>No mesmo dia</span></label><label class="choice-option"><input type="radio" name="companyResponse" value="Até o próximo dia útil"><span>Até o próximo dia útil</span></label><label class="choice-option"><input type="radio" name="companyResponse" value="Depende do tipo de pedido"><span>Depende do tipo de pedido</span></label></div></fieldset>
+        <fieldset class="survey-question"><legend>Se recebesse amanhã uma oportunidade realmente compatível com o que você faz, conseguiria atender?</legend><div class="choice-grid"><label class="choice-option"><input type="radio" name="companyTomorrow" value="Sim, conseguiríamos atender" required><span>Sim, conseguiríamos atender</span></label><label class="choice-option"><input type="radio" name="companyTomorrow" value="Provavelmente, dependendo do horário"><span>Provavelmente, dependendo do horário</span></label><label class="choice-option"><input type="radio" name="companyTomorrow" value="Depende bastante do tipo de pedido"><span>Depende bastante do pedido</span></label><label class="choice-option"><input type="radio" name="companyTomorrow" value="Ainda não estamos prontos"><span>Ainda não estamos prontos</span></label></div></fieldset>
+        <div class="survey-field full"><label for="company-delivery">Como funciona entrega ou retirada?</label><select id="company-delivery" name="companyDelivery" required><option value="">Selecione</option><option>Temos entrega própria</option><option>Usamos entregadores ou transportadoras parceiras</option><option>Conseguimos usar entrega própria e terceirizada</option><option>Trabalhamos principalmente com retirada no local</option><option>Não se aplica ao nosso tipo de serviço</option></select></div>
+      </div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">1</span><div><h3>O que você resolve e onde atende?</h3><p>Isso ajuda a cruzar necessidade com capacidade local.</p></div></div>
-          <div class="survey-field full"><label for="company-capability">Em uma frase, o que sua empresa consegue resolver?</label><textarea id="company-capability" name="companyCapability" minlength="10" maxlength="700" required placeholder="Ex.: instalamos e fazemos manutenção de ar-condicionado residencial e comercial, inclusive atendimento no endereço do cliente."></textarea><span class="survey-help">Descreva capacidade real, não slogan.</span></div>
-          <fieldset class="survey-question" data-checkbox-group data-required="true" style="margin-top:18px"><legend>Como sua empresa consegue atender?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento no próprio estabelecimento"><span>No próprio estabelecimento</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento no endereço do cliente"><span>No endereço do cliente</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyChannels" value="Entrega de produtos"><span>Com entrega de produtos</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyChannels" value="Retirada no local"><span>Com retirada no local</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyChannels" value="Atendimento online"><span>Também online</span></label>
-          </div><span class="group-error">Escolha pelo menos uma forma de atendimento.</span></fieldset>
-          <div class="survey-grid" style="margin-top:18px">
-            <div class="survey-field"><label for="company-coverage">Qual é sua área de atendimento?</label><select id="company-coverage" name="companyCoverage" required><option value="">Selecione</option><option>Somente no estabelecimento</option><option>Alguns bairros de Uberaba</option><option>Toda Uberaba</option><option>Uberaba e região</option><option>Online ou sem dependência de localização</option></select></div>
-            <div class="survey-field"><label for="company-coverage-detail">Quais bairros ou regiões? <span class="survey-help">(quando fizer sentido)</span></label><input id="company-coverage-detail" name="companyCoverageDetail" maxlength="300" placeholder="Ex.: Centro, Abadia, Fabrício e bairros próximos"></div>
-          </div>
-        </div>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">4</span><div><h3>O que costuma impedir um atendimento?</h3><p>Escolha até 2 fatores.</p></div></div>
+        <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="2"><legend>Quais limites mais pesam?</legend><div class="choice-grid"><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Estoque ou disponibilidade de produto"><span>Estoque ou disponibilidade</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Agenda, equipe ou capacidade de execução"><span>Agenda, equipe ou capacidade</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Região ou distância do atendimento"><span>Região ou distância</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Prazo ou dependência de fornecedor"><span>Prazo ou fornecedor</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Entrega ou logística"><span>Entrega ou logística</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Preço ou viabilidade do orçamento"><span>Preço ou viabilidade</span></label><label class="choice-option"><input type="checkbox" name="companyConstraints" value="Nenhuma limitação relevante"><span>Nenhuma limitação relevante costuma impedir</span></label></div><div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos uma opção.</span></fieldset>
+      </div>
 
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">2</span><div><h3>Quem é a empresa?</h3><p>Dados para identificar e responder ao interesse.</p></div></div>
-          <div class="survey-grid">
-            <div class="survey-field"><label for="company-name">Nome da empresa</label><input id="company-name" name="companyName" minlength="2" maxlength="120" required></div>
-            <div class="survey-field"><label for="company-contact">Seu nome</label><input id="company-contact" name="companyContact" autocomplete="name" minlength="2" maxlength="120" required></div>
-            <div class="survey-field"><label for="company-email">E-mail</label><input id="company-email" name="companyEmail" type="email" autocomplete="email" maxlength="254" required></div>
-            <div class="survey-field"><label for="company-whatsapp">WhatsApp <span class="survey-help">(opcional)</span></label><input id="company-whatsapp" name="companyWhatsapp" autocomplete="tel" maxlength="40" placeholder="(34) 9....-...."></div>
-            <div class="survey-field full"><label for="company-category">Área principal</label><select id="company-category" name="companyCategory" required><option value="">Selecione</option><option>Casa, construção e manutenção</option><option>Automóveis e mobilidade</option><option>Alimentação</option><option>Saúde e bem-estar</option><option>Beleza e cuidados pessoais</option><option>Tecnologia e eletrônicos</option><option>Comércio e compras</option><option>Pets</option><option>Educação</option><option>Serviços profissionais</option><option>Eventos e lazer</option><option>Entregas e logística</option><option>Outro</option></select></div>
-          </div>
-        </div>
-
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">3</span><div><h3>Se uma oportunidade chegasse amanhã?</h3><p>Não queremos só empresas cadastradas. Queremos saber quem consegue responder.</p></div></div>
-          <fieldset class="survey-question"><legend>Em quanto tempo sua empresa normalmente consegue dizer se pode atender?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="radio" name="companyResponse" value="Em minutos ou poucas horas" required><span>Em minutos ou poucas horas</span></label>
-            <label class="choice-option"><input type="radio" name="companyResponse" value="No mesmo dia"><span>No mesmo dia</span></label>
-            <label class="choice-option"><input type="radio" name="companyResponse" value="Até o próximo dia útil"><span>Até o próximo dia útil</span></label>
-            <label class="choice-option"><input type="radio" name="companyResponse" value="Depende do tipo de pedido"><span>Depende do tipo de pedido</span></label>
-          </div></fieldset>
-          <fieldset class="survey-question"><legend>Se recebesse amanhã uma oportunidade realmente compatível com o que você faz, conseguiria atender?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="radio" name="companyTomorrow" value="Sim, conseguiríamos atender" required><span>Sim, conseguiríamos atender</span></label>
-            <label class="choice-option"><input type="radio" name="companyTomorrow" value="Provavelmente, dependendo do horário"><span>Provavelmente, dependendo do horário</span></label>
-            <label class="choice-option"><input type="radio" name="companyTomorrow" value="Depende bastante do tipo de pedido"><span>Depende bastante do pedido</span></label>
-            <label class="choice-option"><input type="radio" name="companyTomorrow" value="Ainda não estamos prontos"><span>Ainda não estamos prontos</span></label>
-          </div></fieldset>
-          <div class="survey-field full"><label for="company-delivery">Como funciona entrega ou retirada na sua operação?</label><select id="company-delivery" name="companyDelivery" required><option value="">Selecione</option><option>Temos entrega própria</option><option>Usamos entregadores ou transportadoras parceiras</option><option>Conseguimos usar entrega própria e terceirizada</option><option>Trabalhamos principalmente com retirada no local</option><option>Não se aplica ao nosso tipo de serviço</option></select></div>
-        </div>
-
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">4</span><div><h3>O que costuma impedir um atendimento?</h3><p>Escolha até 2 fatores.</p></div></div>
-          <fieldset class="survey-question" data-checkbox-group data-required="true" data-max="2"><legend>Quais limites mais pesam na sua operação?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Estoque ou disponibilidade de produto"><span>Estoque ou disponibilidade</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Agenda, equipe ou capacidade de execução"><span>Agenda, equipe ou capacidade</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Região ou distância do atendimento"><span>Região ou distância</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Prazo ou dependência de fornecedor"><span>Prazo ou fornecedor</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Entrega ou logística"><span>Entrega ou logística</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Preço ou viabilidade do orçamento"><span>Preço ou viabilidade</span></label>
-            <label class="choice-option"><input type="checkbox" name="companyConstraints" value="Nenhuma limitação relevante"><span>Nenhuma limitação relevante costuma impedir</span></label>
-          </div><div class="survey-help"><span data-choice-counter></span></div><span class="group-error">Escolha pelo menos uma opção.</span></fieldset>
-        </div>
-
-        <div class="survey-section">
-          <div class="survey-section-head"><span class="survey-number">5</span><div><h3>Qual é seu momento de participação?</h3><p>Isso mostra quem vale procurar primeiro no lançamento.</p></div></div>
-          <fieldset class="survey-question"><legend>Qual opção mais combina com sua empresa hoje?</legend><div class="choice-grid">
-            <label class="choice-option"><input type="radio" name="companyStage" value="Quero avaliar entrada entre os 54 parceiros iniciais" required><span>Quero avaliar entrada entre os 54 parceiros iniciais</span></label>
-            <label class="choice-option"><input type="radio" name="companyStage" value="Quero participar, mas preciso entender as condições primeiro"><span>Quero participar, mas preciso entender as condições</span></label>
-            <label class="choice-option"><input type="radio" name="companyStage" value="Tenho interesse em entrar depois do lançamento"><span>Tenho interesse em entrar depois do lançamento</span></label>
-            <label class="choice-option"><input type="radio" name="companyStage" value="Estou apenas conhecendo a proposta"><span>Estou apenas conhecendo</span></label>
-          </div></fieldset>
-          <div class="survey-field full"><label for="company-note">Há alguma condição ou dúvida importante que não apareceu? <span class="survey-help">(opcional)</span></label><textarea id="company-note" name="companyNote" maxlength="600" placeholder="Use se houver algo realmente importante para entendermos sua operação."></textarea></div>
-          <div class="participation-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-          <div class="turnstile-slot" id="empresa-turnstile"></div>
-          <div class="survey-actions">
-            <label class="survey-consent"><input type="checkbox" required><span>Concordo com o uso das informações para analisar onde a empresa consegue atender, responder este contato e planejar a formação inicial da Rede em Uberaba.</span></label>
-            <button class="button button-primary button-full" id="company-submit" type="submit">Apresentar minha empresa</button>
-            <div class="participation-feedback" id="company-feedback" role="status" aria-live="polite"></div>
-          </div>
-        </div>
-      </form>
-    </section>
-  </div>
-</section>
+      <div class="survey-section">
+        <div class="survey-section-head"><span class="survey-number">5</span><div><h3>Qual é seu momento de participação?</h3><p>Isso mostra quem vale procurar primeiro no lançamento.</p></div></div>
+        <fieldset class="survey-question"><legend>Qual opção mais combina com sua empresa hoje?</legend><div class="choice-grid"><label class="choice-option"><input type="radio" name="companyStage" value="Quero avaliar entrada entre os 54 parceiros iniciais" required><span>Quero avaliar entrada entre os 54 parceiros iniciais</span></label><label class="choice-option"><input type="radio" name="companyStage" value="Quero participar, mas preciso entender as condições primeiro"><span>Quero participar, mas preciso entender as condições</span></label><label class="choice-option"><input type="radio" name="companyStage" value="Tenho interesse em entrar depois do lançamento"><span>Tenho interesse em entrar depois do lançamento</span></label><label class="choice-option"><input type="radio" name="companyStage" value="Estou apenas conhecendo a proposta"><span>Estou apenas conhecendo</span></label></div></fieldset>
+        <div class="survey-field full"><label for="company-note">Há alguma condição ou dúvida importante? <span class="survey-help">(opcional)</span></label><textarea id="company-note" name="companyNote" maxlength="600"></textarea></div>
+        <div class="participation-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><div class="turnstile-slot" id="empresa-turnstile"></div>
+        <div class="survey-actions"><label class="survey-consent"><input type="checkbox" required><span>Concordo com o uso das informações para analisar onde a empresa consegue atender, responder este contato e planejar a formação inicial da Rede em Uberaba.</span></label><button class="button button-primary button-full" id="company-submit" type="submit">Apresentar minha empresa</button><div class="participation-feedback" id="company-feedback" role="status" aria-live="polite"></div></div>
+      </div>
+    </form>
+  </section>
+</div></section>
 
 <div id="site-footer"></div>
 <script type="module" src="/assets/site.js"></script>
