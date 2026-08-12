@@ -26,38 +26,90 @@ document.documentElement.dataset.brand="uai-perto";
 
 const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/contato.html","Contato"]];
 const currentPath=location.pathname.endsWith("/")&&location.pathname!=="/"?location.pathname.slice(0,-1):location.pathname;
-const header=document.querySelector("#site-header"),footer=document.querySelector("#site-footer");
-if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — Uberaba mais perto de você."></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
-if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — Uberaba mais perto de você."><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — Uberaba mais perto de você."></a><p class="footer-brand-text">Uma Rede criada para aproximar necessidades reais de soluções locais relevantes — com tecnologia, contexto e regras comerciais claras.</p></div><div class="footer-col"><strong>Institucional</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Empresas</strong><a href="/empresas.html">Para empresas</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Pagamento não compra relevância orgânica.</span></div></div></footer>`;
+const header=document.querySelector("#site-header");
+const footer=document.querySelector("#site-footer");
+
+if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
+
+if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><p class="footer-brand-text">Você conta o que precisa resolver. O Uai Perto trabalha para aproximar sua necessidade de soluções locais em Uberaba.</p></div><div class="footer-col"><strong>Conheça</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Participar</strong><a href="/empresas.html">Para empresas</a><a href="/participar.html?perfil=consumidor">Sou consumidor</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Começando por Uberaba.</span></div></div></footer>`;
+
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
-function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}setTheme(getTheme());
+
+function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}
+function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}
+setTheme(getTheme());
 document.querySelector("#theme-toggle")?.addEventListener("click",()=>setTheme(getTheme()==="dark"?"light":"dark"));
-const menu=document.querySelector("#menu-toggle"),nav=document.querySelector("#nav-links");menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open")||false;menu.setAttribute("aria-expanded",String(open));menu.textContent=open?"×":"☰"});nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");if(menu)menu.textContent="☰"}));
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+const menu=document.querySelector("#menu-toggle");
+const nav=document.querySelector("#nav-links");
+menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open")||false;menu.setAttribute("aria-expanded",String(open));menu.textContent=open?"×":"☰"});
+nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");if(menu)menu.textContent="☰"}));
+
+if("IntersectionObserver" in window){
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.1});
+  document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+}else document.querySelectorAll(".reveal").forEach(el=>el.classList.add("visible"));
 
 const examples={
- casa:{need:"Meu chuveiro queimou agora à noite. Preciso de alguém que venha hoje, porque tenho criança em casa.",tags:["urgência","hoje à noite","não pode esperar"],solution:"Entender o problema e buscar capacidade compatível com serviço, região e horário.",note:"A categoria é só uma parte. O contexto muda quem realmente consegue resolver."},
- visita:{need:"Vou receber visita amanhã e preciso montar mercado + padaria + algo pronto, com entrega e dentro do meu orçamento.",tags:["amanhã","orçamento","entrega","compra combinada"],solution:"Comparar uma solução única ou capacidades complementares quando isso fizer mais sentido.",note:"Uma única intenção pode, no horizonte do produto, coordenar mais de uma empresa sem obrigar a pessoa a refazer toda a busca."},
- carro:{need:"Meu carro não liga de manhã. Preciso de alguém que venha até mim, porque não consigo levar na oficina.",tags:["carro não liga","atendimento no local","manhã"],solution:"Buscar alternativas que respeitem a restrição de deslocamento, não apenas oficinas próximas.",note:"A necessidade real inclui o que a pessoa não consegue fazer — e isso também muda a solução."}
+  casa:{need:"Meu chuveiro queimou agora à noite. Preciso de alguém que venha hoje, porque tenho criança em casa.",tags:["hoje à noite","urgente","não pode esperar"],solution:"Procurar quem consiga instalar o chuveiro na região e no horário em que você precisa.",note:"Você não precisa começar procurando uma categoria perfeita. Começa contando o problema."},
+  visita:{need:"Vou receber visita amanhã e preciso de mercado, padaria, algo pronto e entrega dentro do meu orçamento.",tags:["amanhã","orçamento","entrega","mais de uma compra"],solution:"Comparar se uma empresa resolve tudo ou se uma combinação faz mais sentido para o pedido.",note:"Uma única necessidade pode envolver mais de um parceiro sem obrigar você a refazer toda a busca."},
+  carro:{need:"Meu carro não liga de manhã. Preciso resolver antes do trabalho, mas não consigo levar até a oficina.",tags:["carro não liga","manhã","atendimento no local"],solution:"Priorizar quem consegue ir até o carro ou organizar uma alternativa que respeite a restrição de deslocamento.",note:"O que você não consegue fazer também faz parte do problema e muda a solução."}
 };
-const exampleContent=document.querySelector("#example-content");function renderExample(key){const d=examples[key];if(!d||!exampleContent)return;exampleContent.innerHTML=`<div class="need-card"><small>O QUE ESTÁ ACONTECENDO</small><strong>“${d.need}”</strong><div class="context-tags">${d.tags.map(t=>`<span>${t}</span>`).join("")}</div></div><div class="route-line"></div><div class="solution-card"><div><small>O QUE A REDE PRECISA RESOLVER</small><strong>${d.solution}</strong></div><em>contexto primeiro</em></div><p class="example-note">${d.note}</p>`;document.querySelectorAll(".example-chip").forEach(b=>b.classList.toggle("active",b.dataset.example===key))}document.querySelectorAll(".example-chip").forEach(b=>b.addEventListener("click",()=>renderExample(b.dataset.example)));if(exampleContent)renderExample("casa");
+
+const exampleContent=document.querySelector("#example-content");
+function renderExample(key){
+  const data=examples[key];
+  if(!data||!exampleContent)return;
+  exampleContent.innerHTML=`<div class="need-card"><small>O QUE VOCÊ DIRIA</small><strong>“${data.need}”</strong><div class="context-tags">${data.tags.map(tag=>`<span>${tag}</span>`).join("")}</div></div><div class="route-line"></div><div class="solution-card"><div><small>O QUE A PROCURA PRECISA RESOLVER</small><strong>${data.solution}</strong></div><em>problema primeiro</em></div><p class="example-note">${data.note}</p>`;
+  document.querySelectorAll(".example-chip").forEach(button=>button.classList.toggle("active",button.dataset.example===key));
+}
+document.querySelectorAll(".example-chip").forEach(button=>button.addEventListener("click",()=>renderExample(button.dataset.example)));
+if(exampleContent)renderExample("casa");
+
 const stepData={
- understand:{k:"01 · ENTENDER",title:"A pessoa fala como falaria com outra pessoa.",text:"A tecnologia pode ajudar a organizar serviço, urgência, região, quantidade e outras condições presentes na frase, sem exigir linguagem técnica.",left:"“Preciso disso hoje”",right:"Contexto organizado"},
- resolve:{k:"02 · ENCONTRAR",title:"A procura considera quem realmente pode atender.",text:"A Rede busca alternativas compatíveis com o que foi informado. Estar cadastrado ou pagar mais não substitui pertinência.",left:"Necessidade + contexto",right:"Alternativas pertinentes"},
- learn:{k:"03 · APRENDER",title:"O resultado ajuda a entender o que funcionou e o que faltou.",text:"Uma tentativa atendida mostra capacidade. Necessidades recorrentes sem solução podem revelar onde a Rede precisa melhorar.",left:"Resultado da tentativa",right:"Aprendizado da Rede"},
- improve:{k:"04 · MELHORAR",title:"Situações diferentes pedem respostas diferentes.",text:"Falta de capacidade pode indicar expansão. Capacidade disponível com barreira comercial pode justificar uma oportunidade. Dados insuficientes podem exigir cautela.",left:"O que está acontecendo",right:"Próxima ação coerente"}
+  understand:{k:"01 · ENTENDER",title:"A pessoa fala como falaria com outra pessoa.",text:"A tecnologia identifica o que parece importar naquela frase — problema, urgência, região, prazo e outras condições — sem exigir linguagem técnica.",left:"“Preciso resolver isso hoje”",right:"O que realmente importa"},
+  resolve:{k:"02 · ENCONTRAR",title:"A procura tenta respeitar o que foi pedido.",text:"Em vez de devolver uma lista genérica, a Rede trabalha para aproximar alternativas que façam sentido para aquela situação.",left:"Problema + condições",right:"Alternativas compatíveis"},
+  learn:{k:"03 · APRENDER",title:"O resultado mostra onde a Rede está forte e onde ainda falha.",text:"Uma necessidade atendida revela capacidade. Uma necessidade recorrente sem solução mostra onde a cobertura precisa melhorar.",left:"O que aconteceu",right:"O que precisa melhorar"},
+  improve:{k:"04 · MELHORAR",title:"A próxima ação depende do problema real.",text:"Às vezes falta empresa. Às vezes falta informação. Às vezes a melhor decisão é não fingir que existe uma resposta suficiente ainda.",left:"Situação observada",right:"Próxima ação coerente"}
 };
-const stepContent=document.querySelector("#step-content");function renderStep(key){const d=stepData[key];if(!d||!stepContent)return;stepContent.innerHTML=`<span class="step-kicker">${d.k}</span><h3 class="h2">${d.title}</h3><p class="lead">${d.text}</p><div class="step-visual"><div class="mini-panel"><small>Entrada</small><strong>${d.left}</strong></div><span>→</span><div class="mini-panel"><small>Resultado</small><strong>${d.right}</strong></div></div>`;document.querySelectorAll(".step-button").forEach(b=>b.classList.toggle("active",b.dataset.step===key))}document.querySelectorAll(".step-button").forEach(b=>b.addEventListener("click",()=>renderStep(b.dataset.step)));if(stepContent)renderStep("understand");
 
-const canvas=document.querySelector("#network-canvas");if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,pointer={x:-999,y:-999};const count=innerWidth<720?18:32;const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};resize();addEventListener("resize",resize,{passive:true});canvas.addEventListener("pointermove",e=>{const r=canvas.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top}});canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});function draw(){ctx.clearRect(0,0,w,h);const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>1)n.vx*=-1;if(n.y<0||n.y>1)n.vy*=-1}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}for(const n of nodes){const x=n.x*w,y=n.y*h,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?n.r*1.6:n.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
+const stepContent=document.querySelector("#step-content");
+function renderStep(key){
+  const data=stepData[key];
+  if(!data||!stepContent)return;
+  stepContent.innerHTML=`<span class="step-kicker">${data.k}</span><h3 class="h2">${data.title}</h3><p class="lead">${data.text}</p><div class="step-visual"><div class="mini-panel"><small>Entrada</small><strong>${data.left}</strong></div><span>→</span><div class="mini-panel"><small>Resultado</small><strong>${data.right}</strong></div></div>`;
+  document.querySelectorAll(".step-button").forEach(button=>button.classList.toggle("active",button.dataset.step===key));
+}
+document.querySelectorAll(".step-button").forEach(button=>button.addEventListener("click",()=>renderStep(button.dataset.step)));
+if(stepContent)renderStep("understand");
 
+const canvas=document.querySelector("#network-canvas");
+if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const ctx=canvas.getContext("2d");
+  let width=0,height=0,dpr=1,pointer={x:-999,y:-999};
+  const count=innerWidth<720?18:32;
+  const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));
+  const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);width=canvas.clientWidth;height=canvas.clientHeight;canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};
+  resize();
+  addEventListener("resize",resize,{passive:true});
+  canvas.addEventListener("pointermove",event=>{const rect=canvas.getBoundingClientRect();pointer={x:event.clientX-rect.left,y:event.clientY-rect.top}});
+  canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});
+  function draw(){
+    ctx.clearRect(0,0,width,height);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+    for(const node of nodes){node.x+=node.vx;node.y+=node.vy;if(node.x<0||node.x>1)node.vx*=-1;if(node.y<0||node.y>1)node.vy*=-1}
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*width,ay=a.y*height,bx=b.x*width,by=b.y*height,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}
+    for(const node of nodes){const x=node.x*width,y=node.y*height,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?node.r*1.6:node.r,0,Math.PI*2);ctx.fill()}
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  }
+  draw();
+}
 
 function applyBrandMetadata(){
-  const currentTitle=document.title;
-  document.title=currentTitle.includes(BRAND_NAME)?currentTitle:`${BRAND_NAME} · ${currentTitle}`;
+  if(!document.title.includes(BRAND_NAME))document.title=`${BRAND_NAME} · ${document.title}`;
   let description=document.querySelector('meta[name="description"]');
   if(!description){description=document.createElement("meta");description.name="description";document.head.append(description)}
-  description.content=description.content||"Uai Perto é uma Rede Comercial Inteligente em Uberaba: começa pela necessidade da pessoa e trabalha para aproximá-la de soluções locais relevantes.";
+  description.content=description.content||"Uai Perto aproxima necessidades reais de soluções locais em Uberaba.";
   let theme=document.querySelector('meta[name="theme-color"]');
   if(!theme){theme=document.createElement("meta");theme.name="theme-color";document.head.append(theme)}
   theme.content="#335749";
@@ -72,7 +124,7 @@ function ensureHeroBrand(){
   if(!hero||hero.querySelector(".uai-hero-brand"))return;
   const lockup=document.createElement("div");
   lockup.className="uai-hero-brand";
-  lockup.innerHTML=`<img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — Uberaba mais perto de você.">`;
+  lockup.innerHTML=`<img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}">`;
   hero.prepend(lockup);
 }
 
