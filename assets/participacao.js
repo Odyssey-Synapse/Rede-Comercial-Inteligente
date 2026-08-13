@@ -25,6 +25,16 @@ if(config.turnstileRequired&&config.turnstileSiteKey){
 
 function setFeedback(profile,text,type=""){const el=feedbacks[profile];if(!el)return;el.textContent=text;el.className=`participation-feedback ${type}`.trim()}
 function setSuccess(profile,html){const el=feedbacks[profile];if(!el)return;el.innerHTML=html;el.className="participation-feedback success"}
+function waitForTurnstileToken(profile,timeoutMs=8000){
+  if(tokens[profile])return Promise.resolve(true);
+  return new Promise(resolve=>{
+    const started=Date.now();
+    const timer=setInterval(()=>{
+      if(tokens[profile]){clearInterval(timer);resolve(true);return}
+      if(Date.now()-started>=timeoutMs){clearInterval(timer);resolve(false)}
+    },120);
+  });
+}
 async function ensureTurnstile(profile){
   if(!config.turnstileRequired)return true;
   if(!config.turnstileSiteKey){setFeedback(profile,"A verificação de segurança está temporariamente indisponível.","error");return false}
@@ -36,20 +46,15 @@ async function ensureTurnstile(profile){
     widgetIds[profile]=window.turnstile.render(target,{
       sitekey:config.turnstileSiteKey,
       theme:"auto",
-      language:"pt-BR",
-      size:"flexible",
-      appearance:"interaction-only",
-      execution:"render",
+      appearance:"always",
       retry:"auto",
       "refresh-expired":"auto",
-      "refresh-timeout":"auto",
       callback:token=>{
         tokens[profile]=token;
         if(feedbacks[profile]?.textContent?.toLowerCase().includes("verificação de segurança"))setFeedback(profile,"");
       },
       "expired-callback":()=>{tokens[profile]=""},
-      "timeout-callback":()=>{tokens[profile]="";setFeedback(profile,"A verificação de segurança expirou e será refeita automaticamente.","error")},
-      "error-callback":()=>{tokens[profile]="";setFeedback(profile,"Não foi possível concluir a verificação de segurança. Aguarde alguns segundos e tente novamente.","error")}
+      "error-callback":code=>{tokens[profile]="";setFeedback(profile,`Não foi possível concluir a verificação de segurança${code?` (${code})`:""}. Atualize a página e tente novamente.`,"error")}
     });
     return true;
   }catch{
@@ -172,8 +177,11 @@ async function submitParticipation(profile,event){
   if(config.contactFormEnabled===false){setFeedback(profile,"O envio pelo site está temporariamente indisponível.","error");return}
   if(config.turnstileRequired&&!tokens[profile]){
     const ready=await ensureTurnstile(profile);
-    if(ready)setFeedback(profile,"Aguarde a verificação de segurança concluir e tente enviar novamente.","error");
-    return;
+    if(!ready)return;
+    setFeedback(profile,"Concluindo a verificação de segurança…");
+    const verified=await waitForTurnstileToken(profile);
+    if(!verified){setFeedback(profile,"A verificação de segurança não concluiu. Atualize a página e tente novamente.","error");return}
+    setFeedback(profile,"");
   }
 
   const submit=submitButtons[profile],originalText=submit.textContent;submit.disabled=true;submit.textContent="Enviando…";
@@ -196,7 +204,7 @@ async function submitParticipation(profile,event){
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     if(isTurnstileError(error))resetTurnstileProfile(profile);
-    const friendly=isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Seus dados foram preservados; aguarde alguns segundos e envie novamente.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
+    const friendly=isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Seus dados foram preservados; atualize a página e envie novamente.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
   }finally{submit.disabled=false;submit.textContent=originalText}
 }
 forms.consumidor?.addEventListener("submit",event=>submitParticipation("consumidor",event));
