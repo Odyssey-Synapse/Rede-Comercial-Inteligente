@@ -8,7 +8,7 @@ export default async function handler(req,res){
     return res.status(200).json({
       configured:status.configured,
       count:status.count,
-      capacity:25
+      capacity:54
     });
   }catch(err){
     return res.status(500).json({error:err.message});
