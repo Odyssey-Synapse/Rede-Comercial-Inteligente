@@ -3,51 +3,153 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Organize compras, casa, veículo, pet e eventos. Quando quiser agir, peça ao Uai Perto para procurar o caminho.">
+  <meta name="description" content="Você lembra aos poucos. O Uai Perto guarda o contexto e, quando chegar a hora, ajuda a transformar isso em uma solução local.">
   <meta name="theme-color" content="#335749">
   <title>Meu Uai Perto · Seu assistente local</title>
   <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/uai-perto.css?v=3.1.20">
-  <link rel="stylesheet" href="/assets/consumer.css?v=0.1.1">
+  <link rel="stylesheet" href="/assets/consumer.css?v=0.2.0">
   <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
 </head>
 <body>
 <div id="site-header"></div>
+
 <main class="consumer-shell">
-  <section class="consumer-hero">
+  <section class="consumer-hero consumer-hero-rich">
     <div class="container consumer-hero-grid">
-      <div>
-        <span class="eyebrow">MEU UAI PERTO · SEU ASSISTENTE LOCAL</span>
-        <h1 class="display">Organize o que precisa. Quando chegar a hora, peça para o Uai Perto procurar.</h1>
-        <p class="lead">Você pode ir anotando uma compra, uma reforma, os cuidados do pet, as pendências do veículo ou um evento. Não precisa lembrar de tudo de uma vez.</p>
+      <div class="consumer-hero-copy">
+        <span class="eyebrow">MEU UAI PERTO</span>
+        <h1 class="display">Você não precisa lembrar de tudo na hora de resolver.</h1>
+        <p class="lead">Lembrou agora? Guarda. Lembrou amanhã? Acrescenta. Quando chegar a hora, você só diz: <strong>“resolve isso pra mim”.</strong></p>
+        <div class="consumer-hero-actions">
+          <a class="button button-primary" href="/participar.html?perfil=consumidor#consumer-panel">Quero testar como consumidor →</a>
+          <a class="button button-ghost" href="#guardar">Quero guardar algo para depois</a>
+        </div>
+        <div class="consumer-promise-row" aria-label="O que você controla">
+          <span>Você guarda aos poucos</span>
+          <span>Você decide quando agir</span>
+          <span>O contexto não se perde</span>
+        </div>
       </div>
-      <form class="consumer-now" id="quick-intent-form">
-        <label for="quick-intent">Precisa resolver alguma coisa agora?</label>
+
+      <form class="consumer-now consumer-now-featured" id="quick-intent-form">
+        <span class="consumer-now-kicker">SE PRECISA RESOLVER AGORA</span>
+        <label for="quick-intent">Conte do seu jeito. O que aconteceu?</label>
         <textarea id="quick-intent" minlength="5" maxlength="600" required placeholder="Ex.: meu chuveiro queimou e preciso de alguém que consiga vir hoje."></textarea>
-        <button class="button button-primary button-full" type="submit">Pedir para o Uai Perto procurar →</button>
-        <p class="fine">Ou escolha abaixo algo que você quer organizar aos poucos.</p>
+        <div class="quick-examples" aria-label="Exemplos de pedidos">
+          <button type="button" data-quick-example="Preciso de um eletricista hoje à noite porque meu chuveiro queimou.">Chuveiro queimou</button>
+          <button type="button" data-quick-example="Meu carro não liga e eu não consigo levar até a oficina.">Carro não liga</button>
+          <button type="button" data-quick-example="Preciso montar uma compra para receber visita amanhã dentro do meu orçamento.">Compra para amanhã</button>
+        </div>
+        <button class="button button-primary button-full" type="submit">Organizar esse pedido →</button>
+        <p class="fine">Nesta demonstração, o pedido é preparado para mostrar a experiência. Empresas reais ainda não são acionadas.</p>
       </form>
     </div>
   </section>
-  <section class="section" id="meus-contextos">
+
+  <section class="consumer-life-band">
     <div class="container">
-      <div class="section-head consumer-section-head"><div><span class="eyebrow">O que você já está cuidando</span><h2 class="h2">Continue de onde parou.</h2></div><button class="button button-primary" type="button" id="create-context">+ Organizar algo</button></div>
-      <div class="consumer-empty" id="consumer-empty"><strong>Ainda não há nada salvo.</strong><p>Comece por uma compra, sua casa, um veículo, um pet ou um evento.</p></div>
+      <div class="consumer-life-head">
+        <span class="eyebrow eyebrow-light">A VIDA VAI LEMBRANDO POR VOCÊ</span>
+        <h2>Uma coisa hoje. Outra amanhã. Tudo continua no mesmo lugar.</h2>
+      </div>
+      <div class="consumer-life-scenes">
+        <article><span>SEGUNDA</span><strong>“O pneu da moto está ficando ruim.”</strong><small>Você guarda.</small></article>
+        <article><span>QUARTA</span><strong>“Também preciso trocar o óleo.”</strong><small>Você acrescenta.</small></article>
+        <article><span>SÁBADO</span><strong>“Agora quero resolver a moto.”</strong><small>O Uai Perto já tem o contexto.</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section consumer-start-section" id="guardar">
+    <div class="container">
+      <div class="section-head consumer-section-head">
+        <div>
+          <span class="eyebrow">COMECE POR ALGO QUE JÁ EXISTE NA SUA VIDA</span>
+          <h2 class="h2">O que você quer parar de carregar só na cabeça?</h2>
+        </div>
+        <p>Não precisa resolver agora. Só guarde o que importa e continue quando lembrar de mais alguma coisa.</p>
+      </div>
+
+      <div class="consumer-starter-grid">
+        <a href="/meu-uai-perto.html?criar=compras" class="consumer-starter-card">
+          <span class="starter-icon">🛒</span><small>COMPRA</small><h3>“Toda hora eu lembro de mais uma coisa.”</h3><p>Faça a lista crescer durante a semana e resolva quando estiver pronta.</p><strong>Começar minha lista →</strong>
+        </a>
+        <a href="/meu-uai-perto.html?criar=casa" class="consumer-starter-card">
+          <span class="starter-icon">🏠</span><small>CASA</small><h3>“Essa reforma tem um monte de detalhe.”</h3><p>Medidas, materiais, etapas e pendências ficam juntas.</p><strong>Organizar minha casa →</strong>
+        </a>
+        <a href="/meu-uai-perto.html?criar=veiculo" class="consumer-starter-card">
+          <span class="starter-icon">🚗</span><small>VEÍCULO</small><h3>“Depois eu preciso olhar isso.”</h3><p>Km, revisão, barulho, pneu e serviços anteriores ficam registrados.</p><strong>Guardar no meu veículo →</strong>
+        </a>
+        <a href="/meu-uai-perto.html?criar=pet" class="consumer-starter-card">
+          <span class="starter-icon">🐶</span><small>PET</small><h3>“A vacina dele está chegando.”</h3><p>Cuidados, alimentação e necessidades acompanham o pet com você.</p><strong>Guardar no meu pet →</strong>
+        </a>
+        <a href="/meu-uai-perto.html?criar=evento" class="consumer-starter-card">
+          <span class="starter-icon">🎉</span><small>EVENTO</small><h3>“Ainda falta resolver um monte de coisa.”</h3><p>Monte as partes aos poucos e procure fornecedores na hora certa.</p><strong>Organizar meu evento →</strong>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="meus-contextos">
+    <div class="container">
+      <div class="section-head consumer-section-head">
+        <div><span class="eyebrow">SEU ESPAÇO</span><h2 class="h2">Continue de onde parou.</h2></div>
+        <button class="button button-primary" type="button" id="create-context">+ Guardar outra coisa</button>
+      </div>
+      <div class="consumer-empty" id="consumer-empty">
+        <div class="consumer-empty-icon">⌁</div>
+        <strong>Ainda não há nada guardado aqui.</strong>
+        <p>Quando você criar sua primeira lista, casa, veículo, pet ou evento, ele aparece neste espaço para continuar depois.</p>
+        <a href="#guardar" class="button button-ghost">Escolher o que guardar</a>
+      </div>
       <div class="context-grid" id="context-grid" aria-live="polite"></div>
     </div>
   </section>
-  <section class="section section-alt" id="experiencias">
+
+  <section class="section consumer-form-cta" id="testar-consumidor">
     <div class="container">
-      <div class="section-head"><div><span class="eyebrow">O que você quer organizar?</span><h2 class="h2">Escolha algo da sua vida que o Uai Perto pode acompanhar com você.</h2></div><p>Você vai alimentando quando lembrar. Quando quiser comprar, contratar ou resolver, o contexto já está pronto.</p></div>
+      <div class="consumer-form-cta-panel">
+        <div>
+          <span class="eyebrow">QUER IR ALÉM DA DEMONSTRAÇÃO?</span>
+          <h2>Conte uma necessidade real de Uberaba.</h2>
+          <p>O formulário do consumidor ajuda o Uai Perto a entender o que as pessoas realmente querem resolver, em que região e com qual urgência.</p>
+        </div>
+        <div class="consumer-form-cta-actions">
+          <a class="button button-light" href="/participar.html?perfil=consumidor#consumer-panel">Ativar formulário do consumidor →</a>
+          <small>Você pode responder sem deixar contato.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt consumer-more-section" id="experiencias">
+    <div class="container">
+      <div class="section-head"><div><span class="eyebrow">MAIS FORMAS DE ORGANIZAR</span><h2 class="h2">Escolha onde quer começar.</h2></div><p>As opções abaixo usam o mesmo espaço que você acabou de ver. Você pode criar mais de uma e voltar depois.</p></div>
       <div class="experience-grid" id="experience-grid"></div>
     </div>
   </section>
 </main>
-<div class="consumer-modal" id="consumer-modal" hidden><button class="modal-backdrop" type="button" data-close-modal aria-label="Fechar"></button><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><span class="eyebrow" id="modal-kicker">ORGANIZAR</span><h2 class="h3" id="modal-title">Criar</h2></div><button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button></div><form id="context-form" class="context-form"></form></section></div>
-<div class="intent-drawer" id="intent-drawer" hidden><button class="modal-backdrop" type="button" data-close-intent aria-label="Fechar"></button><section class="intent-card" role="dialog" aria-modal="true" aria-labelledby="intent-title"><div class="modal-head"><div><span class="eyebrow">PRONTO PARA AGIR</span><h2 class="h3" id="intent-title">Veja o que o Uai Perto vai levar em conta.</h2></div><button class="modal-close" type="button" data-close-intent aria-label="Fechar">×</button></div><div id="intent-content"></div></section></div>
+
+<div class="consumer-modal" id="consumer-modal" hidden>
+  <button class="modal-backdrop" type="button" data-close-modal aria-label="Fechar"></button>
+  <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head"><div><span class="eyebrow" id="modal-kicker">ORGANIZAR</span><h2 class="h3" id="modal-title">Criar</h2></div><button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button></div>
+    <form id="context-form" class="context-form"></form>
+  </section>
+</div>
+
+<div class="intent-drawer" id="intent-drawer" hidden>
+  <button class="modal-backdrop" type="button" data-close-intent aria-label="Fechar"></button>
+  <section class="intent-card" role="dialog" aria-modal="true" aria-labelledby="intent-title">
+    <div class="modal-head"><div><span class="eyebrow">PRONTO PARA AGIR</span><h2 class="h3" id="intent-title">Veja o que o Uai Perto vai levar em conta.</h2></div><button class="modal-close" type="button" data-close-intent aria-label="Fechar">×</button></div>
+    <div id="intent-content"></div>
+  </section>
+</div>
+
 <div id="site-footer"></div>
 <script type="module" src="/assets/site.js"></script>
-<script type="module" src="/assets/meu-uai-perto.js?v=0.1.1"></script>
+<script type="module" src="/assets/meu-uai-perto.js?v=0.2.0"></script>
 </body>
 </html>
