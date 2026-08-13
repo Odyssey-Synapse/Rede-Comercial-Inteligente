@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/og-uai-perto.jpg",
+      "destination": "/api/og-uai-perto"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
