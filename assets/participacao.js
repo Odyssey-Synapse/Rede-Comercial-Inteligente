@@ -153,10 +153,14 @@ function validConsumerContact(form){
   if(type==="WhatsApp")return value.replace(/\D/g,"").length>=10;
   return false;
 }
+function resetTurnstileProfile(profile){
+  tokens[profile]="";
+  if(window.turnstile&&widgetIds[profile]!==null)window.turnstile.reset(widgetIds[profile]);
+}
 function resetFormState(profile,form){
   form.reset();form.querySelectorAll("[data-checkbox-group]").forEach(group=>{group.classList.remove("invalid");updateGroupCounter(group)});
   if(profile==="consumidor")syncConsumerContact();
-  tokens[profile]="";if(window.turnstile&&widgetIds[profile]!==null)window.turnstile.reset(widgetIds[profile]);
+  resetTurnstileProfile(profile);
 }
 function isTurnstileError(error){return error?.message==="ANTIABUSE_REJECTED"||String(error?.message||"").startsWith("TURNSTILE_")}
 
@@ -191,8 +195,8 @@ async function submitParticipation(profile,event){
     if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. <a href="/entrada-empresa.html">Entenda o que acontece agora →</a>');
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
-    if(isTurnstileError(error))resetFormState(profile,form);
-    const friendly=isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Revise os dados e envie novamente.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
+    if(isTurnstileError(error))resetTurnstileProfile(profile);
+    const friendly=isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Seus dados foram preservados; aguarde alguns segundos e envie novamente.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
   }finally{submit.disabled=false;submit.textContent=originalText}
 }
 forms.consumidor?.addEventListener("submit",event=>submitParticipation("consumidor",event));
