@@ -19,6 +19,8 @@ const condition=validCondition?{
 }:null;
 
 let config={};
+let acceptanceCompleted=false;
+let onboardingCompleted=false;
 const tokens={acceptance:'',onboarding:''};
 const widgetIds={acceptance:null,onboarding:null};
 let turnstileReady=Promise.resolve();
@@ -105,7 +107,7 @@ renderCondition();
 const acceptanceForm=document.querySelector('#acceptance-form');
 acceptanceForm?.addEventListener('submit',async event=>{
   event.preventDefault();
-  if(!condition)return;
+  if(!condition||acceptanceCompleted)return;
   setFeedback('#acceptance-feedback','');
   if(!acceptanceForm.checkValidity()){acceptanceForm.reportValidity();setFeedback('#acceptance-feedback','Revise os campos antes de continuar.','error');return}
   const submit=document.querySelector('#acceptance-submit');
@@ -134,15 +136,18 @@ acceptanceForm?.addEventListener('submit',async event=>{
   ].join('\n');
   try{
     await sendContact({kind:'acceptance',name:`${name} — ${company}`,email,subject:'Aceite de condição — empresa',message,website:acceptanceForm.elements.website?.value||''});
+    acceptanceCompleted=true;
     try{localStorage.setItem('uai-company-entry-draft',JSON.stringify({company,name,email,whatsapp}))}catch{}
     setFeedback('#acceptance-feedback','Aceite enviado. Agora o Uai Perto confere a condição e envia a cobrança identificada pelo contato informado.','success');
+    acceptanceForm.querySelectorAll('input,select,textarea').forEach(el=>{el.disabled=true});
+    submit.textContent='Aceite enviado';
     const payment=document.querySelector('#payment-card');
     payment?.classList.add('ready');
     if(payment)payment.innerHTML=`<span class="status-chip">ACEITE ENVIADO</span><h3>Agora aguarde a cobrança identificada.</h3><p>Se a condição for confirmada, o Uai Perto enviará a cobrança de adesão pelo contato informado.</p><div class="condition-summary"><small>Valor que deve aparecer na cobrança confirmada</small><strong>${money(condition.adhesion)}</strong><span>Faixa ${condition.band} · ${isInitial?'entrada inicial':'entrada futura'}</span></div><div class="safety-note"><strong>Não pague valor diferente sem confirmar.</strong><span>O pagamento ainda é conciliado manualmente nesta fase.</span></div>`;
     setProgress(4);
     payment?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
   }catch(error){setFeedback('#acceptance-feedback',friendlyError(error),'error');resetTurnstile('acceptance')}
-  finally{submit.disabled=false;submit.textContent=original}
+  finally{if(!acceptanceCompleted){submit.disabled=false;submit.textContent=original}}
 });
 
 const onboardingGate=document.querySelector('#onboarding-gate');
@@ -166,7 +171,9 @@ if(params.get('etapa')==='onboarding')openOnboarding({scroll:false});
 
 function checkedValues(form,name){return [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(el=>el.value)}
 onboardingForm?.addEventListener('submit',async event=>{
-  event.preventDefault();setFeedback('#onboarding-feedback','');
+  event.preventDefault();
+  if(onboardingCompleted)return;
+  setFeedback('#onboarding-feedback','');
   const channels=checkedValues(onboardingForm,'channels');
   if(!onboardingForm.checkValidity()||channels.length===0){onboardingForm.reportValidity();setFeedback('#onboarding-feedback',channels.length?'Revise os campos antes de enviar.':'Escolha pelo menos uma forma de atendimento.','error');return}
   const submit=document.querySelector('#onboarding-submit');const original=submit.textContent;submit.disabled=true;submit.textContent='Enviando…';
@@ -194,9 +201,11 @@ onboardingForm?.addEventListener('submit',async event=>{
   ].join('\n');
   try{
     await sendContact({kind:'onboarding',name:`${name} — ${company}`,email,subject:'Onboarding operacional — empresa',message,website:f.website?.value||''});
+    onboardingCompleted=true;
     setFeedback('#onboarding-feedback','Configuração enviada. O Uai Perto agora tem uma base operacional melhor para evitar oportunidades incompatíveis.','success');
-    onboardingForm.querySelectorAll('input,select,textarea,button').forEach(el=>{if(el.type!=='button')el.disabled=true});
+    onboardingForm.querySelectorAll('input,select,textarea').forEach(el=>{el.disabled=true});
+    submit.textContent='Onboarding enviado';
     document.querySelectorAll('[data-progress-stage]').forEach(item=>{item.classList.remove('active');item.classList.add('complete')});
   }catch(error){setFeedback('#onboarding-feedback',friendlyError(error),'error');resetTurnstile('onboarding')}
-  finally{submit.disabled=false;submit.textContent=original}
+  finally{if(!onboardingCompleted){submit.disabled=false;submit.textContent=original}}
 });
