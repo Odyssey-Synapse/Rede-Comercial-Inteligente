@@ -53,6 +53,16 @@ function setProgress(stage,{completeBefore=true}={}){
     item.classList.toggle('complete',completeBefore&&n<stage);
   });
 }
+function waitForTurnstileToken(kind,timeoutMs=8000){
+  if(tokens[kind])return Promise.resolve(true);
+  return new Promise(resolve=>{
+    const started=Date.now();
+    const timer=setInterval(()=>{
+      if(tokens[kind]){clearInterval(timer);resolve(true);return}
+      if(Date.now()-started>=timeoutMs){clearInterval(timer);resolve(false)}
+    },120);
+  });
+}
 async function ensureTurnstile(kind){
   if(!config.turnstileRequired)return true;
   if(!config.turnstileSiteKey){setTurnstileFeedback(kind,'A verificação de segurança está temporariamente indisponível.');return false}
@@ -64,21 +74,16 @@ async function ensureTurnstile(kind){
     widgetIds[kind]=window.turnstile.render(target,{
       sitekey:config.turnstileSiteKey,
       theme:'auto',
-      language:'pt-BR',
-      size:'flexible',
-      appearance:'interaction-only',
-      execution:'render',
+      appearance:'always',
       retry:'auto',
       'refresh-expired':'auto',
-      'refresh-timeout':'auto',
       callback:token=>{
         tokens[kind]=token;
         const el=document.querySelector(feedbackId(kind));
         if(el?.textContent?.toLowerCase().includes('verificação de segurança'))setTurnstileFeedback(kind,'','');
       },
       'expired-callback':()=>{tokens[kind]=''},
-      'timeout-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'A verificação de segurança expirou e será refeita automaticamente.')},
-      'error-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'Não foi possível concluir a verificação de segurança. Aguarde alguns segundos e tente novamente.')}
+      'error-callback':code=>{tokens[kind]='';setTurnstileFeedback(kind,`Não foi possível concluir a verificação de segurança${code?` (${code})`:''}. Atualize a página e tente novamente.`)}
     });
     return true;
   }catch{
@@ -94,8 +99,11 @@ async function sendContact({kind,name,email,subject,message,website=''}){
   if(config.contactFormEnabled===false)throw new Error('CONTACT_DISABLED');
   if(config.turnstileRequired&&!tokens[kind]){
     const ready=await ensureTurnstile(kind);
-    if(ready)throw new Error('TURNSTILE_NOT_READY');
-    throw new Error('TURNSTILE_LOAD_FAILED');
+    if(!ready)throw new Error('TURNSTILE_LOAD_FAILED');
+    setTurnstileFeedback(kind,'Concluindo a verificação de segurança…','');
+    const verified=await waitForTurnstileToken(kind);
+    if(!verified)throw new Error('TURNSTILE_NOT_READY');
+    setTurnstileFeedback(kind,'','');
   }
   const response=await fetch('/api/contact',{
     method:'POST',headers:{'content-type':'application/json'},
@@ -108,8 +116,8 @@ async function sendContact({kind,name,email,subject,message,website=''}){
 function isTurnstileError(error){return error?.message==='ANTIABUSE_REJECTED'||String(error?.message||'').startsWith('TURNSTILE_')}
 function friendlyError(error){
   if(error.message==='TURNSTILE_LOAD_FAILED')return 'Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.';
-  if(error.message==='TURNSTILE_NOT_READY'||error.message==='TURNSTILE_REQUIRED')return 'Aguarde a verificação de segurança concluir e tente enviar novamente.';
-  if(isTurnstileError(error))return 'A verificação de segurança precisa ser refeita. Aguarde alguns segundos e tente novamente.';
+  if(error.message==='TURNSTILE_NOT_READY'||error.message==='TURNSTILE_REQUIRED')return 'A verificação de segurança não concluiu. Atualize a página e tente novamente.';
+  if(isTurnstileError(error))return 'A verificação de segurança precisa ser refeita. Atualize a página e tente novamente.';
   if(error.message==='CONTACT_DISABLED'||error.message==='CONTACT_NOT_CONFIGURED')return 'O canal de envio está temporariamente indisponível.';
   if(error.message==='RATE_LIMITED')return 'Muitas tentativas em pouco tempo. Tente novamente mais tarde.';
   return 'Não foi possível enviar agora. Tente novamente em alguns minutos.';
