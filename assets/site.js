@@ -128,7 +128,47 @@ function ensureHeroBrand(){
   hero.prepend(lockup);
 }
 
+function ensureHomeMeuUaiPerto(){
+  const isHome=location.pathname==="/"||location.pathname==="/index.html";
+  if(!isHome||document.querySelector("#meu-uai-perto"))return;
+  const hero=document.querySelector(".hero");
+  if(!hero)return;
+
+  if(!document.querySelector('link[href^="/assets/consumer-home.css"]')){
+    const link=document.createElement("link");
+    link.rel="stylesheet";
+    link.href="/assets/consumer-home.css?v=0.1.2";
+    document.head.append(link);
+  }
+
+  const section=document.createElement("section");
+  section.className="section home-uai-life";
+  section.id="meu-uai-perto";
+  section.innerHTML=`<div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">UM LUGAR PARA O QUE VOCÊ AINDA VAI PRECISAR</span><h2 class="h2">Você lembra de uma coisa agora. Outra amanhã. Quando chegar a hora de resolver, o Uai Perto já sabe o resto.</h2></div>
+      <p>Vai guardando aos poucos. Quando quiser comprar, contratar ou resolver, você só diz: <strong>“resolve isso pra mim”.</strong></p>
+    </div>
+    <div class="home-uai-life-grid">
+      <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=compras"><span class="home-uai-life-icon">🛒</span><small>COMPRA DA SEMANA</small><h3>“Lembrei de mais uma coisa.”</h3><p>Adicione agora. Resolva a lista quando quiser.</p><strong>Guardar na minha lista →</strong></a>
+      <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=casa"><span class="home-uai-life-icon">🏠</span><small>CASA E OBRA</small><h3>“Ainda falta fazer isso aqui.”</h3><p>Medidas, materiais e etapas ficam no mesmo lugar.</p><strong>Guardar na minha casa →</strong></a>
+      <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=veiculo"><span class="home-uai-life-icon">🚗</span><small>SEU VEÍCULO</small><h3>“Depois eu preciso olhar esse barulho.”</h3><p>Você registra hoje para não começar do zero depois.</p><strong>Guardar no meu veículo →</strong></a>
+      <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=pet"><span class="home-uai-life-icon">🐶</span><small>SEU PET</small><h3>“A vacina dele está chegando.”</h3><p>Cuidados e necessidades acompanham o pet com você.</p><strong>Guardar no meu pet →</strong></a>
+      <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=evento"><span class="home-uai-life-icon">🎉</span><small>SEU EVENTO</small><h3>“Ainda falta buffet, bolo e som.”</h3><p>Monte aos poucos. Procure quando estiver pronto.</p><strong>Guardar no meu evento →</strong></a>
+    </div>
+    <div class="home-uai-life-actions"><a class="button button-primary" href="/meu-uai-perto.html">Quero guardar o que preciso →</a><a class="button button-ghost" href="/meu-uai-perto.html#quick-intent-form">Preciso resolver algo agora</a></div>
+    <p class="home-uai-life-note">Guardar não inicia nenhuma procura. Você decide quando o Uai Perto deve agir.</p>
+  </div>`;
+  hero.insertAdjacentElement("afterend",section);
+
+  const heroConsumerCta=document.querySelector(".hero .hero-actions .button-ghost");
+  if(heroConsumerCta){heroConsumerCta.href="/meu-uai-perto.html";heroConsumerCta.textContent="Quero guardar o que preciso"}
+
+  document.querySelectorAll('a[href="/participar.html?perfil=consumidor"]').forEach(link=>{link.href="/meu-uai-perto.html"});
+}
+
 applyBrandMetadata();
 ensureHeroBrand();
+ensureHomeMeuUaiPerto();
 const bridge=document.querySelector("#demo-bridge-core span");
 if(bridge)bridge.innerHTML="UAI<br>PERTO";
