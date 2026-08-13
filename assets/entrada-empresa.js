@@ -53,6 +53,16 @@ function setProgress(stage,{completeBefore=true}={}){
     item.classList.toggle('complete',completeBefore&&n<stage);
   });
 }
+function waitForTurnstileToken(kind,timeoutMs=8000){
+  if(tokens[kind])return Promise.resolve(true);
+  return new Promise(resolve=>{
+    const started=Date.now();
+    const timer=setInterval(()=>{
+      if(tokens[kind]){clearInterval(timer);resolve(true);return}
+      if(Date.now()-started>=timeoutMs){clearInterval(timer);resolve(false)}
+    },120);
+  });
+}
 async function ensureTurnstile(kind){
   if(!config.turnstileRequired)return true;
   if(!config.turnstileSiteKey){setTurnstileFeedback(kind,'A verificação de segurança está temporariamente indisponível.');return false}
@@ -64,21 +74,16 @@ async function ensureTurnstile(kind){
     widgetIds[kind]=window.turnstile.render(target,{
       sitekey:config.turnstileSiteKey,
       theme:'auto',
-      language:'pt-BR',
-      size:'flexible',
-      appearance:'interaction-only',
-      execution:'render',
+      appearance:'always',
       retry:'auto',
       'refresh-expired':'auto',
-      'refresh-timeout':'auto',
       callback:token=>{
         tokens[kind]=token;
         const el=document.querySelector(feedbackId(kind));
         if(el?.textContent?.toLowerCase().includes('verificação de segurança'))setTurnstileFeedback(kind,'','');
       },
       'expired-callback':()=>{tokens[kind]=''},
-      'timeout-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'A verificação de segurança expirou e será refeita automaticamente.')},
-      'error-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'Não foi possível concluir a verificação de segurança. Aguarde alguns segundos e tente novamente.')}
+      'error-callback':code=>{tokens[kind]='';setTurnstileFeedback(kind,`Não foi possível concluir a verificação de segurança${code?` (${code})`:''}. Atualize a página e tente novamente.`)}
     });
     return true;
   }catch{
@@ -94,8 +99,11 @@ async function sendContact({kind,name,email,subject,message,website=''}){
   if(config.contactFormEnabled===false)throw new Error('CONTACT_DISABLED');
   if(config.turnstileRequired&&!tokens[kind]){
     const ready=await ensureTurnstile(kind);
-    if(ready)throw new Error('TURNSTILE_NOT_READY');
-    throw new Error('TURNSTILE_LOAD_FAILED');
+    if(!ready)throw new Error('TURNSTILE_LOAD_FAILED');
+    setTurnstileFeedback(kind,'Concluindo a verificação de segurança…','');
+    const verified=await waitForTurnstileToken(kind);
+    if(!verified)throw new Error('TURNSTILE_NOT_READY');
+    setTurnstileFeedback(kind,'','');
   }
   const response=await fetch('/api/contact',{
     method:'POST',headers:{'content-type':'application/json'},
@@ -108,12 +116,69 @@ async function sendContact({kind,name,email,subject,message,website=''}){
 function isTurnstileError(error){return error?.message==='ANTIABUSE_REJECTED'||String(error?.message||'').startsWith('TURNSTILE_')}
 function friendlyError(error){
   if(error.message==='TURNSTILE_LOAD_FAILED')return 'Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.';
-  if(error.message==='TURNSTILE_NOT_READY'||error.message==='TURNSTILE_REQUIRED')return 'Aguarde a verificação de segurança concluir e tente enviar novamente.';
-  if(isTurnstileError(error))return 'A verificação de segurança precisa ser refeita. Aguarde alguns segundos e tente novamente.';
+  if(error.message==='TURNSTILE_NOT_READY'||error.message==='TURNSTILE_REQUIRED')return 'A verificação de segurança não concluiu. Atualize a página e tente novamente.';
+  if(isTurnstileError(error))return 'A verificação de segurança precisa ser refeita. Atualize a página e tente novamente.';
   if(error.message==='CONTACT_DISABLED'||error.message==='CONTACT_NOT_CONFIGURED')return 'O canal de envio está temporariamente indisponível.';
   if(error.message==='RATE_LIMITED')return 'Muitas tentativas em pouco tempo. Tente novamente mais tarde.';
   return 'Não foi possível enviar agora. Tente novamente em alguns minutos.';
 }
+
+function installOnboardingTutorial(){
+  const section=document.querySelector('#onboarding');
+  const copy=section?.querySelector('.entry-copy');
+  const form=document.querySelector('#onboarding-form');
+  if(!section||!copy||!form||copy.querySelector('.onboarding-tutorial'))return;
+
+  const style=document.createElement('style');
+  style.textContent=`
+    #onboarding .entry-copy{position:sticky;top:96px}
+    .onboarding-tutorial{margin-top:24px;padding:20px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--green-soft) 50%,var(--surface)));box-shadow:0 12px 30px rgba(51,87,73,.06)}
+    .onboarding-tutorial h3{margin:10px 0 6px;font-size:1.2rem}.onboarding-tutorial>p{margin:0 0 16px;color:var(--muted);font-size:.92rem}
+    .tutorial-example{display:grid;gap:9px;margin:0}.tutorial-example div{padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+    .tutorial-example dt{font-size:.7rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em;color:#B55A30}.tutorial-example dd{margin:3px 0 0;color:var(--ink);font-size:.87rem;line-height:1.42}
+    .tutorial-note{margin-top:14px!important;padding:12px;border-left:3px solid #D39237;border-radius:0 10px 10px 0;background:var(--surface-2);font-weight:700;color:var(--ink)!important}
+    #acceptance-turnstile,#onboarding-turnstile{min-height:68px;display:flex;align-items:center;justify-content:flex-start;overflow:visible}
+    @media(max-width:980px){#onboarding .entry-copy{position:static}.tutorial-example{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:700px){.tutorial-example{grid-template-columns:1fr}#acceptance-turnstile,#onboarding-turnstile{justify-content:center}}
+  `;
+  document.head.appendChild(style);
+
+  const tutorial=document.createElement('aside');
+  tutorial.className='onboarding-tutorial';
+  tutorial.setAttribute('aria-label','Exemplo de preenchimento do onboarding');
+  tutorial.innerHTML=`
+    <span class="status-chip">EXEMPLO FICTÍCIO</span>
+    <h3>Como preencher: Clima Triângulo</h3>
+    <p>Use este caso apenas como modelo de raciocínio. No formulário, descreva a realidade da sua empresa.</p>
+    <dl class="tutorial-example">
+      <div><dt>Pedido muito bom</dt><dd>Instalação ou manutenção de ar-condicionado split em residência ou pequeno comércio.</dd></div>
+      <div><dt>Evitar</dt><dd>Refrigeração industrial, elétrica geral e equipamento que dependa de peça especial sem consulta.</dd></div>
+      <div><dt>Área</dt><dd>Toda Uberaba; fora do perímetro urbano somente sob consulta.</dd></div>
+      <div><dt>Horário</dt><dd>Seg–sex 8h–18h e sábado 8h–12h. Urgências dependem da agenda.</dd></div>
+      <div><dt>Capacidade</dt><dd>3–5 atendimentos simultâneos em um dia normal.</dd></div>
+      <div><dt>Resposta</dt><dd>Quando interessa, responde em até 1 hora.</dd></div>
+      <div><dt>Atendimento</dt><dd>No endereço do cliente. Entrega não é a atividade principal.</dd></div>
+      <div><dt>Preço</dt><dd>Orçamento após entender o pedido. Pix e cartão; parcelamento sob consulta.</dd></div>
+      <div><dt>Limites</dt><dd>Grande altura exige avaliação; algumas peças dependem de fornecedor.</dd></div>
+    </dl>
+    <p class="tutorial-note">Ensine ao Uai Perto quando chamar sua empresa — e também quando não chamar.</p>`;
+  copy.appendChild(tutorial);
+
+  const placeholders={
+    company:'Ex.: Clima Triângulo',
+    name:'Ex.: Carlos Almeida',
+    email:'Ex.: atendimento@empresa.com.br',
+    whatsapp:'Ex.: (34) 9....-....',
+    ideal:'Ex.: instalação ou manutenção de ar-condicionado split em residência ou pequeno comércio.',
+    avoid:'Ex.: refrigeração industrial, elétrica geral ou equipamento que dependa de peça especial sem consulta.',
+    coverageDetail:'Ex.: toda Uberaba; fora do perímetro urbano somente sob consulta.',
+    hours:'Ex.: seg–sex 8h–18h; sábado 8h–12h; urgências dependem da agenda.',
+    payment:'Ex.: Pix e cartão; parcelamento sob consulta.',
+    constraints:'Ex.: grande altura exige avaliação; algumas peças dependem de fornecedor.'
+  };
+  Object.entries(placeholders).forEach(([name,value])=>{const field=form.elements[name];if(field)field.placeholder=value});
+}
+installOnboardingTutorial();
 
 function renderCondition(){
   if(!condition){setProgress(1,{completeBefore:false});return}
