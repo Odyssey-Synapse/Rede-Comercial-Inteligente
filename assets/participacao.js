@@ -153,7 +153,7 @@ async function submitParticipation(profile,event){
     const response=await fetch("/api/contact",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
     const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"SEND_FAILED");
     resetFormState(profile,form);
-    if(isCompany)setSuccess(profile,'Informações enviadas. Agora sabemos melhor onde sua empresa pode entrar na primeira Rede. <a href="/calculadora.html">Se quiser, simule sua referência de participação.</a>');
+    if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. <a href="/entrada-empresa.html">Entenda o que acontece agora →</a>');
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     const friendly=error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
