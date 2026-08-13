@@ -14,6 +14,7 @@ const bands=[
 
 function selectedText(id){const el=document.querySelector(id);return el?.selectedOptions?.[0]?.textContent||''}
 function selectedValue(id){return document.querySelector(id)?.value??''}
+function entryUrl(band,type){return `/entrada-empresa.html?faixa=${encodeURIComponent(band.name)}&tipo=${type}`}
 
 function enterpriseResult(reason){
   result.innerHTML=`
@@ -49,24 +50,26 @@ form?.addEventListener('submit',event=>{
   const band=bands.find(item=>score>=item.min&&score<=item.max);
   if(!band)return enterpriseResult('A combinação informada ultrapassa as faixas padronizadas');
 
-  const adhesion=band.monthly*3;
+  const founderAdhesion=band.monthly*3;
+  const futureAdhesion=band.monthly*2;
   result.innerHTML=`
     <div class="quote-status"><span class="eyebrow">SUA REFERÊNCIA</span><span class="quote-badge preview">SIMULAÇÃO</span></div>
     <div class="quote-company"><small>Faixa estimada</small><strong>${band.name}</strong><span>calculada a partir da operação informada</span></div>
     <div class="price-display"><small>Mensalidade de referência para entradas futuras</small><strong>${money(band.monthly)}</strong><span>/ mês</span></div>
-    <div class="price-lines"><div class="price-line"><span>Adesão de referência</span><strong>${money(adhesion)}</strong></div></div>
     <div class="basis-note"><strong>O que foi considerado:</strong> ${escapeHtml(selectedText('#operational-cores'))}; ${escapeHtml(selectedText('#simultaneous-operations'))}; ${escapeHtml(selectedText('#active-units'))}; ${escapeHtml(selectedText('#integration-level'))}.</div>
     <div class="founder-quote-context recognized">
       <span class="eyebrow">SE FOR CONFIRMADO ENTRE OS 54 INICIAIS</span>
-      <strong>Adesão estimada: ${money(adhesion)} · mensalidade recorrente: R$ 0.</strong>
-      <p>A simulação não reserva posição. Essa condição precisa ser confirmada pelo Uai Perto antes do aceite.</p>
+      <strong>Adesão estimada: ${money(founderAdhesion)} · mensalidade recorrente: R$ 0.</strong>
+      <p>A simulação não reserva posição. Essa condição precisa ser confirmada pelo Uai Perto antes do aceite e da cobrança.</p>
+      <a class="button button-primary button-full" href="${entryUrl(band,'inicial')}">Continuar com esta condição →</a>
     </div>
     <div class="founder-quote-context">
       <span class="eyebrow">SE ENTRAR DEPOIS DOS 54</span>
-      <strong>Adesão estimada: ${money(adhesion)}.</strong>
-      <p>A adesão inclui os dois primeiros meses. Se a empresa decidir continuar, a mensalidade de ${money(band.monthly)} passa a valer a partir do terceiro mês.</p>
+      <strong>Adesão estimada: ${money(futureAdhesion)}.</strong>
+      <p>A entrada futura usa adesão equivalente a 2 mensalidades e inclui os dois primeiros meses. Se a empresa decidir continuar, a mensalidade de ${money(band.monthly)} passa a valer a partir do terceiro mês.</p>
+      <a class="button button-light button-full" href="${entryUrl(band,'futuro')}">Continuar como entrada futura →</a>
     </div>
-    <div class="quote-actions"><a class="button button-primary" href="/participar.html?perfil=empresa">Apresentar minha empresa</a><a class="button button-light" href="/contato.html?assunto=Quero%20participar%20como%20empresa">Falar com o Uai Perto</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
+    <div class="quote-actions"><a class="button button-ghost" href="/participar.html?perfil=empresa">Ainda não apresentei minha empresa</a><button class="button button-ghost" id="reset-capacity" type="button">Refazer simulação</button></div>
     <p class="fine">Modelo em validação. Este resultado não é proposta oficial, contrato, cobrança automática nem garantia de entrada na rede inicial.</p>`;
   document.querySelector('#reset-capacity')?.addEventListener('click',reset);
 });
