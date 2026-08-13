@@ -35,6 +35,9 @@ html[data-theme="dark"] .status-chip{color:#F2E8D9;background:rgba(242,232,217,.
 .condition-note{padding:14px 16px;border-radius:14px;background:var(--surface-2);color:var(--muted);font-size:.9rem;line-height:1.55}
 .entry-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .entry-form .full,.entry-form .locked-state,.entry-form .selected-condition,.entry-form .entry-check,.entry-form .turnstile-slot,.entry-form .entry-feedback,.entry-form .form-intro{grid-column:1/-1}
+#acceptance-fields{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#acceptance-fields[hidden]{display:none!important}
+#acceptance-fields .selected-condition,#acceptance-fields .entry-check,#acceptance-fields .turnstile-slot,#acceptance-fields .entry-feedback,#acceptance-fields .button{grid-column:1/-1}
 .entry-field{display:flex;flex-direction:column;gap:7px;min-width:0}
 .entry-field.full{grid-column:1/-1}
 .entry-field label,.entry-fieldset legend{font-weight:820;color:var(--ink);font-size:.94rem}
@@ -76,6 +79,8 @@ html[data-theme="dark"] .status-chip{color:#F2E8D9;background:rgba(242,232,217,.
   .entry-card{border-radius:18px;padding:20px}
   .entry-form{grid-template-columns:1fr}
   .entry-form>*{grid-column:1!important}
+  #acceptance-fields{grid-template-columns:1fr}
+  #acceptance-fields>*{grid-column:1!important}
   .condition-meta{grid-template-columns:1fr}
   .compact-choices{grid-template-columns:1fr}
   .entry-copy .h2{font-size:clamp(1.8rem,9vw,2.5rem)}
