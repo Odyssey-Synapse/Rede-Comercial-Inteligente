@@ -1,55 +1,49 @@
 import sharp from "sharp";
-import { fileURLToPath } from "node:url";
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const LOGO_PATH = fileURLToPath(new URL("../assets/uai-perto-logo-horizontal-hd.png", import.meta.url));
-const SYMBOL_PATH = fileURLToPath(new URL("../assets/uai-perto-symbol.png", import.meta.url));
 
 export default async function handler(req, res) {
   try {
-    const [logo, symbol] = await Promise.all([
-      sharp(LOGO_PATH).resize({ width: 420 }).png().toBuffer(),
-      sharp(SYMBOL_PATH).resize({ width: 470 }).png().toBuffer()
-    ]);
+    const svg = Buffer.from(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
+        <rect width="1200" height="630" fill="#F2E8D9"/>
 
-    const overlay = Buffer.from(`
-      <svg width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-        <style>
-          .headline { font-family: Arial, Helvetica, sans-serif; font-size: 62px; font-weight: 900; letter-spacing: -1.8px; fill: #335749; }
-          .support { font-family: Arial, Helvetica, sans-serif; font-size: 27px; font-weight: 700; fill: #335749; }
-          .cta { font-family: Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 800; fill: #F2E8D9; }
-          .arrow { font-family: Arial, Helvetica, sans-serif; font-size: 43px; font-weight: 700; fill: #D39237; }
-        </style>
+        <!-- Marca no topo -->
+        <g transform="translate(38 30)">
+          <path d="M0 0 V58 C0 89 18 109 48 116" fill="none" stroke="#335749" stroke-width="18" stroke-linecap="butt"/>
+          <path d="M48 0 H72 C111 0 130 25 130 61 V119" fill="none" stroke="#D39237" stroke-width="18" stroke-linecap="butt"/>
+          <circle cx="63" cy="61" r="17" fill="#B55A30"/>
+          <text x="151" y="71" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800" letter-spacing="-2" fill="#335749">Uai Perto</text>
+          <text x="153" y="106" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#335749">Uberaba mais perto de você.</text>
+        </g>
 
-        <text class="headline" x="40" y="245">UBERABA ESTÁ</text>
-        <text class="headline" x="40" y="322">PRESTES A FICAR</text>
-        <text class="headline" x="40" y="399">MAIS PERTO</text>
-        <circle cx="513" cy="386" r="10" fill="#B55A30"/>
+        <!-- Copy principal -->
+        <text x="40" y="250" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="900" letter-spacing="-2.2" fill="#335749">UBERABA ESTÁ</text>
+        <text x="40" y="329" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="900" letter-spacing="-2.2" fill="#335749">PRESTES A FICAR</text>
+        <text x="40" y="408" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="900" letter-spacing="-2.2" fill="#335749">MAIS PERTO</text>
+        <circle cx="515" cy="392" r="10" fill="#B55A30"/>
 
-        <text class="support" x="42" y="455">Empresas, serviços, produtos e</text>
-        <text class="support" x="42" y="491">profissionais da cidade em um só lugar.</text>
+        <text x="42" y="465" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#335749">Empresas, serviços, produtos e</text>
+        <text x="42" y="501" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#335749">profissionais da cidade em um só lugar.</text>
 
-        <rect x="40" y="525" width="505" height="70" rx="35" fill="#335749"/>
-        <text class="cta" x="72" y="571">Veja como vai funcionar</text>
-        <text class="arrow" x="479" y="574">→</text>
+        <!-- CTA visual -->
+        <rect x="40" y="530" width="510" height="72" rx="36" fill="#335749"/>
+        <text x="74" y="577" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="800" fill="#F2E8D9">Veja como vai funcionar</text>
+        <text x="484" y="580" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="800" fill="#D39237">→</text>
+
+        <!-- Símbolo ampliado da identidade visual -->
+        <g>
+          <path d="M805 170 V365 C805 470 862 530 958 548" fill="none" stroke="#335749" stroke-width="70" stroke-linecap="butt"/>
+          <path d="M940 170 H1018 C1115 170 1172 236 1172 332 V565" fill="none" stroke="#D39237" stroke-width="70" stroke-linecap="butt"/>
+          <circle cx="992" cy="366" r="74" fill="#B55A30"/>
+        </g>
       </svg>
     `);
 
-    const image = await sharp({
-      create: {
-        width: WIDTH,
-        height: HEIGHT,
-        channels: 4,
-        background: "#F2E8D9"
-      }
-    })
-      .composite([
-        { input: logo, left: 34, top: 22 },
-        { input: symbol, left: 770, top: 135 },
-        { input: overlay, left: 0, top: 0 }
-      ])
-      .jpeg({ quality: 94, chromaSubsampling: "4:4:4", progressive: true })
+    const image = await sharp(svg, { density: 216 })
+      .resize(WIDTH, HEIGHT, { fit: "fill" })
+      .jpeg({ quality: 95, chromaSubsampling: "4:4:4", progressive: true, mozjpeg: true })
       .toBuffer();
 
     res.setHeader("Content-Type", "image/jpeg");
