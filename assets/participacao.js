@@ -9,23 +9,53 @@ let config={};
 
 try{const response=await fetch("/api/public-config",{cache:"no-store"});if(response.ok)config=await response.json()}catch{}
 
-let turnstileReady=Promise.resolve();
+let turnstileLoadFailed=false;
+let turnstileReady=Promise.resolve(true);
 if(config.turnstileRequired&&config.turnstileSiteKey){
   turnstileReady=new Promise(resolve=>{
-    if(window.turnstile){resolve();return}
+    if(window.turnstile){resolve(true);return}
     const script=document.createElement("script");
     script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    script.async=true;script.defer=true;script.onload=resolve;script.onerror=resolve;document.head.appendChild(script);
+    script.async=true;script.defer=true;
+    script.onload=()=>resolve(true);
+    script.onerror=()=>{turnstileLoadFailed=true;resolve(false)};
+    document.head.appendChild(script);
   });
 }
 
 function setFeedback(profile,text,type=""){const el=feedbacks[profile];if(!el)return;el.textContent=text;el.className=`participation-feedback ${type}`.trim()}
 function setSuccess(profile,html){const el=feedbacks[profile];if(!el)return;el.innerHTML=html;el.className="participation-feedback success"}
 async function ensureTurnstile(profile){
-  if(!config.turnstileRequired||!config.turnstileSiteKey||widgetIds[profile]!==null)return;
-  await turnstileReady;
-  const target=document.querySelector(`#${profile}-turnstile`);if(!target||!window.turnstile)return;
-  widgetIds[profile]=window.turnstile.render(target,{sitekey:config.turnstileSiteKey,callback:token=>{tokens[profile]=token},"expired-callback":()=>{tokens[profile]=""},"error-callback":()=>{tokens[profile]=""}});
+  if(!config.turnstileRequired)return true;
+  if(!config.turnstileSiteKey){setFeedback(profile,"A verificação de segurança está temporariamente indisponível.","error");return false}
+  if(widgetIds[profile]!==null)return true;
+  const loaded=await turnstileReady;
+  const target=document.querySelector(`#${profile}-turnstile`);
+  if(!loaded||turnstileLoadFailed||!target||!window.turnstile){setFeedback(profile,"Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.","error");return false}
+  try{
+    widgetIds[profile]=window.turnstile.render(target,{
+      sitekey:config.turnstileSiteKey,
+      theme:"auto",
+      language:"pt-BR",
+      size:"flexible",
+      appearance:"interaction-only",
+      execution:"render",
+      retry:"auto",
+      "refresh-expired":"auto",
+      "refresh-timeout":"auto",
+      callback:token=>{
+        tokens[profile]=token;
+        if(feedbacks[profile]?.textContent?.toLowerCase().includes("verificação de segurança"))setFeedback(profile,"");
+      },
+      "expired-callback":()=>{tokens[profile]=""},
+      "timeout-callback":()=>{tokens[profile]="";setFeedback(profile,"A verificação de segurança expirou e será refeita automaticamente.","error")},
+      "error-callback":()=>{tokens[profile]="";setFeedback(profile,"Não foi possível concluir a verificação de segurança. Aguarde alguns segundos e tente novamente.","error")}
+    });
+    return true;
+  }catch{
+    setFeedback(profile,"Não foi possível iniciar a verificação de segurança. Atualize a página e tente novamente.","error");
+    return false;
+  }
 }
 function activateProfile(profile,updateUrl=true){
   if(!panels[profile])return;
@@ -128,6 +158,7 @@ function resetFormState(profile,form){
   if(profile==="consumidor")syncConsumerContact();
   tokens[profile]="";if(window.turnstile&&widgetIds[profile]!==null)window.turnstile.reset(widgetIds[profile]);
 }
+function isTurnstileError(error){return error?.message==="ANTIABUSE_REJECTED"||String(error?.message||"").startsWith("TURNSTILE_")}
 
 async function submitParticipation(profile,event){
   event.preventDefault();
@@ -135,7 +166,11 @@ async function submitParticipation(profile,event){
   const groupsOk=validateGroups(form);const contactOk=profile!=="consumidor"||validConsumerContact(form);
   if(!form.checkValidity()||!groupsOk||!contactOk){form.reportValidity();setFeedback(profile,contactOk?"Revise os campos indicados antes de enviar.":"Informe um e-mail ou WhatsApp válido para receber o aviso.","error");return}
   if(config.contactFormEnabled===false){setFeedback(profile,"O envio pelo site está temporariamente indisponível.","error");return}
-  if(config.turnstileRequired&&!tokens[profile]){setFeedback(profile,"Conclua a verificação de segurança.","error");return}
+  if(config.turnstileRequired&&!tokens[profile]){
+    const ready=await ensureTurnstile(profile);
+    if(ready)setFeedback(profile,"Aguarde a verificação de segurança concluir e tente enviar novamente.","error");
+    return;
+  }
 
   const submit=submitButtons[profile],originalText=submit.textContent;submit.disabled=true;submit.textContent="Enviando…";
   const isCompany=profile==="empresa";
@@ -156,7 +191,8 @@ async function submitParticipation(profile,event){
     if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. <a href="/entrada-empresa.html">Entenda o que acontece agora →</a>');
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
-    const friendly=error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
+    if(isTurnstileError(error))resetFormState(profile,form);
+    const friendly=isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Revise os dados e envie novamente.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
   }finally{submit.disabled=false;submit.textContent=originalText}
 }
 forms.consumidor?.addEventListener("submit",event=>submitParticipation("consumidor",event));
