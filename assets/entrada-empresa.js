@@ -23,15 +23,19 @@ let acceptanceCompleted=false;
 let onboardingCompleted=false;
 const tokens={acceptance:'',onboarding:''};
 const widgetIds={acceptance:null,onboarding:null};
-let turnstileReady=Promise.resolve();
+let turnstileLoadFailed=false;
+let turnstileReady=Promise.resolve(true);
 
 try{const response=await fetch('/api/public-config',{cache:'no-store'});if(response.ok)config=await response.json()}catch{}
 if(config.turnstileRequired&&config.turnstileSiteKey){
   turnstileReady=new Promise(resolve=>{
-    if(window.turnstile){resolve();return}
+    if(window.turnstile){resolve(true);return}
     const script=document.createElement('script');
     script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    script.async=true;script.defer=true;script.onload=resolve;script.onerror=resolve;document.head.appendChild(script);
+    script.async=true;script.defer=true;
+    script.onload=()=>resolve(true);
+    script.onerror=()=>{turnstileLoadFailed=true;resolve(false)};
+    document.head.appendChild(script);
   });
 }
 
@@ -40,6 +44,8 @@ function setFeedback(id,text,type=''){
   const el=document.querySelector(id);if(!el)return;
   el.textContent=text;el.className=`entry-feedback ${type}`.trim();
 }
+function feedbackId(kind){return kind==='acceptance'?'#acceptance-feedback':'#onboarding-feedback'}
+function setTurnstileFeedback(kind,text,type='error'){setFeedback(feedbackId(kind),text,type)}
 function setProgress(stage,{completeBefore=true}={}){
   document.querySelectorAll('[data-progress-stage]').forEach(item=>{
     const n=Number(item.dataset.progressStage);
@@ -48,16 +54,37 @@ function setProgress(stage,{completeBefore=true}={}){
   });
 }
 async function ensureTurnstile(kind){
-  if(!config.turnstileRequired||!config.turnstileSiteKey||widgetIds[kind]!==null)return;
-  await turnstileReady;
-  if(!window.turnstile)return;
-  const target=document.querySelector(`#${kind}-turnstile`);if(!target)return;
-  widgetIds[kind]=window.turnstile.render(target,{
-    sitekey:config.turnstileSiteKey,
-    callback:token=>{tokens[kind]=token},
-    'expired-callback':()=>{tokens[kind]=''},
-    'error-callback':()=>{tokens[kind]=''}
-  });
+  if(!config.turnstileRequired)return true;
+  if(!config.turnstileSiteKey){setTurnstileFeedback(kind,'A verificação de segurança está temporariamente indisponível.');return false}
+  if(widgetIds[kind]!==null)return true;
+  const loaded=await turnstileReady;
+  if(!loaded||turnstileLoadFailed||!window.turnstile){setTurnstileFeedback(kind,'Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.');return false}
+  const target=document.querySelector(`#${kind}-turnstile`);if(!target)return false;
+  try{
+    widgetIds[kind]=window.turnstile.render(target,{
+      sitekey:config.turnstileSiteKey,
+      theme:'auto',
+      language:'pt-BR',
+      size:'flexible',
+      appearance:'interaction-only',
+      execution:'render',
+      retry:'auto',
+      'refresh-expired':'auto',
+      'refresh-timeout':'auto',
+      callback:token=>{
+        tokens[kind]=token;
+        const el=document.querySelector(feedbackId(kind));
+        if(el?.textContent?.toLowerCase().includes('verificação de segurança'))setTurnstileFeedback(kind,'','');
+      },
+      'expired-callback':()=>{tokens[kind]=''},
+      'timeout-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'A verificação de segurança expirou e será refeita automaticamente.')},
+      'error-callback':()=>{tokens[kind]='';setTurnstileFeedback(kind,'Não foi possível concluir a verificação de segurança. Aguarde alguns segundos e tente novamente.')}
+    });
+    return true;
+  }catch{
+    setTurnstileFeedback(kind,'Não foi possível iniciar a verificação de segurança. Atualize a página e tente novamente.');
+    return false;
+  }
 }
 function resetTurnstile(kind){
   tokens[kind]='';
@@ -65,7 +92,11 @@ function resetTurnstile(kind){
 }
 async function sendContact({kind,name,email,subject,message,website=''}){
   if(config.contactFormEnabled===false)throw new Error('CONTACT_DISABLED');
-  if(config.turnstileRequired&&!tokens[kind])throw new Error('TURNSTILE_REQUIRED');
+  if(config.turnstileRequired&&!tokens[kind]){
+    const ready=await ensureTurnstile(kind);
+    if(ready)throw new Error('TURNSTILE_NOT_READY');
+    throw new Error('TURNSTILE_LOAD_FAILED');
+  }
   const response=await fetch('/api/contact',{
     method:'POST',headers:{'content-type':'application/json'},
     body:JSON.stringify({name,email,subject,message,website,consent:true,turnstileToken:tokens[kind]})
@@ -74,8 +105,11 @@ async function sendContact({kind,name,email,subject,message,website=''}){
   if(!response.ok)throw new Error(data.error||'SEND_FAILED');
   return data;
 }
+function isTurnstileError(error){return error?.message==='ANTIABUSE_REJECTED'||String(error?.message||'').startsWith('TURNSTILE_')}
 function friendlyError(error){
-  if(error.message==='TURNSTILE_REQUIRED'||error.message==='ANTIABUSE_REJECTED')return 'Conclua a verificação de segurança antes de enviar.';
+  if(error.message==='TURNSTILE_LOAD_FAILED')return 'Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.';
+  if(error.message==='TURNSTILE_NOT_READY'||error.message==='TURNSTILE_REQUIRED')return 'Aguarde a verificação de segurança concluir e tente enviar novamente.';
+  if(isTurnstileError(error))return 'A verificação de segurança precisa ser refeita. Aguarde alguns segundos e tente novamente.';
   if(error.message==='CONTACT_DISABLED'||error.message==='CONTACT_NOT_CONFIGURED')return 'O canal de envio está temporariamente indisponível.';
   if(error.message==='RATE_LIMITED')return 'Muitas tentativas em pouco tempo. Tente novamente mais tarde.';
   return 'Não foi possível enviar agora. Tente novamente em alguns minutos.';
@@ -146,7 +180,7 @@ acceptanceForm?.addEventListener('submit',async event=>{
     if(payment)payment.innerHTML=`<span class="status-chip">ACEITE ENVIADO</span><h3>Agora aguarde a cobrança identificada.</h3><p>Se a condição for confirmada, o Uai Perto enviará a cobrança de adesão pelo contato informado.</p><div class="condition-summary"><small>Valor que deve aparecer na cobrança confirmada</small><strong>${money(condition.adhesion)}</strong><span>Faixa ${condition.band} · ${isInitial?'entrada inicial':'entrada futura'}</span></div><div class="safety-note"><strong>Não pague valor diferente sem confirmar.</strong><span>O pagamento ainda é conciliado manualmente nesta fase.</span></div>`;
     setProgress(4);
     payment?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
-  }catch(error){setFeedback('#acceptance-feedback',friendlyError(error),'error');resetTurnstile('acceptance')}
+  }catch(error){setFeedback('#acceptance-feedback',friendlyError(error),'error');if(isTurnstileError(error))resetTurnstile('acceptance')}
   finally{if(!acceptanceCompleted){submit.disabled=false;submit.textContent=original}}
 });
 
@@ -206,6 +240,6 @@ onboardingForm?.addEventListener('submit',async event=>{
     onboardingForm.querySelectorAll('input,select,textarea').forEach(el=>{el.disabled=true});
     submit.textContent='Onboarding enviado';
     document.querySelectorAll('[data-progress-stage]').forEach(item=>{item.classList.remove('active');item.classList.add('complete')});
-  }catch(error){setFeedback('#onboarding-feedback',friendlyError(error),'error');resetTurnstile('onboarding')}
+  }catch(error){setFeedback('#onboarding-feedback',friendlyError(error),'error');if(isTurnstileError(error))resetTurnstile('onboarding')}
   finally{if(!onboardingCompleted){submit.disabled=false;submit.textContent=original}}
 });
