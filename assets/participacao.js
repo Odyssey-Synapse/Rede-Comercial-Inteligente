@@ -84,12 +84,118 @@ function setupLimitedCheckboxGroup(group){
   }));
   updateGroupCounter(group);
 }
-document.querySelectorAll("[data-checkbox-group]").forEach(setupLimitedCheckboxGroup);
+function toggleContainer(container,active){
+  if(!container)return;
+  container.hidden=!active;
+  container.querySelectorAll('input,select,textarea').forEach(field=>{
+    field.disabled=!active;
+    if(field.dataset.roleRequired==="true")field.required=active;
+  });
+}
+function fieldValue(form,name){return cleanText(form.elements[name]?.value||"")}
+
+function installCompanyRoleQuestion(){
+  const form=forms.empresa;
+  if(!form||form.querySelector('[data-company-role-section]'))return;
+  const intro=form.querySelector('.survey-intro');
+  const introTitle=intro?.querySelector('h2');
+  const introText=intro?.querySelector('p');
+  if(introTitle)introTitle.textContent='Mostre o que sua empresa consegue fornecer ou executar.';
+  if(introText)introText.textContent='Primeiro diga se você coloca produtos, serviços ou os dois na Rede. Depois mostramos somente as perguntas que fazem sentido para esse papel.';
+
+  const firstSection=form.querySelector('.survey-section');
+  const roleSection=document.createElement('div');
+  roleSection.className='survey-section';
+  roleSection.dataset.companyRoleSection='true';
+  roleSection.innerHTML=`
+    <div class="survey-section-head"><span class="survey-number">0</span><div><h3>O que sua empresa coloca na Rede?</h3><p>Marque uma opção ou as duas. Isso define o papel operacional, não quantas categorias você pode informar.</p></div></div>
+    <fieldset class="survey-question" data-checkbox-group data-required="true" data-company-role-group><legend>Como sua empresa pode participar?</legend><div class="choice-grid">
+      <label class="choice-option"><input type="checkbox" name="companyRole" value="Produtos"><span>Vendo produtos</span></label>
+      <label class="choice-option"><input type="checkbox" name="companyRole" value="Serviços"><span>Presto serviços</span></label>
+    </div><span class="group-error">Marque Produtos, Serviços ou os dois.</span></fieldset>
+    <p class="survey-help"><strong>Faz os dois?</strong> Marque os dois. Uma única empresa pode fornecer produtos e também executar serviços.</p>`;
+  firstSection?.before(roleSection);
+
+  const productSection=document.createElement('div');
+  productSection.className='survey-section';
+  productSection.dataset.companyProductSection='true';
+  productSection.hidden=true;
+  productSection.innerHTML=`
+    <div class="survey-section-head"><span class="survey-number">P</span><div><h3>Como seus produtos entram numa solução?</h3><p>Queremos saber como consultar, separar e retirar um produto sem transformar sua equipe em operadora de um segundo sistema.</p></div></div>
+    <div class="survey-grid">
+      <div class="survey-field"><label for="company-catalog-source">Como seu catálogo/preço existe hoje?</label><select id="company-catalog-source" name="companyCatalogSource" data-role-required="true"><option value="">Selecione</option><option>Sistema ou ERP</option><option>Planilha ou arquivo</option><option>Cadastro simples/manual</option><option>Não temos catálogo estruturado</option><option>Ainda preciso avaliar</option></select></div>
+      <div class="survey-field"><label for="company-system-name">Qual sistema ou ERP? <span class="survey-help">(opcional)</span></label><input id="company-system-name" name="companySystemName" maxlength="160" placeholder="Ex.: nome do sistema que a loja já usa"></div>
+      <div class="survey-field"><label for="company-pickup">Retirada na loja está disponível?</label><select id="company-pickup" name="companyPickup" data-role-required="true"><option value="">Selecione</option><option>Sim, normalmente</option><option>Sim, com horário combinado</option><option>Depende do produto</option><option>Não</option></select></div>
+      <div class="survey-field"><label for="company-own-delivery">A loja já faz entrega própria?</label><select id="company-own-delivery" name="companyOwnDelivery" data-role-required="true"><option value="">Selecione</option><option>Sim</option><option>Às vezes / depende da região</option><option>Não</option></select></div>
+      <div class="survey-field"><label for="company-resolva-collection">Aceitaria coleta autorizada pelo Resolva Aí quando o produto fizer parte de uma solução da Rede?</label><select id="company-resolva-collection" name="companyResolvaCollection" data-role-required="true"><option value="">Selecione</option><option>Sim</option><option>Sim, mas preciso combinar o processo</option><option>Preciso entender melhor antes</option><option>Não neste momento</option></select></div>
+      <div class="survey-field"><label for="company-prep-time">Depois de confirmado, quanto tempo costuma levar para separar um pedido?</label><select id="company-prep-time" name="companyPrepTime" data-role-required="true"><option value="">Selecione</option><option>Até 15 minutos</option><option>15–30 minutos</option><option>30–60 minutos</option><option>Algumas horas</option><option>Depende bastante do produto</option></select></div>
+    </div>`;
+  roleSection.after(productSection);
+
+  const serviceSection=document.createElement('div');
+  serviceSection.className='survey-section';
+  serviceSection.dataset.companyServiceSection='true';
+  serviceSection.hidden=true;
+  serviceSection.innerHTML=`
+    <div class="survey-section-head"><span class="survey-number">S</span><div><h3>Como sua capacidade de serviço funciona?</h3><p>Mais habilidades não significam mais mensalidades. Precisamos entender capacidade, limites e disponibilidade para não chamar você na hora errada.</p></div></div>
+    <div class="survey-grid">
+      <div class="survey-field"><label for="company-service-structure">Quem normalmente executa o serviço?</label><select id="company-service-structure" name="companyServiceStructure" data-role-required="true"><option value="">Selecione</option><option>Eu trabalho sozinho(a)</option><option>Uma equipe</option><option>Mais de uma equipe</option><option>Rede de profissionais/parceiros</option><option>Depende do serviço</option></select></div>
+      <div class="survey-field"><label for="company-service-capacity">Quantos atendimentos consegue tocar ao mesmo tempo num dia normal?</label><select id="company-service-capacity" name="companyServiceCapacity" data-role-required="true"><option value="">Selecione</option><option>1 por vez</option><option>2 ao mesmo tempo</option><option>3–5 ao mesmo tempo</option><option>6 ou mais</option><option>Depende muito do tipo de serviço</option></select></div>
+      <div class="survey-field full"><label for="company-service-ideal">Que tipo de pedido seria muito bom receber?</label><textarea id="company-service-ideal" name="companyServiceIdeal" minlength="8" maxlength="600" data-role-required="true" placeholder="Ex.: instalação e pequenos reparos elétricos residenciais em Uberaba."></textarea></div>
+      <div class="survey-field full"><label for="company-service-avoid">Que pedido parece combinar, mas vocês normalmente não conseguem atender?</label><textarea id="company-service-avoid" name="companyServiceAvoid" minlength="5" maxlength="600" data-role-required="true" placeholder="Ex.: fazemos elétrica residencial, mas não executamos padrão de entrada."></textarea></div>
+    </div>`;
+  productSection.after(serviceSection);
+
+  const roleGroup=roleSection.querySelector('[data-company-role-group]');
+  if(roleGroup)setupLimitedCheckboxGroup(roleGroup);
+  const requested=new URLSearchParams(location.search).get('modelo');
+  const productInput=roleSection.querySelector('input[value="Produtos"]');
+  const serviceInput=roleSection.querySelector('input[value="Serviços"]');
+  if(requested==='catalogo'&&productInput)productInput.checked=true;
+  if(requested==='servico'&&serviceInput)serviceInput.checked=true;
+  if(requested==='ambos'){
+    if(productInput)productInput.checked=true;
+    if(serviceInput)serviceInput.checked=true;
+  }
+
+  const capability=document.querySelector('#company-capability');
+  const capabilityLabel=capability?.closest('.survey-field')?.querySelector('label');
+  const responseQuestion=form.querySelector('input[name="companyResponse"]')?.closest('fieldset');
+  const tomorrowQuestion=form.querySelector('input[name="companyTomorrow"]')?.closest('fieldset');
+
+  const syncRole=()=>{
+    const roles=[...roleSection.querySelectorAll('input[name="companyRole"]:checked')].map(input=>input.value);
+    const hasProducts=roles.includes('Produtos');
+    const hasServices=roles.includes('Serviços');
+    toggleContainer(productSection,hasProducts);
+    toggleContainer(serviceSection,hasServices);
+    toggleContainer(responseQuestion,hasServices);
+    toggleContainer(tomorrowQuestion,hasServices);
+
+    if(capability){
+      if(hasProducts&&!hasServices){
+        if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue fornecer?';
+        capability.placeholder='Ex.: vendemos materiais elétricos para instalações e pequenos reparos residenciais.';
+      }else if(hasProducts&&hasServices){
+        if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue fornecer e executar?';
+        capability.placeholder='Ex.: vendemos ar-condicionado e também fazemos instalação e manutenção.';
+      }else{
+        if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue resolver?';
+        capability.placeholder='Ex.: instalamos e fazemos manutenção de ar-condicionado residencial e comercial.';
+      }
+    }
+  };
+  roleSection.querySelectorAll('input[name="companyRole"]').forEach(input=>input.addEventListener('change',syncRole));
+  form.addEventListener('reset',()=>setTimeout(syncRole,0));
+  syncRole();
+}
+installCompanyRoleQuestion();
+document.querySelectorAll("[data-checkbox-group]").forEach(group=>{if(!group.dataset.checkboxReady){setupLimitedCheckboxGroup(group);group.dataset.checkboxReady='true'}});
 
 function groupValues(form,name){return [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(input=>input.value)}
 function radioValue(form,name){return form.querySelector(`input[name="${name}"]:checked`)?.value||""}
 function cleanText(value){return String(value||"").trim()}
-function validateGroups(form){let ok=true;form.querySelectorAll('[data-checkbox-group][data-required="true"]').forEach(group=>{const hasChecked=!!group.querySelector('input[type="checkbox"]:checked');group.classList.toggle("invalid",!hasChecked);if(!hasChecked)ok=false});return ok}
+function validateGroups(form){let ok=true;form.querySelectorAll('[data-checkbox-group][data-required="true"]').forEach(group=>{if(group.hidden||group.closest('[hidden]'))return;const enabled=[...group.querySelectorAll('input[type="checkbox"]')].filter(input=>!input.disabled);const hasChecked=enabled.some(input=>input.checked);group.classList.toggle("invalid",!hasChecked);if(!hasChecked)ok=false});return ok}
 
 const consumerForm=forms.consumidor;
 const consumerContactFields=document.querySelector("#consumer-contact-fields");
@@ -114,13 +220,13 @@ syncConsumerContact();
 
 function consumerMessage(form){
   const notify=radioValue(form,"consumerNotify");
-  const contact=notify==="Sim"?`${cleanText(form.elements.consumerContactType.value)}: ${cleanText(form.elements.consumerContact.value)}`:"Não solicitou aviso";
-  const referralName=cleanText(form.elements.consumerReferralName.value);
-  const referralCategory=cleanText(form.elements.consumerReferralCategory.value);
+  const contact=notify==="Sim"?`${fieldValue(form,'consumerContactType')}: ${fieldValue(form,'consumerContact')}`:"Não solicitou aviso";
+  const referralName=fieldValue(form,'consumerReferralName');
+  const referralCategory=fieldValue(form,'consumerReferralCategory');
   return [
     "MAPA INICIAL DE DEMANDA — CONSUMIDOR","",
-    `Pedido real: ${cleanText(form.elements.consumerNeed.value)}`,
-    `Bairro/região aproximada: ${cleanText(form.elements.consumerNeighborhood.value)}`,
+    `Pedido real: ${fieldValue(form,'consumerNeed')}`,
+    `Bairro/região aproximada: ${fieldValue(form,'consumerNeighborhood')}`,
     `Quando precisaria resolver: ${radioValue(form,"consumerWhen")}`,
     `Áreas que mais fariam diferença: ${groupValues(form,"consumerCategory").join("; ")}`,
     `Indicação local: ${referralName||"Não informou"}`,
@@ -132,27 +238,51 @@ function consumerMessage(form){
   ].join("\n");
 }
 function companyMessage(form){
-  return [
+  const roles=groupValues(form,'companyRole');
+  const hasProducts=roles.includes('Produtos');
+  const hasServices=roles.includes('Serviços');
+  const lines=[
     "MAPA INICIAL DE CAPACIDADE — EMPRESA","",
-    `Empresa: ${cleanText(form.elements.companyName.value)}`,
-    `Responsável: ${cleanText(form.elements.companyContact.value)}`,
-    `WhatsApp: ${cleanText(form.elements.companyWhatsapp.value)||"Não informou"}`,
-    `Área principal: ${cleanText(form.elements.companyCategory.value)}`,
-    `O que realmente consegue resolver: ${cleanText(form.elements.companyCapability.value)}`,
+    `Empresa: ${fieldValue(form,'companyName')}`,
+    `Responsável: ${fieldValue(form,'companyContact')}`,
+    `WhatsApp: ${fieldValue(form,'companyWhatsapp')||"Não informou"}`,
+    `Papel na Rede: ${roles.join(" + ")}`,
+    `Área principal: ${fieldValue(form,'companyCategory')}`,
+    `O que consegue fornecer ou resolver: ${fieldValue(form,'companyCapability')}`,
     `Formas de atendimento: ${groupValues(form,"companyChannels").join("; ")}`,
-    `Área de atendimento: ${cleanText(form.elements.companyCoverage.value)}`,
-    `Bairros/regiões informados: ${cleanText(form.elements.companyCoverageDetail.value)||"Não informou"}`,
+    `Área de atendimento: ${fieldValue(form,'companyCoverage')}`,
+    `Bairros/regiões informados: ${fieldValue(form,'companyCoverageDetail')||"Não informou"}`
+  ];
+  if(hasProducts)lines.push(
+    '',"CAPACIDADE DE PRODUTO",
+    `Fonte de catálogo/preço: ${fieldValue(form,'companyCatalogSource')}`,
+    `Sistema/ERP: ${fieldValue(form,'companySystemName')||"Não informou"}`,
+    `Retirada: ${fieldValue(form,'companyPickup')}`,
+    `Entrega própria: ${fieldValue(form,'companyOwnDelivery')}`,
+    `Coleta pelo Resolva Aí: ${fieldValue(form,'companyResolvaCollection')}`,
+    `Tempo de separação: ${fieldValue(form,'companyPrepTime')}`
+  );
+  if(hasServices)lines.push(
+    '',"CAPACIDADE DE SERVIÇO",
+    `Estrutura de execução: ${fieldValue(form,'companyServiceStructure')}`,
+    `Capacidade simultânea: ${fieldValue(form,'companyServiceCapacity')}`,
+    `Pedido ideal: ${fieldValue(form,'companyServiceIdeal')}`,
+    `Pedido que deve evitar: ${fieldValue(form,'companyServiceAvoid')}`,
     `Velocidade normal de resposta: ${radioValue(form,"companyResponse")}`,
-    `Conseguiria atender oportunidade compatível amanhã: ${radioValue(form,"companyTomorrow")}`,
-    `Entrega/logística: ${cleanText(form.elements.companyDelivery.value)}`,
+    `Conseguiria atender oportunidade compatível amanhã: ${radioValue(form,"companyTomorrow")}`
+  );
+  lines.push(
+    '',"OPERAÇÃO GERAL",
+    `Entrega/logística atual: ${fieldValue(form,'companyDelivery')}`,
     `Principais limitações: ${groupValues(form,"companyConstraints").join("; ")}`,
     `Momento de participação: ${radioValue(form,"companyStage")}`,
-    `Observação: ${cleanText(form.elements.companyNote.value)||"Não informou"}`
-  ].join("\n");
+    `Observação: ${fieldValue(form,'companyNote')||"Não informou"}`
+  );
+  return lines.join("\n");
 }
 function validConsumerContact(form){
   if(radioValue(form,"consumerNotify")!=="Sim")return true;
-  const type=cleanText(form.elements.consumerContactType.value),value=cleanText(form.elements.consumerContact.value);
+  const type=fieldValue(form,'consumerContactType'),value=fieldValue(form,'consumerContact');
   if(!type||!value)return false;
   if(type==="E-mail")return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   if(type==="WhatsApp")return value.replace(/\D/g,"").length>=10;
@@ -187,10 +317,10 @@ async function submitParticipation(profile,event){
   const submit=submitButtons[profile],originalText=submit.textContent;submit.disabled=true;submit.textContent="Enviando…";
   const isCompany=profile==="empresa";
   let email="";
-  if(isCompany)email=cleanText(form.elements.companyEmail.value);
-  else if(radioValue(form,"consumerNotify")==="Sim"&&cleanText(form.elements.consumerContactType.value)==="E-mail")email=cleanText(form.elements.consumerContact.value);
+  if(isCompany)email=fieldValue(form,'companyEmail');
+  else if(radioValue(form,"consumerNotify")==="Sim"&&fieldValue(form,'consumerContactType')==="E-mail")email=fieldValue(form,'consumerContact');
   const body={
-    name:isCompany?`${cleanText(form.elements.companyContact.value)} — ${cleanText(form.elements.companyName.value)}`:"Consumidor — mapa inicial de demanda",
+    name:isCompany?`${fieldValue(form,'companyContact')} — ${fieldValue(form,'companyName')}`:"Consumidor — mapa inicial de demanda",
     email,
     subject:isCompany?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor",
     message:isCompany?companyMessage(form):consumerMessage(form),
@@ -200,7 +330,7 @@ async function submitParticipation(profile,event){
     const response=await fetch("/api/contact",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
     const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"SEND_FAILED");
     resetFormState(profile,form);
-    if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. <a href="/entrada-empresa.html">Entenda o que acontece agora →</a>');
+    if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. O Uai Perto confirma o papel, a operação e a condição antes de qualquer aceite ou cobrança.');
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     if(isTurnstileError(error))resetTurnstileProfile(profile);
