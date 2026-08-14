@@ -35,10 +35,17 @@
 .choice-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .choice-option{position:relative}
 .choice-option input{position:absolute;opacity:0;pointer-events:none}
-.choice-option span{display:flex;align-items:center;min-height:48px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:.9rem;line-height:1.38;cursor:pointer;transition:.16s border-color,.16s background,.16s box-shadow,.12s transform}
+.choice-option span{display:flex;align-items:center;gap:10px;min-height:48px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:.9rem;line-height:1.38;cursor:pointer;transition:.16s border-color,.16s background,.16s box-shadow,.12s transform}
+.choice-option span::before{content:"";width:22px;height:22px;flex:0 0 22px;display:grid;place-items:center;border:2px solid color-mix(in srgb,var(--muted) 55%,var(--line));background:var(--surface);font-size:.9rem;font-weight:950;line-height:1;color:transparent;transition:.16s background,.16s border-color,.16s color,.16s box-shadow,.12s transform}
+.choice-option input[type="checkbox"]+span::before{border-radius:6px}
+.choice-option input[type="radio"]+span::before{border-radius:50%}
 .choice-option span:active{transform:scale(.99)}
-.choice-option input:checked+span{border-color:#45665A;background:#EDF1ED;box-shadow:inset 0 0 0 1px #45665A}
-html[data-theme="dark"] .choice-option input:checked+span{background:#3C554C}
+.choice-option input:checked+span{border:2px solid #335749;background:#EDF1ED;box-shadow:0 0 0 3px rgba(51,87,73,.09);font-weight:800}
+.choice-option input[type="checkbox"]:checked+span::before{content:"✓";background:#335749;border-color:#335749;color:#F2E8D9;box-shadow:0 2px 8px rgba(51,87,73,.22);transform:scale(1.04)}
+.choice-option input[type="radio"]:checked+span::before{background:#F2E8D9;border-color:#335749;box-shadow:inset 0 0 0 5px #335749,0 2px 8px rgba(51,87,73,.16)}
+html[data-theme="dark"] .choice-option input:checked+span{background:#3C554C;border-color:#D39237;box-shadow:0 0 0 3px rgba(211,146,55,.13)}
+html[data-theme="dark"] .choice-option input[type="checkbox"]:checked+span::before{background:#D39237;border-color:#D39237;color:#1a1a1a}
+html[data-theme="dark"] .choice-option input[type="radio"]:checked+span::before{background:#335749;border-color:#D39237;box-shadow:inset 0 0 0 5px #D39237}
 .choice-option input:focus-visible+span{outline:3px solid #B55A30;outline-offset:2px}
 .example-box{margin-top:10px;border:1px solid var(--line);border-radius:14px;background:var(--bg);overflow:hidden}
 .example-box summary{cursor:pointer;padding:14px;font-weight:850;color:#335749;list-style:none;min-height:48px}
