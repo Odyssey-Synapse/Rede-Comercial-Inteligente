@@ -19,8 +19,9 @@ const condition=validCondition?{
 
 let config={};
 let acceptanceCompleted=false;
-let token='';
-let widgetId=null;
+let onboardingCompleted=false;
+const tokens={acceptance:'',onboarding:''};
+const widgetIds={acceptance:null,onboarding:null};
 let turnstileLoadFailed=false;
 let turnstileReady=Promise.resolve(true);
 
@@ -38,8 +39,8 @@ if(config.turnstileRequired&&config.turnstileSiteKey){
 }
 
 function clean(value){return String(value||'').trim()}
-function setFeedback(text,type=''){
-  const el=document.querySelector('#acceptance-feedback');if(!el)return;
+function setFeedback(kind,text,type=''){
+  const el=document.querySelector(kind==='acceptance'?'#acceptance-feedback':'#onboarding-feedback');if(!el)return;
   el.textContent=text;el.className=`entry-feedback ${type}`.trim();
 }
 function setProgress(stage,{completeBefore=true}={}){
@@ -49,43 +50,47 @@ function setProgress(stage,{completeBefore=true}={}){
     item.classList.toggle('complete',completeBefore&&n<stage);
   });
 }
-function waitForTurnstileToken(timeoutMs=8000){
-  if(token)return Promise.resolve(true);
+function waitForTurnstileToken(kind,timeoutMs=8000){
+  if(tokens[kind])return Promise.resolve(true);
   return new Promise(resolve=>{
     const started=Date.now();
     const timer=setInterval(()=>{
-      if(token){clearInterval(timer);resolve(true);return}
+      if(tokens[kind]){clearInterval(timer);resolve(true);return}
       if(Date.now()-started>=timeoutMs){clearInterval(timer);resolve(false)}
     },120);
   });
 }
-async function ensureTurnstile(){
+async function ensureTurnstile(kind){
   if(!config.turnstileRequired)return true;
-  if(!config.turnstileSiteKey){setFeedback('A verificação de segurança está temporariamente indisponível.','error');return false}
-  if(widgetId!==null)return true;
+  if(!config.turnstileSiteKey){setFeedback(kind,'A verificação de segurança está temporariamente indisponível.','error');return false}
+  if(widgetIds[kind]!==null)return true;
   const loaded=await turnstileReady;
-  const target=document.querySelector('#acceptance-turnstile');
-  if(!loaded||turnstileLoadFailed||!target||!window.turnstile){setFeedback('Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.','error');return false}
+  const target=document.querySelector(`#${kind}-turnstile`);
+  if(!loaded||turnstileLoadFailed||!target||!window.turnstile){setFeedback(kind,'Não foi possível carregar a verificação de segurança. Atualize a página e tente novamente.','error');return false}
   try{
-    widgetId=window.turnstile.render(target,{
+    widgetIds[kind]=window.turnstile.render(target,{
       sitekey:config.turnstileSiteKey,
       theme:'auto',appearance:'always',retry:'auto','refresh-expired':'auto',
-      callback:value=>{token=value;if(document.querySelector('#acceptance-feedback')?.textContent?.toLowerCase().includes('verificação de segurança'))setFeedback('')},
-      'expired-callback':()=>{token=''},
-      'error-callback':code=>{token='';setFeedback(`Não foi possível concluir a verificação de segurança${code?` (${code})`:''}. Atualize a página e tente novamente.`,'error')}
+      callback:value=>{tokens[kind]=value;if(document.querySelector(kind==='acceptance'?'#acceptance-feedback':'#onboarding-feedback')?.textContent?.toLowerCase().includes('verificação de segurança'))setFeedback(kind,'')},
+      'expired-callback':()=>{tokens[kind]=''},
+      'error-callback':code=>{tokens[kind]='';setFeedback(kind,`Não foi possível concluir a verificação de segurança${code?` (${code})`:''}. Atualize a página e tente novamente.`,'error')}
     });
     return true;
-  }catch{setFeedback('Não foi possível iniciar a verificação de segurança. Atualize a página e tente novamente.','error');return false}
+  }catch{setFeedback(kind,'Não foi possível iniciar a verificação de segurança. Atualize a página e tente novamente.','error');return false}
 }
-async function sendContact({name,email,message,website=''}){
+function resetTurnstile(kind){
+  tokens[kind]='';
+  if(window.turnstile&&widgetIds[kind]!==null)window.turnstile.reset(widgetIds[kind]);
+}
+async function sendContact({kind,name,email,subject,message,website=''}){
   if(config.contactFormEnabled===false)throw new Error('CONTACT_DISABLED');
-  if(config.turnstileRequired&&!token){
-    const ready=await ensureTurnstile();if(!ready)throw new Error('TURNSTILE_LOAD_FAILED');
-    setFeedback('Concluindo a verificação de segurança…');
-    const verified=await waitForTurnstileToken();if(!verified)throw new Error('TURNSTILE_NOT_READY');
-    setFeedback('');
+  if(config.turnstileRequired&&!tokens[kind]){
+    const ready=await ensureTurnstile(kind);if(!ready)throw new Error('TURNSTILE_LOAD_FAILED');
+    setFeedback(kind,'Concluindo a verificação de segurança…');
+    const verified=await waitForTurnstileToken(kind);if(!verified)throw new Error('TURNSTILE_NOT_READY');
+    setFeedback(kind,'');
   }
-  const response=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,email,subject:'Aceite de condição — empresa',message,website,consent:true,turnstileToken:token})});
+  const response=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,email,subject,message,website,consent:true,turnstileToken:tokens[kind]})});
   const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'SEND_FAILED');
   return data;
 }
@@ -118,22 +123,22 @@ function renderCondition(){
   if(fields)fields.hidden=false;
   if(selected)selected.innerHTML=`<small>Condição que você está pedindo para confirmar</small><strong>${condition.label} · adesão ${money(condition.adhesion)}</strong><span>${typeLabel} · ${recurring}</span>`;
   setProgress(3);
-  ensureTurnstile();
+  ensureTurnstile('acceptance');
 }
 renderCondition();
 
-const form=document.querySelector('#acceptance-form');
-form?.addEventListener('submit',async event=>{
+const acceptanceForm=document.querySelector('#acceptance-form');
+acceptanceForm?.addEventListener('submit',async event=>{
   event.preventDefault();
   if(!condition||acceptanceCompleted)return;
-  setFeedback('');
-  if(!form.checkValidity()){form.reportValidity();setFeedback('Revise os campos antes de continuar.','error');return}
+  setFeedback('acceptance','');
+  if(!acceptanceForm.checkValidity()){acceptanceForm.reportValidity();setFeedback('acceptance','Revise os campos antes de continuar.','error');return}
   const submit=document.querySelector('#acceptance-submit');
   const original=submit.textContent;submit.disabled=true;submit.textContent='Enviando…';
-  const company=clean(form.elements.company.value);
-  const name=clean(form.elements.name.value);
-  const email=clean(form.elements.email.value);
-  const whatsapp=clean(form.elements.whatsapp.value);
+  const company=clean(acceptanceForm.elements.company.value);
+  const name=clean(acceptanceForm.elements.name.value);
+  const email=clean(acceptanceForm.elements.email.value);
+  const whatsapp=clean(acceptanceForm.elements.whatsapp.value);
   const isInitial=condition.type==='inicial';
   const message=[
     'ACEITE DE CONDIÇÃO — ENTRADA DE EMPRESA','',
@@ -153,12 +158,111 @@ form?.addEventListener('submit',async event=>{
     '- Concorda com o uso dos dados para conduzir a entrada.'
   ].join('\n');
   try{
-    await sendContact({name:`${name} — ${company}`,email,message,website:form.elements.website?.value||''});
+    await sendContact({kind:'acceptance',name:`${name} — ${company}`,email,subject:'Aceite de condição — empresa',message,website:acceptanceForm.elements.website?.value||''});
     acceptanceCompleted=true;
-    setFeedback('Aceite enviado. O Uai Perto ainda confirma o enquadramento antes de enviar qualquer cobrança.','success');
+    try{localStorage.setItem('uai-company-entry-draft',JSON.stringify({company,name,email,whatsapp,model:condition.model}))}catch{}
+    setFeedback('acceptance','Aceite enviado. O Uai Perto ainda confirma o enquadramento antes de enviar qualquer cobrança.','success');
     setProgress(4);
     const payment=document.querySelector('#payment-card');
     if(payment)payment.innerHTML='<span class="status-chip">ACEITE RECEBIDO</span><h3>Agora vem a conferência final.</h3><p>Se a condição for confirmada, a cobrança identificada da adesão será enviada pelo contato informado. Nenhum pagamento é feito automaticamente por esta página.</p>';
-  }catch(error){setFeedback(friendlyError(error),'error')}
+  }catch(error){if(String(error?.message||'').startsWith('TURNSTILE_')||error?.message==='ANTIABUSE_REJECTED')resetTurnstile('acceptance');setFeedback('acceptance',friendlyError(error),'error')}
   finally{submit.disabled=false;submit.textContent=original}
+});
+
+const onboardingGate=document.querySelector('#onboarding-gate');
+const onboardingForm=document.querySelector('#onboarding-form');
+const onboardingModel=document.querySelector('#onboard-model');
+const productBlock=document.querySelector('#onboarding-product-block');
+const serviceBlock=document.querySelector('#onboarding-service-block');
+
+function setModelBlock(block,active){
+  if(!block)return;
+  block.hidden=!active;
+  block.querySelectorAll('input,select,textarea').forEach(field=>{
+    field.disabled=!active;
+    if(field.dataset.modelRequired==='true')field.required=active;
+  });
+}
+function syncOnboardingModel(){
+  const model=onboardingModel?.value||'';
+  setModelBlock(productBlock,model==='catalogo'||model==='ambos');
+  setModelBlock(serviceBlock,model==='servico'||model==='ambos');
+}
+function prefillOnboarding(){
+  let draft={};
+  try{draft=JSON.parse(localStorage.getItem('uai-company-entry-draft')||'{}')}catch{}
+  if(onboardingForm){
+    if(draft.company&&!onboardingForm.elements.company.value)onboardingForm.elements.company.value=draft.company;
+    if(draft.name&&!onboardingForm.elements.name.value)onboardingForm.elements.name.value=draft.name;
+    if(draft.email&&!onboardingForm.elements.email.value)onboardingForm.elements.email.value=draft.email;
+    if(draft.whatsapp&&!onboardingForm.elements.whatsapp.value)onboardingForm.elements.whatsapp.value=draft.whatsapp;
+  }
+  const model=condition?.model||(pricing[requestedModel]?requestedModel:'')||draft.model||'';
+  if(onboardingModel&&model)onboardingModel.value=model;
+  syncOnboardingModel();
+}
+onboardingModel?.addEventListener('change',syncOnboardingModel);
+prefillOnboarding();
+
+document.querySelector('#open-onboarding')?.addEventListener('click',()=>{
+  if(!onboardingForm)return;
+  onboardingForm.hidden=false;
+  onboardingGate?.classList.add('ready');
+  prefillOnboarding();
+  setProgress(5);
+  ensureTurnstile('onboarding');
+  onboardingForm.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+});
+
+onboardingForm?.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(onboardingCompleted)return;
+  setFeedback('onboarding','');
+  syncOnboardingModel();
+  if(!onboardingForm.checkValidity()){onboardingForm.reportValidity();setFeedback('onboarding','Revise os campos da implantação antes de enviar.','error');return}
+  const model=onboardingModel.value;
+  if(!pricing[model]){setFeedback('onboarding','Selecione Catálogo, Serviço ou Serviço + Catálogo.','error');return}
+
+  const submit=document.querySelector('#onboarding-submit');
+  const original=submit.textContent;submit.disabled=true;submit.textContent='Enviando…';
+  const company=clean(onboardingForm.elements.company.value);
+  const name=clean(onboardingForm.elements.name.value);
+  const email=clean(onboardingForm.elements.email.value);
+  const whatsapp=clean(onboardingForm.elements.whatsapp.value);
+  const lines=[
+    'IMPLANTAÇÃO OPERACIONAL — EMPRESA','',
+    `Empresa: ${company}`,
+    `Responsável: ${name}`,
+    `E-mail: ${email}`,
+    `WhatsApp operacional: ${whatsapp}`,
+    `Papel na Rede: ${pricing[model].label}`
+  ];
+  if(model==='catalogo'||model==='ambos')lines.push(
+    '', 'CATÁLOGO',
+    `Fonte de catálogo/preço/estoque: ${clean(onboardingForm.elements.catalogSource.value)}`,
+    `Sistema/ERP: ${clean(onboardingForm.elements.system.value)||'Não informou'}`,
+    `Retirada: ${clean(onboardingForm.elements.pickup.value)}`,
+    `Entrega própria: ${clean(onboardingForm.elements.ownDelivery.value)}`,
+    `Coleta pelo Resolva Aí: ${clean(onboardingForm.elements.resolvaCollection.value)}`,
+    `Tempo de separação: ${clean(onboardingForm.elements.prepTime.value)}`,
+    `Ponto de retirada/coleta: ${clean(onboardingForm.elements.pickupPoint.value)}`
+  );
+  if(model==='servico'||model==='ambos')lines.push(
+    '', 'SERVIÇO',
+    `Pedido ideal: ${clean(onboardingForm.elements.ideal.value)}`,
+    `Pedido a evitar: ${clean(onboardingForm.elements.avoid.value)}`,
+    `Área de atendimento: ${clean(onboardingForm.elements.coverage.value)}`,
+    `Capacidade simultânea: ${clean(onboardingForm.elements.capacity.value)}`,
+    `Horários/disponibilidade: ${clean(onboardingForm.elements.hours.value)}`,
+    `Limites importantes: ${clean(onboardingForm.elements.limits.value)}`
+  );
+  lines.push('',`Troca de informações no início: ${clean(onboardingForm.elements.integration.value)}`,'','Declarações: pagamento confirmado pelo Uai Perto; dados representam a operação atual.');
+
+  try{
+    await sendContact({kind:'onboarding',name:`${name} — ${company}`,email,subject:'Implantação operacional — empresa',message:lines.join('\n'),website:onboardingForm.elements.website?.value||''});
+    onboardingCompleted=true;
+    setFeedback('onboarding','Implantação enviada. Agora o Uai Perto pode configurar o início da operação com base no papel informado.','success');
+    submit.textContent='Implantação enviada';
+  }catch(error){if(String(error?.message||'').startsWith('TURNSTILE_')||error?.message==='ANTIABUSE_REJECTED')resetTurnstile('onboarding');setFeedback('onboarding',friendlyError(error),'error');submit.disabled=false;submit.textContent=original;return}
+  submit.disabled=true;
 });
