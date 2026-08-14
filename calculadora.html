@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Responda quatro perguntas simples e veja uma referência de participação da sua empresa no Uai Perto.">
+  <meta name="description" content="Marque se sua empresa oferece produtos, serviços ou os dois e veja a referência atual de participação no Uai Perto.">
   <meta name="theme-color" content="#335749">
   <title>Simulador de participação — Uai Perto</title>
   <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="/assets/uai-perto.css?v=3.1.20">
   <link rel="stylesheet" href="/assets/calculadora-help.css?v=3.1.19">
   <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+  <style>
+    .participation-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}.participation-pick{display:block;cursor:pointer}.participation-pick input{position:absolute;opacity:0;pointer-events:none}.participation-pick span{display:block;height:100%;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--surface);transition:.18s ease}.participation-pick strong{display:block;font-size:1.05rem;margin-bottom:7px}.participation-pick small{display:block;color:var(--muted);line-height:1.5}.participation-pick input:checked+span{border-color:#335749;box-shadow:0 0 0 2px rgba(51,87,73,.12);background:color-mix(in srgb,var(--green-soft) 42%,var(--surface))}.participation-pick input:focus-visible+span{outline:3px solid rgba(211,146,55,.35);outline-offset:2px}.simple-calc-note{margin:8px 0 0}.calc-price-stack{display:grid;gap:12px;margin:18px 0}.calc-price-stack>div{padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.calc-price-stack small,.calc-price-stack span{display:block;color:var(--muted)}.calc-price-stack strong{display:block;font-size:1.25rem;margin:3px 0}@media(max-width:700px){.participation-picks{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 <div id="site-header"></div>
@@ -19,80 +22,71 @@
   <div class="container narrow">
     <div class="breadcrumb"><a href="/">Início</a><span>›</span>Simulador</div>
     <span class="eyebrow">Simulador para empresas</span>
-    <h1 class="h1">Responda quatro coisas sobre sua operação e veja sua referência de participação.</h1>
-    <p class="lead">A simulação ajuda você a entender a faixa estimada, a adesão e a diferença entre entrar na rede inicial ou depois dela. Leva poucos minutos.</p>
+    <h1 class="h1">Você vende produtos? Presta serviços? Marque o que sua empresa coloca na Rede.</h1>
+    <p class="lead">A primeira referência ficou simples de propósito. Produtos e serviços são papéis diferentes — e uma empresa pode fazer os dois.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="calc-notice reveal"><div><span class="notice-icon">i</span></div><div><strong>É uma estimativa, não uma cobrança.</strong><p>O resultado serve para orientar sua decisão. A condição definitiva precisa ser confirmada pelo Uai Perto antes de qualquer adesão ou aceite.</p></div></div>
+    <div class="calc-notice reveal"><div><span class="notice-icon">i</span></div><div><strong>É uma referência, não uma cobrança.</strong><p>O resultado mostra a condição comercial básica atual. Operações com várias unidades, integrações específicas ou estrutura incomum podem precisar de avaliação antes do aceite.</p></div></div>
 
     <div class="calculator-layout">
       <div class="form-card reveal">
         <form id="capacity-calculator" novalidate>
-          <div><span class="eyebrow">Sua operação</span><h2 class="h3">Quatro perguntas rápidas</h2><p class="fine">Pense apenas na parte da empresa que realmente vai atender oportunidades pelo Uai Perto.</p></div>
+          <div><span class="eyebrow">O que sua empresa oferece?</span><h2 class="h3">Marque uma opção ou as duas.</h2><p class="fine">Não conte categorias, produtos ou habilidades. Queremos saber apenas quais papéis sua empresa pode exercer dentro da Rede.</p></div>
 
-          <div class="field calculator-question">
-            <label for="operational-cores">1. Quantas áreas de atendimento funcionam de forma separada?</label>
-            <p class="question-hint">Conte frentes de trabalho com equipe, agenda ou rotina própria — não cada produto ou serviço.</p>
-            <select id="operational-cores" required><option value="">Selecione</option><option value="0">1–2 áreas de atendimento</option><option value="1">3–5 áreas de atendimento</option><option value="2">6–10 áreas de atendimento</option><option value="3">11–20 áreas de atendimento</option><option value="4">21–40 áreas de atendimento</option><option value="5">41 ou mais áreas de atendimento</option></select>
-            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Uma oficina com mecânica e elétrica funcionando como duas frentes diferentes pode contar 2 áreas. Uma loja com milhares de produtos, mas uma única operação de venda, pode continuar contando 1.</p></div></details>
+          <div class="participation-picks" role="group" aria-label="Papéis da empresa">
+            <label class="participation-pick"><input type="checkbox" id="offers-products" name="offersProducts"><span><strong>Eu vendo produtos</strong><small>Tenho loja, estoque ou produtos que podem ser retirados, entregues ou usados para completar uma solução.</small></span></label>
+            <label class="participation-pick"><input type="checkbox" id="offers-services" name="offersServices"><span><strong>Eu presto serviços</strong><small>Tenho conhecimento, mão de obra ou equipe capaz de executar uma parte da necessidade.</small></span></label>
           </div>
 
-          <div class="field calculator-question">
-            <label for="simultaneous-operations">2. Quantos atendimentos sua empresa consegue realizar ao mesmo tempo?</label>
-            <p class="question-hint">Considere um dia normal, não a capacidade máxima de uma situação excepcional.</p>
-            <select id="simultaneous-operations" required><option value="">Selecione</option><option value="0">1 por vez</option><option value="2">2 ao mesmo tempo</option><option value="4">3–5 ao mesmo tempo</option><option value="6">6 ou mais ao mesmo tempo</option></select>
-            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Se uma pessoa atende um cliente por vez, marque 1. Se duas equipes conseguem atender duas oportunidades ao mesmo tempo, marque 2.</p></div></details>
-          </div>
-
-          <div class="field calculator-question">
-            <label for="active-units">3. Quantas lojas, filiais ou locais de atendimento vão participar?</label>
-            <p class="question-hint">Conte somente os locais que realmente receberão ou atenderão oportunidades do Uai Perto.</p>
-            <select id="active-units" required><option value="">Selecione</option><option value="0">1 local</option><option value="3">2 locais</option><option value="6">3–4 locais</option><option value="enterprise">5 ou mais locais</option></select>
-            <details class="question-help"><summary>Ver um exemplo</summary><div class="question-help-body"><p>Uma matriz e duas filiais que vão atender pelo Uai Perto contam como 3 locais. Um depósito que não atende oportunidades não precisa ser contado.</p></div></details>
-          </div>
-
-          <div class="field calculator-question">
-            <label for="integration-level">4. Como sua empresa prefere trocar informações com o Uai Perto?</label>
-            <p class="question-hint">Se você já usa um sistema, a ideia é evitar cadastro duplicado. Aqui queremos medir apenas o nível de integração que sua operação pode precisar.</p>
-            <select id="integration-level" required><option value="">Selecione</option><option value="0">Posso começar sem integração, informando só o necessário</option><option value="1">Quero aproveitar dados de um sistema por uma conexão simples</option><option value="3">Preciso conectar vários processos ou sistemas</option><option value="enterprise">Preciso de uma conexão feita especificamente para minha empresa</option></select>
-            <details class="question-help"><summary>Qual opção escolher?</summary><div class="question-help-body integration-definitions"><p><strong>Sem integração:</strong> sua equipe pode começar informando somente o necessário para avaliar e atender oportunidades.</p><p><strong>Conexão simples:</strong> a ideia é aproveitar dados que seu sistema já mantém por um recurso suportado, importação ou API, quando houver compatibilidade.</p><p><strong>Vários processos:</strong> a operação depende de mais automação ou troca de dados com sistemas diferentes.</p><p><strong>Conexão específica:</strong> seria necessário avaliar e desenvolver algo próprio para seu ERP ou processo.</p><p><strong>Importante:</strong> integrações dependem de acesso autorizado, recursos disponíveis no sistema e validação técnica. Esta resposta não garante compatibilidade com um sistema específico.</p></div></details>
-          </div>
-
+          <p class="fine simple-calc-note"><strong>Faz os dois?</strong> Marque os dois. Isso não cria duas empresas nem duas cobranças separadas.</p>
           <button class="button button-primary button-full" type="submit">Ver minha referência</button>
-          <p class="fine calculator-closing-note">Se alguma resposta não representar bem a sua operação, o enquadramento pode ser revisto antes de qualquer contratação.</p>
+          <p class="fine calculator-closing-note">Quantidade de produtos ou habilidades, sozinha, não aumenta o preço. A Rede precisa conhecer mais capacidades, não punir quem consegue contribuir mais.</p>
         </form>
       </div>
 
-      <aside class="result-card reveal" data-delay="1" id="capacity-result"><div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Seu resultado aparece aqui.</h3><p>Preencha as quatro respostas para ver a faixa estimada, a adesão de referência e as condições de entrada.</p></div></div></aside>
+      <aside class="result-card reveal" data-delay="1" id="capacity-result"><div class="result-empty"><div><div class="orb brand-orb" role="img" aria-label="Uai Perto"></div><h3>Seu resultado aparece aqui.</h3><p>Marque Produtos, Serviços ou os dois.</p></div></div></aside>
     </div>
   </div>
 </section>
 
 <section class="section section-alt">
   <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">Duas formas de entrada</span><h2 class="h2">A mesma faixa pode ter condições diferentes conforme o momento em que a empresa entra.</h2></div></div>
-    <div class="grid-2">
-      <article class="card reveal"><span class="demo-tag">54 INICIAIS</span><h3>Adesão + mensalidade recorrente de R$ 0.</h3><p>A posição entre os 54 precisa ser confirmada pela Rede. A simulação sozinha não reserva vaga.</p></article>
-      <article class="card reveal" data-delay="1"><span class="demo-tag">DEPOIS DOS 54</span><h3>Adesão + dois primeiros meses incluídos.</h3><p>Se a empresa decidir continuar depois desse período, a mensalidade da faixa começa no terceiro mês.</p></article>
+    <div class="section-head reveal"><div><span class="eyebrow">Referências atuais</span><h2 class="h2">Três combinações simples para começar.</h2></div><p>Integração especial ou operação fora do padrão é avaliada à parte; não tentamos esconder isso dentro de uma conta complicada.</p></div>
+    <div class="grid-3">
+      <article class="card reveal"><span class="demo-tag">CATÁLOGO</span><h3>R$ 49/mês</h3><p>Para quem disponibiliza produtos à Rede.</p></article>
+      <article class="card reveal" data-delay="1"><span class="demo-tag">SERVIÇO</span><h3>a partir de R$ 79/mês</h3><p>Para profissionais e empresas que executam serviços.</p></article>
+      <article class="card reveal" data-delay="2"><span class="demo-tag">SERVIÇO + CATÁLOGO</span><h3>a partir de R$ 99/mês</h3><p>Para quem fornece produtos e também executa.</p></article>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">O que não aumenta o preço sozinho</span><h2 class="h2">Vender mais ou informar mais produtos não deveria virar punição.</h2></div></div>
+    <div class="section-head reveal"><div><span class="eyebrow">Condição Fundador</span><h2 class="h2">O papel da empresa continua o mesmo. A condição comercial é que muda.</h2></div><p>Se a entrada for confirmada entre os 54 iniciais, a empresa paga a adesão correspondente e mantém mensalidade recorrente de R$ 0 enquanto conservar a condição Fundador.</p></div>
     <div class="grid-3">
-      <article class="card reveal"><h3>Quantidade de produtos</h3><p>Um catálogo grande, por si só, não empurra a empresa para uma faixa maior.</p></article>
-      <article class="card reveal" data-delay="1"><h3>Faturamento ou vendas</h3><p>A referência não é um percentual da receita da empresa.</p></article>
-      <article class="card reveal" data-delay="2"><h3>Prioridade na busca</h3><p>Pagar uma faixa maior não transforma uma empresa incompatível em uma solução melhor.</p></article>
+      <article class="card reveal"><h3>Catálogo</h3><p><strong>R$ 149</strong> de adesão<br><strong>R$ 0/mês</strong></p></article>
+      <article class="card reveal" data-delay="1"><h3>Serviço</h3><p><strong>R$ 199</strong> de adesão<br><strong>R$ 0/mês</strong></p></article>
+      <article class="card reveal" data-delay="2"><h3>Serviço + Catálogo</h3><p><strong>R$ 249</strong> de adesão<br><strong>R$ 0/mês</strong></p></article>
+    </div>
+    <p class="fine reveal">A simulação não reserva posição entre os 54 e não gera cobrança automática. A condição precisa ser confirmada pelo Uai Perto.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal"><div><span class="eyebrow">Depois da Rede inicial</span><h2 class="h2">A adesão inclui os dois primeiros meses.</h2></div><p>Antes da primeira mensalidade recorrente, a empresa pode decidir se quer continuar. Se encerrar antes do terceiro mês, não há mensalidade adicional.</p></div>
+    <div class="grid-3">
+      <article class="card reveal"><h3>Catálogo</h3><p>Adesão <strong>R$ 98</strong><br>2 meses incluídos<br>depois <strong>R$ 49/mês</strong>.</p></article>
+      <article class="card reveal" data-delay="1"><h3>Serviço</h3><p>Adesão a partir de <strong>R$ 158</strong><br>2 meses incluídos<br>depois a partir de <strong>R$ 79/mês</strong>.</p></article>
+      <article class="card reveal" data-delay="2"><h3>Serviço + Catálogo</h3><p>Adesão a partir de <strong>R$ 198</strong><br>2 meses incluídos<br>depois a partir de <strong>R$ 99/mês</strong>.</p></article>
     </div>
   </div>
 </section>
 
-<section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Gostou da referência?</span><h2>Apresente sua empresa para a Rede.</h2><p>O formulário empresarial ajuda o Uai Perto a entender o que sua operação consegue resolver.</p></div><a class="button button-light" href="/participar.html?perfil=empresa">Preencher formulário →</a></div></section>
+<section class="section-sm"><div class="container cta-panel reveal"><div><span class="eyebrow eyebrow-cta">Antes de qualquer cobrança</span><h2>Apresente sua empresa para a Rede.</h2><p>O formulário ajuda o Uai Perto a entender o que você fornece ou consegue executar. A qualificação vem antes da condição definitiva.</p></div><a class="button button-light" href="/participar.html?perfil=empresa">Apresentar empresa →</a></div></section>
 
 <div id="site-footer"></div>
 <script type="module" src="/assets/site.js"></script>
