@@ -84,7 +84,56 @@ function setupLimitedCheckboxGroup(group){
   }));
   updateGroupCounter(group);
 }
-document.querySelectorAll("[data-checkbox-group]").forEach(setupLimitedCheckboxGroup);
+
+function installCompanyRoleQuestion(){
+  const form=forms.empresa;
+  if(!form||form.querySelector('[data-company-role-section]'))return;
+  const firstSection=form.querySelector('.survey-section');
+  const section=document.createElement('div');
+  section.className='survey-section';
+  section.dataset.companyRoleSection='true';
+  section.innerHTML=`
+    <div class="survey-section-head"><span class="survey-number">0</span><div><h3>O que sua empresa coloca na Rede?</h3><p>Marque uma opção ou as duas. Isso define o papel operacional, não a quantidade de categorias que você pode informar.</p></div></div>
+    <fieldset class="survey-question" data-checkbox-group data-required="true" data-company-role-group><legend>Como sua empresa pode participar?</legend><div class="choice-grid">
+      <label class="choice-option"><input type="checkbox" name="companyRole" value="Produtos"><span>Vendo produtos</span></label>
+      <label class="choice-option"><input type="checkbox" name="companyRole" value="Serviços"><span>Presto serviços</span></label>
+    </div><span class="group-error">Marque Produtos, Serviços ou os dois.</span></fieldset>
+    <p class="survey-help"><strong>Faz os dois?</strong> Marque os dois. Uma única empresa pode fornecer produtos e também executar serviços.</p>`;
+  firstSection?.before(section);
+  const group=section.querySelector('[data-company-role-group]');
+  if(group)setupLimitedCheckboxGroup(group);
+
+  const requested=new URLSearchParams(location.search).get('modelo');
+  const productInput=section.querySelector('input[value="Produtos"]');
+  const serviceInput=section.querySelector('input[value="Serviços"]');
+  if(requested==='catalogo'&&productInput)productInput.checked=true;
+  if(requested==='servico'&&serviceInput)serviceInput.checked=true;
+  if(requested==='ambos'){
+    if(productInput)productInput.checked=true;
+    if(serviceInput)serviceInput.checked=true;
+  }
+
+  const capability=document.querySelector('#company-capability');
+  const capabilityLabel=capability?.closest('.survey-field')?.querySelector('label');
+  const syncCapabilityLanguage=()=>{
+    const roles=[...section.querySelectorAll('input[name="companyRole"]:checked')].map(input=>input.value);
+    if(!capability)return;
+    if(roles.length===1&&roles[0]==='Produtos'){
+      if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue fornecer?';
+      capability.placeholder='Ex.: vendemos materiais elétricos para instalações e pequenos reparos residenciais.';
+    }else if(roles.includes('Produtos')&&roles.includes('Serviços')){
+      if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue fornecer e executar?';
+      capability.placeholder='Ex.: vendemos ar-condicionado e também fazemos instalação e manutenção.';
+    }else{
+      if(capabilityLabel)capabilityLabel.textContent='Em uma frase, o que sua empresa consegue resolver?';
+      capability.placeholder='Ex.: instalamos e fazemos manutenção de ar-condicionado residencial e comercial.';
+    }
+  };
+  section.querySelectorAll('input[name="companyRole"]').forEach(input=>input.addEventListener('change',syncCapabilityLanguage));
+  syncCapabilityLanguage();
+}
+installCompanyRoleQuestion();
+document.querySelectorAll("[data-checkbox-group]").forEach(group=>{if(!group.dataset.checkboxReady){setupLimitedCheckboxGroup(group);group.dataset.checkboxReady='true'}});
 
 function groupValues(form,name){return [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(input=>input.value)}
 function radioValue(form,name){return form.querySelector(`input[name="${name}"]:checked`)?.value||""}
@@ -137,8 +186,9 @@ function companyMessage(form){
     `Empresa: ${cleanText(form.elements.companyName.value)}`,
     `Responsável: ${cleanText(form.elements.companyContact.value)}`,
     `WhatsApp: ${cleanText(form.elements.companyWhatsapp.value)||"Não informou"}`,
+    `Papel na Rede: ${groupValues(form,"companyRole").join(" + ")}`,
     `Área principal: ${cleanText(form.elements.companyCategory.value)}`,
-    `O que realmente consegue resolver: ${cleanText(form.elements.companyCapability.value)}`,
+    `O que consegue fornecer ou resolver: ${cleanText(form.elements.companyCapability.value)}`,
     `Formas de atendimento: ${groupValues(form,"companyChannels").join("; ")}`,
     `Área de atendimento: ${cleanText(form.elements.companyCoverage.value)}`,
     `Bairros/regiões informados: ${cleanText(form.elements.companyCoverageDetail.value)||"Não informou"}`,
@@ -200,7 +250,7 @@ async function submitParticipation(profile,event){
     const response=await fetch("/api/contact",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
     const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"SEND_FAILED");
     resetFormState(profile,form);
-    if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. <a href="/entrada-empresa.html">Entenda o que acontece agora →</a>');
+    if(isCompany)setSuccess(profile,'Informações enviadas. Sua empresa entrou em qualificação. Não há cobrança nesta etapa. O Uai Perto confirma o enquadramento e a condição antes de qualquer aceite ou cobrança.');
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     if(isTurnstileError(error))resetTurnstileProfile(profile);
