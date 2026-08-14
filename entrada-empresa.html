@@ -82,7 +82,7 @@
       <form class="entry-card entry-form" id="acceptance-form" novalidate>
         <div id="acceptance-locked" class="locked-state">
           <strong>Nenhuma condição válida foi carregada.</strong>
-          <p>Esta etapa é usada com um link de condição após a qualificação da empresa.</p>
+          <p>Esta etapa é usada com um link de condição depois que a empresa já foi qualificada.</p>
         </div>
         <div id="acceptance-fields" hidden>
           <div class="selected-condition" id="selected-condition"></div>
@@ -123,14 +123,54 @@
       <div class="entry-copy">
         <span class="stage-kicker"><b>5</b> Implantação</span>
         <h2 class="h2">Depois do pagamento, a Rede aprende como usar sua capacidade sem criar trabalho duplicado.</h2>
-        <p>Para Serviço, refinamos capacidades, limites, região e disponibilidade. Para Catálogo, definimos produtos, retirada, entrega e a melhor forma de trocar informações. Quem faz os dois passa pelas duas partes.</p>
+        <p>Para Serviço, refinamos capacidade, limites, região e disponibilidade. Para Catálogo, definimos produtos, retirada, entrega e a melhor forma de trocar informações. Quem faz os dois passa pelas duas partes.</p>
+        <p class="entry-principle">Abra esta etapa somente depois de receber a confirmação do pagamento pelo Uai Perto.</p>
       </div>
-      <aside class="entry-card calm-card">
-        <span class="status-chip">PÓS-PAGAMENTO</span>
-        <h3>Integração vem quando fizer sentido.</h3>
-        <p>A empresa pode começar com o mínimo necessário. Se já usa ERP, estoque, agenda ou outro sistema, a conexão só é definida depois de verificar acesso autorizado e compatibilidade técnica.</p>
-        <p class="fine">O objetivo é usar a operação que a empresa já possui — não transformar o parceiro em operador de um segundo sistema.</p>
-      </aside>
+      <div class="entry-card" id="onboarding-gate">
+        <span class="status-chip neutral">ETAPA PÓS-PAGAMENTO</span>
+        <h3>Pagamento já foi confirmado?</h3>
+        <p>Se sim, abra a implantação. O formulário muda conforme Catálogo, Serviço ou a combinação dos dois.</p>
+        <button class="button button-primary button-full" type="button" id="open-onboarding">Abrir implantação</button>
+      </div>
+      <form class="entry-card entry-form onboarding-form" id="onboarding-form" hidden novalidate>
+        <div class="form-intro"><span class="status-chip">CONFIGURAÇÃO OPERACIONAL</span><h3>Ensine ao Uai Perto quando e como usar sua capacidade.</h3><p class="fine">O objetivo é registrar o mínimo útil primeiro. Integrações mais profundas podem vir depois.</p></div>
+        <div class="entry-field"><label for="onboard-company">Empresa</label><input id="onboard-company" name="company" minlength="2" maxlength="120" required></div>
+        <div class="entry-field"><label for="onboard-name">Responsável pela operação</label><input id="onboard-name" name="name" minlength="2" maxlength="120" required></div>
+        <div class="entry-field"><label for="onboard-email">E-mail</label><input id="onboard-email" name="email" type="email" maxlength="254" required></div>
+        <div class="entry-field"><label for="onboard-whatsapp">WhatsApp operacional</label><input id="onboard-whatsapp" name="whatsapp" maxlength="40" required></div>
+        <div class="entry-field full"><label for="onboard-model">Papel na Rede</label><select id="onboard-model" name="model" required><option value="">Selecione</option><option value="catalogo">Catálogo</option><option value="servico">Serviço</option><option value="ambos">Serviço + Catálogo</option></select></div>
+
+        <div id="onboarding-product-block" class="entry-card" hidden>
+          <span class="status-chip">CATÁLOGO</span>
+          <h3>Como os produtos entram e saem da sua operação?</h3>
+          <div class="entry-field full"><label for="onboard-catalog-source">Fonte de catálogo, preço ou estoque</label><select id="onboard-catalog-source" name="catalogSource" data-model-required="true"><option value="">Selecione</option><option>Sistema ou ERP</option><option>Planilha ou arquivo</option><option>Cadastro simples/manual</option><option>Ainda não existe catálogo estruturado</option></select></div>
+          <div class="entry-field full"><label for="onboard-system">Sistema/ERP utilizado <span class="fine">(opcional)</span></label><input id="onboard-system" name="system" maxlength="160" placeholder="Nome do sistema que a empresa já usa"></div>
+          <div class="entry-field"><label for="onboard-pickup">Retirada na loja</label><select id="onboard-pickup" name="pickup" data-model-required="true"><option value="">Selecione</option><option>Disponível normalmente</option><option>Disponível com horário combinado</option><option>Depende do produto</option><option>Não disponível</option></select></div>
+          <div class="entry-field"><label for="onboard-own-delivery">Entrega própria</label><select id="onboard-own-delivery" name="ownDelivery" data-model-required="true"><option value="">Selecione</option><option>Sim</option><option>Depende da região</option><option>Não</option></select></div>
+          <div class="entry-field"><label for="onboard-resolva">Coleta autorizada pelo Resolva Aí em solução coordenada</label><select id="onboard-resolva" name="resolvaCollection" data-model-required="true"><option value="">Selecione</option><option>Sim</option><option>Sim, com processo combinado</option><option>Preciso validar antes</option></select></div>
+          <div class="entry-field"><label for="onboard-prep">Tempo normal para separar produto confirmado</label><select id="onboard-prep" name="prepTime" data-model-required="true"><option value="">Selecione</option><option>Até 15 minutos</option><option>15–30 minutos</option><option>30–60 minutos</option><option>Algumas horas</option><option>Depende do produto</option></select></div>
+          <div class="entry-field full"><label for="onboard-pickup-point">Onde a coleta/retirada deve acontecer?</label><input id="onboard-pickup-point" name="pickupPoint" maxlength="300" data-model-required="true" placeholder="Endereço ou instrução operacional do ponto de retirada"></div>
+        </div>
+
+        <div id="onboarding-service-block" class="entry-card" hidden>
+          <span class="status-chip">SERVIÇO</span>
+          <h3>Quando sua empresa é uma boa solução — e quando não é?</h3>
+          <div class="entry-field full"><label for="onboard-ideal">Que tipo de pedido seria muito bom receber?</label><textarea id="onboard-ideal" name="ideal" minlength="8" maxlength="700" data-model-required="true" placeholder="Descreva uma oportunidade que combina muito com sua operação."></textarea></div>
+          <div class="entry-field full"><label for="onboard-avoid">Que tipo de pedido parece combinar, mas vocês normalmente não conseguem atender?</label><textarea id="onboard-avoid" name="avoid" minlength="5" maxlength="700" data-model-required="true"></textarea></div>
+          <div class="entry-field"><label for="onboard-coverage">Área de atendimento</label><select id="onboard-coverage" name="coverage" data-model-required="true"><option value="">Selecione</option><option>Somente no estabelecimento</option><option>Alguns bairros de Uberaba</option><option>Toda Uberaba</option><option>Uberaba e região</option><option>Online ou sem dependência de localização</option></select></div>
+          <div class="entry-field"><label for="onboard-capacity">Capacidade simultânea num dia normal</label><select id="onboard-capacity" name="capacity" data-model-required="true"><option value="">Selecione</option><option>1 por vez</option><option>2 ao mesmo tempo</option><option>3–5 ao mesmo tempo</option><option>6 ou mais</option><option>Depende do serviço</option></select></div>
+          <div class="entry-field full"><label for="onboard-hours">Quando normalmente consegue atender?</label><textarea id="onboard-hours" name="hours" minlength="5" maxlength="500" data-model-required="true" placeholder="Ex.: seg–sex 8h–18h; sábado até 12h; urgências sob consulta."></textarea></div>
+          <div class="entry-field full"><label for="onboard-limits">Limites importantes</label><textarea id="onboard-limits" name="limits" minlength="5" maxlength="600" data-model-required="true" placeholder="Equipamentos, região, equipe, materiais, altura, prazo ou outras restrições."></textarea></div>
+        </div>
+
+        <div class="entry-field full"><label for="onboard-integration">Como prefere trocar informações com o Uai Perto no começo?</label><select id="onboard-integration" name="integration" required><option value="">Selecione</option><option>Começar manualmente com o mínimo necessário</option><option>Aproveitar arquivo/planilha existente</option><option>Avaliar API ou integração do sistema atual</option><option>Ainda preciso entender a melhor opção</option></select></div>
+        <label class="entry-check"><input type="checkbox" name="confirmedPayment" required><span>Confirmo que só estou preenchendo esta implantação depois de receber a confirmação de pagamento do Uai Perto.</span></label>
+        <label class="entry-check"><input type="checkbox" name="operationalTruth" required><span>Confirmo que as informações acima representam a operação atual e podem ser usadas para evitar oportunidades incompatíveis.</span></label>
+        <div class="entry-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="turnstile-slot" id="onboarding-turnstile"></div>
+        <button class="button button-primary button-full" type="submit" id="onboarding-submit">Enviar implantação</button>
+        <div class="entry-feedback" id="onboarding-feedback" role="status" aria-live="polite"></div>
+      </form>
     </div>
   </section>
 </main>
