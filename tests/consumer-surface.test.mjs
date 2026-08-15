@@ -6,25 +6,34 @@ import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+const exists=file=>fs.existsSync(path.join(root,file));
 
-test('a página pública é somente o Uai Perto Assistente',()=>{
+test('a homepage institucional foi preservada e oferece acesso ao Assistente',()=>{
   const html=read('index.html');
-  assert.match(html,/O que você precisa resolver\?/);
-  assert.match(html,/id="assistant-form"/);
-  assert.match(html,/assets\/assistant\.js/);
-  assert.doesNotMatch(html,/<nav\b/i);
-  assert.doesNotMatch(html,/<a\b/i);
+  assert.match(html,/Pare de procurar empresa por empresa/);
+  assert.match(html,/Ver funcionando/);
+  assert.match(html,/href="\/assistente"/);
+  assert.match(html,/Experimentar o Uai Perto Assistente/);
+  assert.doesNotMatch(html,/id="assistant-form"/);
 });
 
-test('a interface Consumer não revela nomes ou estados internos',()=>{
-  const publicSurface=read('index.html')+read('assets/assistant.js')+read('assets/assistant.css');
+test('o Uai Perto Assistente possui página pública própria',()=>{
+  const html=read('assistente.html');
+  assert.match(html,/O que você precisa resolver\?/);
+  assert.match(html,/id="assistant-form"/);
+  assert.match(html,/assets\/assistant\.css/);
+  assert.match(html,/assets\/assistant\.js/);
+});
+
+test('a interface do Assistente não revela nomes ou estados internos',()=>{
+  const publicSurface=read('assistente.html')+read('assets/assistant.js')+read('assets/assistant.css');
   for(const forbidden of [
     'MCIR','Survival Kernel','KCL','Ollama','Semantic Runtime','proofs','candidates',
     'matching engine','Backoffice','Resolva Aí','debug semântico'
   ])assert.equal(publicSurface.toLowerCase().includes(forbidden.toLowerCase()),false,forbidden);
 });
 
-test('o navegador chama apenas os proxies de sessão e mensagem na própria origem',()=>{
+test('o navegador chama apenas os proxies do Assistente na própria origem',()=>{
   const script=read('assets/assistant.js');
   assert.match(script,/fetch\('\/api\/assistant\/session'/);
   assert.match(script,/fetch\('\/api\/assistant\/message'/);
@@ -32,33 +41,62 @@ test('o navegador chama apenas os proxies de sessão e mensagem na própria orig
   assert.doesNotMatch(script,/localStorage|sessionStorage|conversation/i);
 });
 
-test('páginas antigas e superfícies internas retornam ao Consumer',()=>{
+test('todas as páginas institucionais e comerciais continuam no artefato público',()=>{
+  for(const file of [
+    'index.html','empresas.html','entrada-empresa.html','rede.html','tecnologia.html',
+    'participar.html','calculadora.html','transparencia.html','contato.html',
+    'privacidade.html','assistente.html'
+  ])assert.equal(exists(file),true,file);
+});
+
+test('APIs existentes e Functions do Assistente continuam presentes',()=>{
+  for(const file of [
+    'api/cnpj.js','api/contact.js','api/founder-status.js','api/quote.js',
+    'api/quote-get.js','api/quote-accept.js','api/assistant/session.js',
+    'api/assistant/message.js'
+  ])assert.equal(exists(file),true,file);
+
   const config=JSON.parse(read('vercel.json'));
-  const protectedRoutes=['/empresas','/entrada-empresa','/rede','/tecnologia','/participar','/calculadora','/company/:path*','/backoffice/:path*','/mcir/:path*','/survival-kernel/:path*','/debug-semantico/:path*'];
-  for(const source of protectedRoutes){
-    const redirect=config.redirects.find(item=>item.source===source);
-    assert.ok(redirect,source);
-    assert.equal(redirect.destination,'/');
-  }
+  assert.equal(config.functions['api/assistant/**/*.js'].maxDuration,30);
 });
 
-test('o pacote publicado exclui páginas, APIs e ativos legados',()=>{
+test('o site não publica interfaces operacionais nem cria proxy genérico para o MCIR',()=>{
+  for(const route of [
+    'company','backoffice','resolve-ai','mcir','survival-kernel',
+    'semantic-runtime','debug-semantico'
+  ]){
+    assert.equal(exists(`${route}.html`),false,route);
+    assert.equal(exists(route),false,route);
+  }
+
+  const config=JSON.parse(read('vercel.json'));
+  assert.equal(config.redirects,undefined);
+  assert.equal(config.routes,undefined);
+  assert.equal(config.rewrites.some(item=>/mcir|assistant/i.test(item.source+item.destination)),false);
+});
+
+test('.vercelignore não exclui conteúdo público, APIs ou dependências server-side',()=>{
   const ignored=read('.vercelignore');
-  for(const rule of ['*.html','!index.html','api/*','!api/assistant/','!api/assistant/session.js','!api/assistant/message.js','assets/*','!assets/assistant.js','!assets/assistant.css','lib/*','!lib/assistant-origin.mjs'])assert.ok(ignored.includes(rule),rule);
-});
-
-test('nenhuma credencial server-side aparece nos artefatos enviados ao navegador',()=>{
-  const publicSurface=read('index.html')+read('assets/assistant.js')+read('assets/assistant.css');
-  for(const name of ['MCIR_PUBLIC_ASSISTANT_ORIGIN','CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET','MCIR_ASSISTANT_GATEWAY_SECRET']){
-    assert.equal(publicSurface.includes(name),false,name);
+  for(const destructive of ['*.html','api/*','assets/*','lib/*']){
+    assert.equal(ignored.includes(destructive),false,destructive);
+  }
+  for(const allowed of ['docs/','migrations/','scripts/','tests/']){
+    assert.ok(ignored.includes(allowed),allowed);
   }
 });
 
-test('a política de resposta impede navegação incorporada e chamadas externas',()=>{
+test('nenhuma credencial server-side aparece nos artefatos do Assistente enviados ao navegador',()=>{
+  const publicSurface=read('assistente.html')+read('assets/assistant.js')+read('assets/assistant.css');
+  for(const name of [
+    'MCIR_PUBLIC_ASSISTANT_ORIGIN','CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET',
+    'MCIR_ASSISTANT_GATEWAY_SECRET'
+  ])assert.equal(publicSurface.includes(name),false,name);
+});
+
+test('os headers globais preservam contratos do site institucional',()=>{
   const config=JSON.parse(read('vercel.json'));
   const headers=config.headers.flatMap(item=>item.headers);
-  const csp=headers.find(item=>item.key==='Content-Security-Policy')?.value||'';
-  assert.match(csp,/connect-src 'self'/);
-  assert.match(csp,/frame-ancestors 'none'/);
-  assert.match(csp,/object-src 'none'/);
+  assert.equal(headers.find(item=>item.key==='X-Content-Type-Options')?.value,'nosniff');
+  assert.equal(headers.find(item=>item.key==='Referrer-Policy')?.value,'strict-origin-when-cross-origin');
+  assert.equal(headers.find(item=>item.key==='Permissions-Policy')?.value,'camera=(), microphone=(), geolocation=()');
 });

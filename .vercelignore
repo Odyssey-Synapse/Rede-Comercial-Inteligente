@@ -1,22 +1,5 @@
-# A demonstração publicada contém somente o Consumer e seu proxy.
-*.html
-!index.html
-
-api/*
-!api/assistant/
-api/assistant/*
-!api/assistant/session.js
-!api/assistant/message.js
-
-assets/*
-!assets/assistant.css
-!assets/assistant.js
-!assets/uai-perto-logo-horizontal.png
-!assets/uai-perto-symbol.png
-
+# Somente artefatos de desenvolvimento e documentação interna.
 docs/
-lib/*
-!lib/assistant-origin.mjs
 migrations/
 scripts/
 tests/

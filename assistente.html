@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Converse com o Uai Perto e conte o que você precisa resolver em Uberaba.">
+  <meta name="theme-color" content="#335749">
+  <title>Uai Perto Assistente</title>
+  <link rel="stylesheet" href="/assets/assistant.css?v=1.0.0">
+  <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="brand-header" aria-label="Uai Perto">
+      <img src="/assets/uai-perto-logo-horizontal.png" width="220" height="72" alt="Uai Perto">
+      <span class="city-pill"><i aria-hidden="true"></i> Demonstração em Uberaba</span>
+    </header>
+
+    <main class="assistant-layout">
+      <section class="intro" aria-labelledby="page-title">
+        <span class="eyebrow">SEU ASSISTENTE LOCAL</span>
+        <h1 id="page-title">O que você precisa resolver?</h1>
+        <p>Conte do seu jeito. O Uai Perto ajuda a organizar a necessidade e continuar a conversa sem obrigar você a escolher uma categoria antes.</p>
+
+        <div class="example-list" aria-label="Exemplos de pedidos">
+          <button type="button" data-example="Meu chuveiro queimou e preciso resolver isso hoje à noite.">
+            <span>Casa</span>
+            <strong>“Meu chuveiro queimou.”</strong>
+          </button>
+          <button type="button" data-example="Meu carro não liga e eu não consigo levar até a oficina.">
+            <span>Veículo</span>
+            <strong>“Meu carro não liga.”</strong>
+          </button>
+          <button type="button" data-example="Preciso montar uma compra para receber visita amanhã sem passar de R$ 100.">
+            <span>Compras</span>
+            <strong>“Vou receber visita amanhã.”</strong>
+          </button>
+        </div>
+
+        <p class="demo-note">Esta é uma demonstração. Nenhuma empresa é acionada automaticamente.</p>
+      </section>
+
+      <section class="chat-card" aria-label="Conversa com o Uai Perto">
+        <div class="chat-head">
+          <div class="assistant-identity">
+            <img src="/assets/uai-perto-symbol.png" width="44" height="44" alt="">
+            <div><strong>Uai Perto</strong><span>Assistente local</span></div>
+          </div>
+          <button class="reset-button" id="reset-chat" type="button" aria-label="Começar uma nova conversa">Nova conversa</button>
+        </div>
+
+        <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions">
+          <article class="message assistant-message">
+            <div class="message-avatar" aria-hidden="true">U</div>
+            <div>
+              <span>Uai Perto</span>
+              <p>Olá! Me conta o que você precisa resolver. Pode falar naturalmente — se faltar algum detalhe, eu pergunto.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="typing" id="typing" hidden aria-live="polite">
+          <span></span><span></span><span></span><small>Uai Perto está pensando</small>
+        </div>
+
+        <form class="composer" id="assistant-form">
+          <label class="sr-only" for="assistant-input">O que você precisa resolver?</label>
+          <textarea id="assistant-input" name="message" rows="1" minlength="2" maxlength="1200" required placeholder="Escreva o que você precisa resolver…"></textarea>
+          <button type="submit" id="send-button" aria-label="Enviar mensagem">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </button>
+          <p>Enter para enviar · Shift + Enter para quebrar linha</p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <span>Uai Perto</span>
+      <span>Uberaba mais perto de você.</span>
+    </footer>
+  </div>
+  <script type="module" src="/assets/assistant.js?v=1.0.0"></script>
+</body>
+</html>
+

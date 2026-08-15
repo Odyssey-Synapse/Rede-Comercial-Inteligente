@@ -2,60 +2,19 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/index", "destination": "/", "permanent": true },
-    { "source": "/consumer", "destination": "/", "permanent": false },
-    { "source": "/consumer.html", "destination": "/", "permanent": false },
-    { "source": "/meu-uai-perto", "destination": "/", "permanent": false },
-    { "source": "/meu-uai-perto.html", "destination": "/", "permanent": false },
-    { "source": "/empresas", "destination": "/", "permanent": false },
-    { "source": "/empresas.html", "destination": "/", "permanent": false },
-    { "source": "/entrada-empresa", "destination": "/", "permanent": false },
-    { "source": "/entrada-empresa.html", "destination": "/", "permanent": false },
-    { "source": "/rede", "destination": "/", "permanent": false },
-    { "source": "/rede.html", "destination": "/", "permanent": false },
-    { "source": "/tecnologia", "destination": "/", "permanent": false },
-    { "source": "/tecnologia.html", "destination": "/", "permanent": false },
-    { "source": "/participar", "destination": "/", "permanent": false },
-    { "source": "/participar.html", "destination": "/", "permanent": false },
-    { "source": "/calculadora", "destination": "/", "permanent": false },
-    { "source": "/calculadora.html", "destination": "/", "permanent": false },
-    { "source": "/transparencia", "destination": "/", "permanent": false },
-    { "source": "/transparencia.html", "destination": "/", "permanent": false },
-    { "source": "/contato", "destination": "/", "permanent": false },
-    { "source": "/contato.html", "destination": "/", "permanent": false },
-    { "source": "/privacidade", "destination": "/", "permanent": false },
-    { "source": "/privacidade.html", "destination": "/", "permanent": false },
-    { "source": "/company/:path*", "destination": "/", "permanent": false },
-    { "source": "/company", "destination": "/", "permanent": false },
-    { "source": "/backoffice/:path*", "destination": "/", "permanent": false },
-    { "source": "/backoffice", "destination": "/", "permanent": false },
-    { "source": "/resolva-ai/:path*", "destination": "/", "permanent": false },
-    { "source": "/resolva-ai", "destination": "/", "permanent": false },
-    { "source": "/mcir/:path*", "destination": "/", "permanent": false },
-    { "source": "/mcir", "destination": "/", "permanent": false },
-    { "source": "/survival-kernel/:path*", "destination": "/", "permanent": false },
-    { "source": "/survival-kernel", "destination": "/", "permanent": false },
-    { "source": "/semantic-runtime/:path*", "destination": "/", "permanent": false },
-    { "source": "/semantic-runtime", "destination": "/", "permanent": false },
-    { "source": "/debug-semantico/:path*", "destination": "/", "permanent": false },
-    { "source": "/debug-semantico", "destination": "/", "permanent": false }
+  "rewrites": [
+    { "source": "/og-uai-perto.jpg", "destination": "/api/og-uai-perto" }
   ],
   "functions": {
-    "api/assistant/session.js": { "maxDuration": 30 },
-    "api/assistant/message.js": { "maxDuration": 30 }
+    "api/assistant/**/*.js": { "maxDuration": 30 }
   },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "no-referrer" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ]
