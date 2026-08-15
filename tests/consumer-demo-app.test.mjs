@@ -3,91 +3,85 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {SCENARIOS,advanceState,beginScenario,chooseAnswer,scenarioView} from '../assets/testar-flow.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+const exists=file=>fs.existsSync(path.join(root,file));
 
-test('/testar existe como aplicação Consumer determinística e independente',()=>{
+test('/testar is the canonical MCIR Consumer public distribution',()=>{
   const html=read('testar.html');
+  assert.match(html,/canonical MCIR Consumer at 4e2e3363cf9dccf60149abdeba08316b452234a7/);
+  assert.match(html,/Seu assistente local/);
   assert.match(html,/O que você precisa resolver\?/);
-  assert.match(html,/class="demo-app"/);
+  assert.match(html,/Algo em casa/);
+  assert.match(html,/Meu carro/);
+  assert.match(html,/Uma compra/);
+  assert.match(html,/Conte a situação do seu jeito/);
+  assert.match(html,/Meu Uai Perto/);
+  assert.match(html,/id="projectsSection"/);
+  assert.match(html,/id="solutionsCard"/);
+  assert.match(html,/id="executionCard"/);
   assert.match(html,/assets\/testar\.css/);
   assert.match(html,/assets\/testar\.js/);
-  assert.match(html,/Demonstração/);
-  assert.doesNotMatch(html,/<form\b/i);
+});
 
+test('deterministic scenario engine and fake fallback were removed',()=>{
   const script=read('assets/testar.js');
-  assert.doesNotMatch(script,/\bfetch\s*\(|\/api\//i);
+  assert.equal(exists('assets/testar-flow.mjs'),false);
+  assert.doesNotMatch(script,/\bSCENARIOS\b|variants\.buy|variants\.have|beginScenario|chooseAnswer|scenarioView/);
+  assert.doesNotMatch(script,/Fallback instantâneo|forceReady|enough\s*\?/);
+  assert.doesNotMatch(script,/R\$\s*\d+[\d.,]*/);
+  assert.match(script,/temporariamente indisponível para a demonstração/);
 });
 
-test('a demonstração não expõe interfaces ou termos operacionais',()=>{
-  const surface=[
-    read('testar.html'),read('assets/testar.css'),read('assets/testar.js'),
-    read('assets/testar-flow.mjs')
-  ].join('\n').toLowerCase();
-  for(const forbidden of [
-    'painel da empresa','inbox da empresa','company','backoffice','resolva aí',
-    'mcir','survival kernel','semantic runtime','scores','traces','internals'
-  ])assert.equal(surface.includes(forbidden),false,forbidden);
+test('browser uses only same-origin enumerated Consumer Demo actions',()=>{
+  const app=read('assets/testar.js');
+  const common=read('assets/testar-common.js');
+  assert.match(app,/function enumeratedAction/);
+  assert.match(app,/\['MESSAGE'/);
+  assert.match(app,/\['START_RESOLUTION'/);
+  assert.match(common,/fetch\('\/api\/consumer-demo\/session'/);
+  assert.match(common,/fetch\('\/api\/consumer-demo\/action'/);
+  assert.doesNotMatch(app+common,/Bearer\s|mcir_pilot_token|getPilotToken|setPilotToken|x-api-key|x-mcir-gateway-secret|CF-Access-Client/i);
+  assert.doesNotMatch(app+common,/https?:\/\//i);
 });
 
-test('os três cenários provam caminhos diferentes de uma busca por categoria',()=>{
-  assert.deepEqual(Object.keys(SCENARIOS),['chuveiro','carro','compras']);
-  assert.match(SCENARIOS.chuveiro.userText,/chuveiro queimou/i);
-  assert.match(SCENARIOS.chuveiro.variants.buy.summary,/chuveiro compatível \+ instalação/);
-  assert.match(SCENARIOS.carro.userText,/não consigo levar até a oficina/i);
-  assert.match(SCENARIOS.carro.variants.onsite.summary,/diagnóstico no local/);
-  assert.match(SCENARIOS.compras.userText,/até R\$ 100/);
-  assert.match(SCENARIOS.compras.variants.delivery.summary,/lista de compras \+ entrega/);
+test('conversation is not persisted by the browser and reset clears MCIR session context',()=>{
+  const script=read('assets/testar.js');
+  assert.match(script,/let chatState=freshChat\(\)/);
+  assert.match(script,/const saveChat=\(\)=>\{\}/);
+  assert.match(script,/consumerAction\('RESET_CONVERSATION'/);
+  assert.doesNotMatch(script,/uai_consumer_chat|previousChatKey|chatKey=/i);
 });
 
-test('cada cenário pode chegar deterministicamente ao estado final',()=>{
-  const answers={chuveiro:'buy',carro:'onsite',compras:'delivery'};
-  for(const [scenarioId,answerId] of Object.entries(answers)){
-    let state=beginScenario(scenarioId);
-    assert.equal(state.phase,'question');
-    state=chooseAnswer(state,answerId);
-    assert.equal(state.phase,'progress');
-    for(let safety=0;state.phase!=='complete'&&safety<10;safety++)state=advanceState(state);
-    assert.equal(state.phase,'complete',scenarioId);
-    assert.ok(scenarioView(state).variant.path.length>=1,scenarioId);
-  }
-});
-
-test('o convite de participação fica oculto até a conclusão',()=>{
+test('completion appears only after real Resolution confirmation',()=>{
+  const script=read('assets/testar.js');
   const html=read('testar.html');
-  const script=read('assets/testar.js');
-  assert.match(html,/<section class="complete-screen" id="demo-complete"[^>]*hidden/);
-  assert.match(html,/href="\/participar\.html\?perfil=consumidor&amp;origem=demo"/);
-  assert.match(script,/completion\.hidden=true/);
-  assert.match(script,/function renderComplete[\s\S]*completion\.hidden=false/);
-  assert.doesNotMatch(html,/id="consumer-form"|id="company-form"/);
+  assert.doesNotMatch(html,/demoMcirCompletion|origem=demo-mcir/);
+  assert.match(script,/CONFIRM_RESULT/);
+  assert.match(script,/qs\('confirm'\)\.onclick=[\s\S]*showDemoCompletion\(\)/);
+  assert.match(script,/As empresas eram fictícias/);
+  assert.match(script,/href="\/participar\.html\?perfil=consumidor&amp;origem=demo-mcir"/);
+  assert.match(script,/Resolver outra coisa/);
 });
 
-test('Testar outra situação reinicia todo o fluxo',()=>{
-  const html=read('testar.html');
-  const script=read('assets/testar.js');
-  assert.match(html,/id="restart-demo"[^>]*>Testar outra situação</);
-  assert.match(script,/#restart-demo'\)\?\.addEventListener\('click',restartDemo\)/);
-  assert.match(script,/function restartDemo\(\)[\s\S]*state=null[\s\S]*completion\.hidden=true[\s\S]*start\.hidden=false/);
+test('canonical Consumer never links operational Company, Backoffice or Resolva Aí surfaces',()=>{
+  const publicFiles=['testar.html','assets/testar.js','assets/testar.css','assets/testar-common.js'].map(read).join('\n');
+  assert.doesNotMatch(publicFiles,/href=["'][^"']*\/(?:company|backoffice|resolve-ai)(?:\/|["'])/i);
+  assert.doesNotMatch(publicFiles,/fetch\([^\n]*(?:\/v1\/companies|\/v1\/backoffice|\/v1\/logistics)/i);
 });
 
-test('CTAs de experimentação apontam para /testar e captação continua separada',()=>{
+test('experimentation CTAs still point to /testar and capture remains separate',()=>{
   const home=read('index.html');
   const network=read('rede.html');
   const personal=read('meu-uai-perto.html');
   const site=read('assets/site.js');
   const personalScript=read('assets/meu-uai-perto.js');
-
   assert.match(home,/href="\/testar">Quero testar como consumidor →/);
   assert.match(home,/href="\/testar">Testar como consumidor →/);
   assert.match(network,/href="\/testar">Quero testar como consumidor →/);
   assert.match(personal,/href="\/testar">Quero testar como consumidor →/);
   assert.match(site,/href="\/testar">Quero testar como consumidor/);
   assert.match(personalScript,/href="\/testar">Quero testar com uma necessidade real →/);
-
   assert.match(home,/href="\/participar\.html\?perfil=consumidor">Quero ajudar no pré-lançamento/);
-  assert.match(personal,/href="\/participar\.html\?perfil=consumidor#consumer-panel">Ativar formulário do consumidor/);
-  assert.doesNotMatch(site,/querySelectorAll\('a\[href="\/participar\.html\?perfil=consumidor"\]'/);
 });

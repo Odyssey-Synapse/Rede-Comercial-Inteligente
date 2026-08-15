@@ -6,7 +6,8 @@
     { "source": "/og-uai-perto.jpg", "destination": "/api/og-uai-perto" }
   ],
   "functions": {
-    "api/assistant/**/*.js": { "maxDuration": 30 }
+    "api/assistant/**/*.js": { "maxDuration": 30 },
+    "api/consumer-demo/**/*.js": { "maxDuration": 30 }
   },
   "headers": [
     {

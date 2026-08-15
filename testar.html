@@ -1,83 +1,260 @@
 <!doctype html>
+<!-- Public-safe distribution of the canonical MCIR Consumer at 4e2e3363cf9dccf60149abdeba08316b452234a7. -->
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Experimente uma demonstração completa de como o Uai Perto transforma uma necessidade em um caminho de solução.">
-  <meta name="theme-color" content="#335749">
-  <title>Testar como consumidor · Uai Perto</title>
-  <link rel="stylesheet" href="/assets/testar.css?v=1.0.0">
-  <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#F6F3EC">
+  <link rel="manifest" href="/testar.webmanifest">
+  <link rel="stylesheet" href="/assets/testar.css?v=0.27.0">
+  <title>Uai Perto · O que você precisa resolver?</title>
 </head>
-<body>
-  <div class="demo-app">
-    <header class="app-header">
-      <a class="app-brand" href="/" aria-label="Voltar para o site Uai Perto">
-        <img src="/assets/uai-perto-logo-horizontal.svg" width="210" height="58" alt="Uai Perto">
-      </a>
-      <div class="app-header-actions">
-        <span class="demo-badge">Demonstração</span>
-        <a class="exit-link" href="/">Sair</a>
-      </div>
-    </header>
+<body class="consumer visual-v2 consumer-v017 consumer-v018 consumer-v019 consumer-v020 consumer-v021 consumer-v023 consumer-v025 consumer-v026">
+<div class="app-shell">
+  <header class="calm-header">
+    <a class="uai-brand" href="/" aria-label="Uai Perto">
+      <span class="uai-symbol" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="uai-wordmark"><b>Uai Perto</b><small>Seu assistente local</small></span>
+    </a>
+    <div class="calm-header-actions">
+      <span class="surface-label">Demonstração</span>
+      <button class="quiet-button" id="openNotifications" type="button" aria-label="Ver atualizações"><span aria-hidden="true">●</span><span class="notification-label">Atualizações</span><span class="quiet-dot"></span></button>
+    </div>
+  </header>
 
-    <main class="app-main">
-      <section class="start-screen" id="demo-start" aria-labelledby="start-title">
-        <div class="start-copy">
-          <span class="section-kicker">UAI PERTO · CONSUMIDOR</span>
-          <h1 id="start-title">O que você precisa resolver?</h1>
-          <p>Escolha uma situação e veja uma resolução completa. Nenhuma empresa real será acionada.</p>
+  <main class="consumer-canvas">
+    <section class="conversation-home" id="conversationHome" aria-label="Conversa com o Uai Perto">
+      <div class="conversation-topline"><span><i></i> Uai Perto</span><small id="chatModeLabel">Conte do seu jeito</small></div>
+
+      <section id="firstResolution" class="first-resolution" aria-labelledby="firstResolutionTitle">
+        <span class="first-resolution-kicker">Sua primeira resolução</span>
+        <h1 id="firstResolutionTitle">O que você precisa resolver?</h1>
+        <p>Não procure categoria. Conte a situação como contaria para alguém que conhece Uberaba e vai ajudar a organizar o caminho.</p>
+        <div class="first-resolution-situations" aria-label="Situações para começar">
+          <button type="button" data-first-prompt="Preciso resolver uma coisa em casa."><strong>Algo em casa</strong><small>reparo, instalação, manutenção</small></button>
+          <button type="button" data-first-prompt="Meu carro está com um problema."><strong>Meu carro</strong><small>problema, revisão, peça</small></button>
+          <button type="button" data-first-prompt="Preciso organizar uma compra."><strong>Uma compra</strong><small>lista, produtos, entrega</small></button>
         </div>
-
-        <div class="scenario-list" aria-label="Situações demonstrativas">
-          <button class="scenario-card" type="button" data-scenario="chuveiro">
-            <span>CASA</span><strong>Meu chuveiro queimou.</strong><small>Resolver hoje</small>
-          </button>
-          <button class="scenario-card" type="button" data-scenario="carro">
-            <span>VEÍCULO</span><strong>Meu carro não liga.</strong><small>Atendimento no local</small>
-          </button>
-          <button class="scenario-card" type="button" data-scenario="compras">
-            <span>COMPRAS</span><strong>Vou receber visita amanhã.</strong><small>Até R$ 100</small>
-          </button>
-        </div>
-
-        <p class="start-note"><b>Demonstração:</b> os caminhos, participantes, disponibilidades e valores são ilustrativos.</p>
       </section>
 
-      <section class="resolution-screen" id="demo-stage" tabindex="-1" hidden aria-label="Demonstração de resolução">
-        <div class="stage-topbar">
-          <button class="back-button" id="restart-top" type="button" aria-label="Voltar às situações">←</button>
-          <div><small>RESOLUÇÃO DEMONSTRATIVA</small><strong id="stage-title">Sua necessidade</strong></div>
-          <span class="stage-step" id="stage-step">1 de 5</span>
+      <section id="needContextStrip" class="need-context-strip" hidden aria-live="polite">
+        <div class="need-context-copy">
+          <span>O que estamos resolvendo</span>
+          <strong id="needContextObjective"></strong>
+          <div id="needContextMeta" class="need-context-meta"></div>
         </div>
-        <div class="stage-content" id="stage-content" aria-live="polite"></div>
+        <button id="correctNeedContext" class="need-context-correct" type="button">Corrigir</button>
       </section>
 
-      <section class="complete-screen" id="demo-complete" tabindex="-1" hidden aria-labelledby="complete-title">
-        <div class="complete-mark" aria-hidden="true">✓</div>
-        <span class="section-kicker">CAMINHO ORGANIZADO</span>
-        <h1 id="complete-title">Solução demonstrativa pronta.</h1>
-        <p class="complete-intro">Você começou com:</p>
-        <blockquote id="complete-request"></blockquote>
-        <div class="complete-summary">
-          <small>O UAI PERTO TRANSFORMOU ISSO EM</small>
-          <strong id="complete-summary"></strong>
-          <p>Um caminho executável, apresentado de forma simples para você decidir.</p>
-        </div>
-        <div class="post-demo">
-          <span>Essa foi uma demonstração.</span>
-          <h2>O Uai Perto está sendo preparado para começar em Uberaba.</h2>
-          <p>Quer ajudar a formar a primeira Rede?</p>
-          <div class="post-demo-actions">
-            <a class="primary-action" id="participation-cta" href="/participar.html?perfil=consumidor&amp;origem=demo">Quero participar do pré-lançamento</a>
-            <button class="secondary-action" id="restart-demo" type="button">Testar outra situação</button>
+      <div class="chat-thread" id="chatThread" aria-live="polite">
+        <div class="legacy-opening" hidden aria-hidden="true">
+          <article class="chat-row assistant">
+            <div class="chat-avatar" aria-hidden="true">U</div>
+            <div class="chat-bubble assistant-bubble"><p><strong>Oi. Me conta uma coisa que você precisa resolver hoje.</strong></p><p>Não precisa saber a categoria nem explicar bonito. Fala do seu jeito.</p></div>
+          </article>
+          <div class="chat-quick-row" id="chatOpeningActions">
+            <button id="chatCapabilities" class="chat-quick" type="button">O que você consegue fazer?</button>
+            <button id="chatShowMe" class="chat-quick quiet" type="button">Me mostra com algo meu</button>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+      <div id="chatActionTray" class="chat-action-tray" hidden></div>
+      <input id="chatPilotConsent" type="checkbox" hidden aria-hidden="true">
+      <form class="chat-composer" id="chatComposer">
+        <textarea id="chatInput" rows="1" maxlength="4000" placeholder="Conte a situação do seu jeito…" aria-label="Mensagem para o Uai Perto"></textarea>
+        <button id="chatSend" type="submit" aria-label="Enviar mensagem">↑</button>
+      </form>
+      <div class="chat-privacy">Nada vai para empresas até você mandar resolver.</div>
+    </section>
 
-    <footer class="app-footer"><span>Demonstração de produto</span><span>Começando por Uberaba</span></footer>
-  </div>
-  <script type="module" src="/assets/testar.js?v=1.0.0"></script>
-</body>
-</html>
+    <section class="assistant-opening" hidden>
+      <div class="assistant-intro">
+        <span class="kicker">Seu assistente local</span>
+        <h1>O que você <em>precisa?</em></h1>
+        <p>Conte do seu jeito. Você pode resolver agora ou só anotar para depois.</p><span class="sr-only">resolver ou organizar</span>
+      </div>
+
+      <section class="assistant-composer" aria-labelledby="request-title">
+        <div class="composer-mode"><span>Falar → guardar → resolver</span><span class="live-pill"><i></i> pronto para ouvir</span></div>
+        <div class="field request-field">
+          <label id="request-title" for="text">Conte do seu jeito</label>
+          <textarea id="text" class="textarea intent" placeholder="Ex.: Meu carro faz barulho quando freio e amanhã preciso viajar."></textarea>
+          <span class="request-hint">Eu organizo o contexto. Empresa só entra quando você mandar resolver.</span>
+        </div>
+        <div class="assistant-shortcuts" aria-label="Atalhos">
+          <button class="assistant-chip" data-template="week" type="button"><span>Compras</span><small>montar lista</small></button>
+          <button class="assistant-chip" data-template="vehicle" type="button"><span>Carro</span><small>guardar pendência</small></button>
+          <button class="assistant-chip" data-template="pet" type="button"><span>Pet</span><small>cuidados</small></button>
+          <button class="assistant-chip" id="continueSomething" type="button"><span>Continuar</span><small>Meu Uai Perto</small></button>
+        </div>
+        <details class="optional-context">
+          <summary>Adicionar bairro ou localização <span>opcional</span></summary>
+          <div class="location-row compact-location">
+            <div class="field"><label for="region">Bairro ou região</label><input id="region" class="input" placeholder="Ex.: Centro" autocomplete="address-level3"></div>
+            <div class="field"><label>Localização aproximada</label><button id="geo" class="location-button" type="button">◎ Usar minha localização</button></div>
+          </div>
+        </details>
+        <input id="lat" type="hidden"><input id="lon" type="hidden"><input id="projectKind" type="hidden" value="NEED"><input id="projectArea" type="hidden" value="GENERAL"><input id="projectTitleSeed" type="hidden">
+        <label id="pilotConsentWrap" class="pilot-consent"><input id="pilotConsent" type="checkbox"><span><strong>Quero participar deste teste.</strong><small>Entendo que o Consumer ainda está em piloto e autorizo o uso dos dados desta experiência para operar e melhorar o teste. Nada é enviado a empresas até eu escolher “Resolver agora”.</small></span></label>
+        <div class="composer-actions">
+          <button id="createResolve" class="resolution-button primary-action" type="button"><span>Resolver agora</span><b aria-hidden="true">→</b></button>
+          <button id="create" class="resolution-button secondary-action" type="button"><span>Só anotar</span><span class="sr-only">Guardar e organizar</span><b aria-hidden="true">＋</b></button>
+        </div>
+        <div class="privacy-line"><span>◉</span> Guardar, editar e acompanhar não envia nada para empresas.</div>
+        <div id="msg" aria-live="polite"></div>
+      </section>
+    </section>
+
+    <section id="understandingCard" class="understanding-card" hidden aria-labelledby="understandingTitle">
+      <div class="understanding-head">
+        <div><span class="kicker">Leitura inicial do que você escreveu</span><h2 id="understandingTitle">Entendi assim.</h2></div>
+        <span class="understanding-badge"><i></i> ainda não virou procura</span>
+      </div>
+      <div class="understanding-objective"><small>O que você quer conseguir</small><strong id="understandingObjective"></strong></div>
+      <div class="understanding-grid">
+        <section id="understandingFactsWrap"><span>O que você me disse</span><ul id="understandingFacts"></ul></section>
+        <section id="understandingInferencesWrap"><span>O que parece envolver</span><ul id="understandingInferences"></ul></section>
+        <section id="understandingMissingWrap"><span>O que ainda vale confirmar</span><ul id="understandingMissing"></ul></section>
+      </div>
+      <p class="understanding-note">Você pode corrigir ou completar tudo no seu espaço abaixo. Esta leitura só organiza contexto; nenhuma empresa recebe isso até você escolher <strong>Resolver agora</strong>.</p>
+    </section>
+
+    <details class="life-areas compact-life-areas">
+      <summary><span><strong>Organizar por área</strong><small>Compras, casa, veículo, pet ou evento</small></span><b>＋</b></summary>
+      <div class="life-areas-content">
+      <div class="memory-heading">
+        <div><span class="kicker">O que o Uai Perto pode acompanhar com você</span><h2 id="areasTitle">Não espere virar urgência.</h2></div>
+        <p>Esses espaços servem para lembrar, organizar e acumular contexto. Quando chegar a hora, você decide se quer procurar uma solução.</p>
+      </div>
+      <div class="life-area-grid">
+        <button class="life-area-card" data-area-template="PURCHASES" type="button"><span class="life-area-icon">🛒</span><small>MINHA LISTA</small><strong>Compras</strong><p>Adicione itens aos poucos, preferências, substituições e orçamento.</p><b>Começar →</b></button>
+        <button class="life-area-card" data-area-template="HOME" type="button"><span class="life-area-icon">🏠</span><small>MINHA CASA</small><strong>Casa e obra</strong><p>Guarde medidas, materiais, etapas e o que falta fazer.</p><b>Organizar →</b></button>
+        <button class="life-area-card" data-area-template="VEHICLE" type="button"><span class="life-area-icon">🚗</span><small>MEU VEÍCULO</small><strong>Automóvel</strong><p>Km, revisões, serviços anteriores e pendências ficam juntos.</p><b>Acompanhar →</b></button>
+        <button class="life-area-card" data-area-template="PET" type="button"><span class="life-area-icon">🐶</span><small>MEU PET</small><strong>Pet</strong><p>Alimentação, vacinas, cuidados, restrições e próximas necessidades.</p><b>Acompanhar →</b></button>
+        <button class="life-area-card" data-area-template="EVENT" type="button"><span class="life-area-icon">🎉</span><small>MEU EVENTO</small><strong>Evento</strong><p>Data, convidados, orçamento e partes que ainda precisam ser resolvidas.</p><b>Planejar →</b></button>
+      </div>
+      </div>
+    </details>
+
+    <section id="projectsSection" class="projects-memory" aria-labelledby="projectsTitle">
+      <div class="memory-heading">
+        <div><span class="kicker">Seu espaço</span><h2 id="projectsTitle">Meu Uai Perto</h2></div>
+        <p>O que você anotou, está preparando, resolvendo ou já resolveu.</p>
+      </div>
+      <div id="projectsList" class="projects-list"></div>
+    </section>
+
+    <section id="projectWorkspace" class="project-workspace" hidden>
+      <div class="workspace-intro">
+        <div><span id="projectStatus" class="project-status">ORGANIZANDO</span><span id="workspaceArea" class="workspace-area">Seu espaço</span><h2 id="workspaceTitle">Seu espaço</h2></div>
+        <p>Você pode mexer aqui quantas vezes quiser. Enquanto você estiver organizando, nada é enviado para empresas. A procura só começa quando você mandar.</p>
+      </div>
+
+      <div class="project-layout">
+        <section class="project-main-card">
+          <div class="field"><label for="projectTitle">Como você quer chamar isso?</label><input id="projectTitle" class="input" maxlength="120"></div>
+          <div class="field"><label for="projectGoal">O que você quer conseguir quando chegar a hora?</label><textarea id="projectGoal" class="textarea project-goal" maxlength="4000"></textarea></div>
+          <div id="areaMemoryFields" class="area-memory-fields"></div>
+          <div class="project-facts">
+            <div class="field"><label for="desiredWindow">Quando isso precisa acontecer?</label><input id="desiredWindow" class="input" placeholder="Ex.: sábado à tarde"></div>
+            <div class="field"><label for="budgetMax">Orçamento máximo, se houver</label><input id="budgetMax" class="input" inputmode="decimal" placeholder="Ex.: 250"></div>
+          </div>
+          <div class="field"><label for="projectNotes">Alguma condição importante?</label><textarea id="projectNotes" class="textarea" placeholder="Ex.: pode trocar a marca, mas preciso de entrega."></textarea></div>
+          <button id="saveProject" class="btn btn-secondary" type="button">Salvar mudanças</button>
+        </section>
+
+        <div class="workspace-side-stack">
+          <aside class="project-list-card">
+            <div class="list-card-head"><div><span class="kicker">Lista e pendências</span><h3 id="itemsTitle">O que já entrou</h3></div><span id="itemCount" class="badge">0 itens</span></div>
+            <div class="item-add-row"><input id="newItem" class="input" placeholder="Ex.: 2 pacotes de café"><button id="addItem" class="btn btn-secondary" type="button">Adicionar</button></div>
+            <div id="projectItems" class="project-items"></div>
+          </aside>
+
+          <aside class="project-list-card routine-card">
+            <div class="list-card-head"><div><span class="kicker">Rotinas e lembretes</span><h3>O que volta a acontecer?</h3></div><span id="routineCount" class="badge">0</span></div>
+            <div class="routine-form-grid">
+              <input id="routineLabel" class="input" placeholder="Ex.: trocar óleo">
+              <input id="routineCadence" class="input" placeholder="Ex.: a cada 3.000 km">
+              <input id="routineNextDue" class="input" placeholder="Próxima vez / data">
+              <button id="addRoutine" class="btn btn-secondary" type="button">Guardar rotina</button>
+            </div>
+            <div id="projectRoutines" class="project-items"></div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="ready-strip">
+        <div><span class="kicker">Você decide quando muda de fase</span><strong>Quer que eu use tudo isso para procurar uma solução?</strong><p>Somente esta ação autoriza o Uai Perto a começar a procurar um caminho para resolver.</p></div>
+        <button id="executeProject" class="resolution-button" type="button"><span>Resolver agora</span><b>→</b></button>
+      </div>
+    </section>
+
+    <section class="resolution-stage" aria-label="Caminho da sua necessidade">
+      <section id="clarifyCard" class="resolution-panel clarify-panel" hidden>
+        <div class="panel-index">01</div><div class="panel-content"><span class="kicker">Só falta o que muda a solução</span><h2>Preciso confirmar um detalhe.</h2><p id="unknowns" class="muted"></p><div class="field"><label for="answer">Sua resposta</label><textarea id="answer" class="textarea" placeholder="Responda só o que falta."></textarea></div><button id="clarify" class="btn btn-primary" type="button">Continuar procurando →</button></div>
+      </section>
+
+      <section id="searchCard" class="resolution-panel search-panel" hidden>
+        <div class="search-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="panel-content"><span class="kicker">Agora a procura trabalha</span><h2 id="searchTitle">Estou procurando quem consiga resolver nessas condições.</h2><p id="searchText" class="muted">Você não acompanha fila de empresas. Quando existir um caminho concreto, ele aparece aqui.</p></div>
+      </section>
+
+      <section id="companyQuestionCard" class="resolution-panel question-panel" hidden>
+        <div class="panel-index">?</div><div class="panel-content"><span class="kicker">Uma pergunta pode mudar o atendimento</span><h2>Antes da solução, a empresa precisa saber:</h2><blockquote id="companyQuestion" class="human-question"></blockquote><div class="field"><label for="companyAnswer">Sua resposta</label><textarea id="companyAnswer" class="textarea" placeholder="Responda sem precisar contar tudo de novo."></textarea></div><button id="sendCompanyAnswer" class="btn btn-primary" type="button">Responder e continuar →</button></div>
+      </section>
+
+      <section id="solutionsCard" class="solution-showcase" hidden>
+        <div class="solution-heading"><span class="kicker">A busca pode parar aqui</span><h2 id="solutionsTitle">Encontrei uma solução para você avaliar</h2><p id="solutionsLead">Veja o caminho completo antes de decidir.</p></div>
+        <div id="solutions"></div>
+        <button id="selectSolution" class="resolution-button" type="button"><span>Quero esta solução</span><b>→</b></button>
+      </section>
+
+      <section id="executionCard" class="execution-showcase" hidden>
+        <div class="execution-top"><div><span class="kicker">Solução escolhida</span><h2 id="executionTitle">Agora é execução</h2></div><span id="executionBadge" class="badge pulse"></span></div>
+        <div id="executionDetails"></div>
+        <div id="confirmBox" hidden class="confirmation-box"><strong>As partes informaram conclusão.</strong><p>Para o Uai Perto, só termina quando você disser se resolveu.</p><div class="actions"><button id="confirm" class="btn btn-primary" type="button">Sim, resolveu</button><button id="fail" class="btn btn-secondary" type="button">Ainda não resolveu</button></div></div>
+        <div id="repeatBox" class="repeat-box" hidden><div><strong>Quer guardar isso para a próxima?</strong><p>Seu espaço continua no histórico e pode virar uma nova cópia sem disparar nada sozinho.</p></div><button id="repeatCurrent" class="btn btn-secondary" type="button">Repetir esta necessidade</button></div>
+      </section>
+    </section>
+
+    <section id="pilotFeedbackCard" class="pilot-feedback-card" hidden aria-labelledby="pilotFeedbackTitle">
+      <div class="pilot-feedback-copy"><span class="kicker">Você já testou uma parte do Consumer</span><h2 id="pilotFeedbackTitle">Agora queremos aprender com o uso.</h2><p>Não precisamos de elogio. Queremos saber se isso realmente ajudaria você quando a Rede estiver ligada a empresas reais de Uberaba.</p></div>
+      <div id="pilotFeedbackForm" class="pilot-feedback-form">
+        <fieldset class="feedback-question"><legend>Se isso funcionasse com empresas reais de Uberaba hoje, você usaria?</legend><div class="feedback-picks"><label><input type="radio" name="wouldUse" value="SIM"><span>Sim</span></label><label><input type="radio" name="wouldUse" value="TALVEZ"><span>Talvez</span></label><label><input type="radio" name="wouldUse" value="NAO"><span>Não</span></label></div></fieldset>
+        <div class="field"><label for="pilotComment">O que pareceu útil ou o que faltou para você confiar?</label><textarea id="pilotComment" class="textarea" maxlength="1200" placeholder="Pode escrever do seu jeito. Este campo é opcional."></textarea></div>
+        <fieldset class="feedback-question publication-question"><legend>Este comentário pode aparecer publicamente como aprendizado do piloto?</legend><div class="publication-picks"><label><input type="radio" name="publication" value="PRIVATE" checked><span>Não. Só para pesquisa.</span></label><label><input type="radio" name="publication" value="ANONYMOUS"><span>Sim, anonimamente.</span></label><label><input type="radio" name="publication" value="FIRST_NAME"><span>Sim, com meu primeiro nome.</span></label></div></fieldset>
+        <div id="pilotFirstNameWrap" class="field" hidden><label for="pilotFirstName">Primeiro nome</label><input id="pilotFirstName" class="input" maxlength="80" autocomplete="given-name" placeholder="Ex.: Gabriel"></div>
+        <div class="feedback-actions"><button id="sendPilotFeedback" class="btn btn-primary" type="button">Enviar meu comentário</button><small>Seu comentário serve só para melhorar o teste. Ele não muda quais soluções aparecem para você.</small></div>
+      </div>
+      <div id="pilotFeedbackThanks" class="feedback-thanks" hidden><strong>Obrigado. Isso virou evidência do piloto.</strong><p>Seu comentário ajuda a decidir o que precisa melhorar antes de abrir a experiência para mais pessoas.</p></div>
+    </section>
+
+    <section class="quiet-details">
+      <details id="journeyPanel"><summary>Ver o caminho desta necessidade</summary><div class="dev-content"><div id="feed"></div></div></details>
+      <details id="notificationPanel"><summary>Atualizações e notificações</summary><div class="dev-content"><div id="notifications" class="notification-list"></div></div></details>
+    </section>
+
+    <div id="onboardingBackdrop" class="onboarding-backdrop" hidden></div>
+    <section id="onboardingSheet" class="onboarding-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+      <div class="onboarding-handle" aria-hidden="true"></div>
+      <span class="kicker">Só agora eu preciso te pedir isso</span>
+      <h2 id="onboardingTitle">Para guardar ou procurar, preciso registrar esta experiência no piloto.</h2>
+      <p>Você pode conversar e testar antes disso. Ao continuar, esta necessidade fica vinculada à sua sessão de teste para o Uai Perto conseguir salvar, acompanhar e melhorar a experiência.</p>
+      <div class="onboarding-trust">
+        <span><i></i>Nada é enviado a empresas sem “Resolver agora”.</span>
+        <span><i></i>Seu comentário não altera quais soluções aparecem.</span>
+      </div>
+      <div class="onboarding-actions">
+        <button id="onboardingAccept" class="resolution-button" type="button"><span>Continuar no piloto</span><b>→</b></button>
+        <button id="onboardingCancel" class="onboarding-cancel" type="button">Agora não</button>
+      </div>
+    </section>
+  </main>
+  <nav class="phone-tabbar" aria-label="Navegação do Consumer">
+    <button type="button" data-phone-nav="home"><span aria-hidden="true">⌂</span><b>Início</b></button>
+    <button type="button" data-phone-nav="memory"><span aria-hidden="true">◎</span><b>Meu Uai Perto</b></button>
+    <button type="button" data-phone-nav="updates"><span aria-hidden="true">●</span><b>Atualizações</b></button>
+  </nav>
+</div>
+<script type="module" src="/assets/testar.js?v=0.27.0"></script>
+</body></html>

@@ -53,11 +53,12 @@ test('APIs existentes e Functions do Assistente continuam presentes',()=>{
   for(const file of [
     'api/cnpj.js','api/contact.js','api/founder-status.js','api/quote.js',
     'api/quote-get.js','api/quote-accept.js','api/assistant/session.js',
-    'api/assistant/message.js'
+    'api/assistant/message.js','api/consumer-demo/session.js','api/consumer-demo/action.js'
   ])assert.equal(exists(file),true,file);
 
   const config=JSON.parse(read('vercel.json'));
   assert.equal(config.functions['api/assistant/**/*.js'].maxDuration,30);
+  assert.equal(config.functions['api/consumer-demo/**/*.js'].maxDuration,30);
 });
 
 test('o site não publica interfaces operacionais nem cria proxy genérico para o MCIR',()=>{
