@@ -6,18 +6,13 @@ import { fileURLToPath } from "node:url";
 const here=path.dirname(fileURLToPath(import.meta.url)), root=path.resolve(here,"..");
 const read=f=>fs.readFileSync(path.join(root,f),"utf8");
 
-test("HTML da calculadora contém todos os elementos esperados pelo JS",()=>{
-  const html=read("calculadora.html");
-  const js=read("assets/calculator-page.js");
-  for(const id of [
-    "company-lookup-form","cnpj","lookup-message","company-confirmation",
-    "lookup-button","quote-button","change-cnpj","quote-result",
-    "found-company-name","found-company-meta","found-cnpj","found-location",
-    "primary-activity-label","primary-activity-cnae","activity-list"
-  ]){
-    assert.ok(html.includes(`id="${id}"`),`HTML sem #${id}`);
-    assert.ok(js.includes(`#${id}`)||["quote-result","cnpj","lookup-message","company-confirmation","lookup-button","quote-button"].includes(id),`JS sem referência a #${id}`);
-  }
+test("a calculadora legada não pertence à superfície pública Consumer",()=>{
+  const config=JSON.parse(read("vercel.json"));
+  const redirect=config.redirects.find(item=>item.source==="/calculadora");
+  assert.deepEqual(redirect,{source:"/calculadora",destination:"/",permanent:false});
+  const ignored=read(".vercelignore");
+  assert.match(ignored,/^\*\.html$/m);
+  assert.match(ignored,/^!index\.html$/m);
 });
 
 test("categoria não é mais escolhida manualmente",()=>{

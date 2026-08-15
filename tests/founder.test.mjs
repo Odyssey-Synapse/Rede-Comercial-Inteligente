@@ -7,7 +7,7 @@ test("Founder é reconhecido apenas pela lista server-side",()=>{
   assert.equal(isFounderCnpj("11.222.333/0001-81",registry),true);
   assert.equal(isFounderCnpj("00.000.000/0000-00",registry),false);
 });
-test("registro Founder respeita limite de 25",()=>{
-  assert.equal(assertFounderRegistryLimit(Array.from({length:25},(_,i)=>String(i))),true);
-  assert.throws(()=>assertFounderRegistryLimit(Array.from({length:26},(_,i)=>String(i))),/FOUNDER_REGISTRY_LIMIT_EXCEEDED/);
+test("registro Founder respeita o limite vigente de 54",()=>{
+  assert.equal(assertFounderRegistryLimit(Array.from({length:54},(_,i)=>String(i))),true);
+  assert.throws(()=>assertFounderRegistryLimit(Array.from({length:55},(_,i)=>String(i))),/FOUNDER_REGISTRY_LIMIT_EXCEEDED/);
 });
