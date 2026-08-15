@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Experimente uma demonstração completa de como o Uai Perto transforma uma necessidade em um caminho de solução.">
+  <meta name="theme-color" content="#335749">
+  <title>Testar como consumidor · Uai Perto</title>
+  <link rel="stylesheet" href="/assets/testar.css?v=1.0.0">
+  <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+</head>
+<body>
+  <div class="demo-app">
+    <header class="app-header">
+      <a class="app-brand" href="/" aria-label="Voltar para o site Uai Perto">
+        <img src="/assets/uai-perto-logo-horizontal.svg" width="210" height="58" alt="Uai Perto">
+      </a>
+      <div class="app-header-actions">
+        <span class="demo-badge">Demonstração</span>
+        <a class="exit-link" href="/">Sair</a>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="start-screen" id="demo-start" aria-labelledby="start-title">
+        <div class="start-copy">
+          <span class="section-kicker">UAI PERTO · CONSUMIDOR</span>
+          <h1 id="start-title">O que você precisa resolver?</h1>
+          <p>Escolha uma situação e veja uma resolução completa. Nenhuma empresa real será acionada.</p>
+        </div>
+
+        <div class="scenario-list" aria-label="Situações demonstrativas">
+          <button class="scenario-card" type="button" data-scenario="chuveiro">
+            <span>CASA</span><strong>Meu chuveiro queimou.</strong><small>Resolver hoje</small>
+          </button>
+          <button class="scenario-card" type="button" data-scenario="carro">
+            <span>VEÍCULO</span><strong>Meu carro não liga.</strong><small>Atendimento no local</small>
+          </button>
+          <button class="scenario-card" type="button" data-scenario="compras">
+            <span>COMPRAS</span><strong>Vou receber visita amanhã.</strong><small>Até R$ 100</small>
+          </button>
+        </div>
+
+        <p class="start-note"><b>Demonstração:</b> os caminhos, participantes, disponibilidades e valores são ilustrativos.</p>
+      </section>
+
+      <section class="resolution-screen" id="demo-stage" tabindex="-1" hidden aria-label="Demonstração de resolução">
+        <div class="stage-topbar">
+          <button class="back-button" id="restart-top" type="button" aria-label="Voltar às situações">←</button>
+          <div><small>RESOLUÇÃO DEMONSTRATIVA</small><strong id="stage-title">Sua necessidade</strong></div>
+          <span class="stage-step" id="stage-step">1 de 5</span>
+        </div>
+        <div class="stage-content" id="stage-content" aria-live="polite"></div>
+      </section>
+
+      <section class="complete-screen" id="demo-complete" tabindex="-1" hidden aria-labelledby="complete-title">
+        <div class="complete-mark" aria-hidden="true">✓</div>
+        <span class="section-kicker">CAMINHO ORGANIZADO</span>
+        <h1 id="complete-title">Solução demonstrativa pronta.</h1>
+        <p class="complete-intro">Você começou com:</p>
+        <blockquote id="complete-request"></blockquote>
+        <div class="complete-summary">
+          <small>O UAI PERTO TRANSFORMOU ISSO EM</small>
+          <strong id="complete-summary"></strong>
+          <p>Um caminho executável, apresentado de forma simples para você decidir.</p>
+        </div>
+        <div class="post-demo">
+          <span>Essa foi uma demonstração.</span>
+          <h2>O Uai Perto está sendo preparado para começar em Uberaba.</h2>
+          <p>Quer ajudar a formar a primeira Rede?</p>
+          <div class="post-demo-actions">
+            <a class="primary-action" id="participation-cta" href="/participar.html?perfil=consumidor&amp;origem=demo">Quero participar do pré-lançamento</a>
+            <button class="secondary-action" id="restart-demo" type="button">Testar outra situação</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer"><span>Demonstração de produto</span><span>Começando por Uberaba</span></footer>
+  </div>
+  <script type="module" src="/assets/testar.js?v=1.0.0"></script>
+</body>
+</html>

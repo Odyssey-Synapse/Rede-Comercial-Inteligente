@@ -8,12 +8,12 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const exists=file=>fs.existsSync(path.join(root,file));
 
-test('a homepage institucional foi preservada e oferece acesso ao Assistente',()=>{
+test('a homepage institucional foi preservada e separa demonstração do Assistente',()=>{
   const html=read('index.html');
   assert.match(html,/Pare de procurar empresa por empresa/);
-  assert.match(html,/Ver funcionando/);
+  assert.match(html,/href="\/testar">Quero testar como consumidor →/);
   assert.match(html,/href="\/assistente"/);
-  assert.match(html,/Experimentar o Uai Perto Assistente/);
+  assert.match(html,/Abrir o Uai Perto Assistente/);
   assert.doesNotMatch(html,/id="assistant-form"/);
 });
 
@@ -45,7 +45,7 @@ test('todas as páginas institucionais e comerciais continuam no artefato públi
   for(const file of [
     'index.html','empresas.html','entrada-empresa.html','rede.html','tecnologia.html',
     'participar.html','calculadora.html','transparencia.html','contato.html',
-    'privacidade.html','assistente.html'
+    'privacidade.html','assistente.html','testar.html'
   ])assert.equal(exists(file),true,file);
 });
 

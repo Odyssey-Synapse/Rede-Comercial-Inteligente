@@ -156,15 +156,11 @@ function ensureHomeMeuUaiPerto(){
       <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=pet"><span class="home-uai-life-icon">🐶</span><small>SEU PET</small><h3>“A vacina dele está chegando.”</h3><p>Cuidados e necessidades acompanham o pet com você.</p><strong>Guardar no meu pet →</strong></a>
       <a class="home-uai-life-card" href="/meu-uai-perto.html?criar=evento"><span class="home-uai-life-icon">🎉</span><small>SEU EVENTO</small><h3>“Ainda falta buffet, bolo e som.”</h3><p>Monte aos poucos. Procure quando estiver pronto.</p><strong>Guardar no meu evento →</strong></a>
     </div>
-    <div class="home-uai-life-actions"><a class="button button-primary" href="/meu-uai-perto.html">Quero guardar o que preciso →</a><a class="button button-ghost" href="/meu-uai-perto.html#quick-intent-form">Preciso resolver algo agora</a></div>
+    <div class="home-uai-life-actions"><a class="button button-primary" href="/meu-uai-perto.html">Quero guardar o que preciso →</a><a class="button button-ghost" href="/testar">Quero testar como consumidor</a></div>
     <p class="home-uai-life-note">Guardar não inicia nenhuma procura. Você decide quando o Uai Perto deve agir.</p>
   </div>`;
   hero.insertAdjacentElement("afterend",section);
 
-  const heroConsumerCta=document.querySelector(".hero .hero-actions .button-ghost");
-  if(heroConsumerCta){heroConsumerCta.href="/meu-uai-perto.html";heroConsumerCta.textContent="Quero guardar o que preciso"}
-
-  document.querySelectorAll('a[href="/participar.html?perfil=consumidor"]').forEach(link=>{link.href="/meu-uai-perto.html"});
 }
 
 applyBrandMetadata();
