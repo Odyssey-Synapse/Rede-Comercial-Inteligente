@@ -1,1 +1,10 @@
-{"name":"Uai Perto","short_name":"Uai Perto","start_url":"/testar","scope":"/testar","display":"standalone","background_color":"#F6F3EC","theme_color":"#17382D","lang":"pt-BR","description":"Seu assistente local: organize compras, serviços e projetos e decida quando o Uai Perto deve procurar uma solução."}
+{
+  "name": "Uai Perto · Demonstração em Vereda Clara",
+  "short_name": "Uai Perto",
+  "description": "Demonstração pública do Uai Perto em uma cidade fictícia.",
+  "start_url": "/testar",
+  "display": "standalone",
+  "background_color": "#F2E8D9",
+  "theme_color": "#335749",
+  "lang": "pt-BR"
+}
