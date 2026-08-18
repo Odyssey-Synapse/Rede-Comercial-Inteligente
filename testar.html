@@ -1,260 +1,59 @@
 <!doctype html>
-<!-- Public-safe distribution of the canonical MCIR Consumer at 4e2e3363cf9dccf60149abdeba08316b452234a7. -->
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#F6F3EC">
-  <link rel="manifest" href="/testar.webmanifest">
-  <link rel="stylesheet" href="/assets/testar.css?v=0.27.0">
-  <title>Uai Perto · O que você precisa resolver?</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#335749">
+<meta name="description" content="Demonstração pública do Uai Perto em uma cidade fictícia.">
+<title>Uai Perto · Demonstração em Vereda Clara</title>
+<link rel="manifest" href="/testar.webmanifest">
+<style>
+:root{--green:#335749;--gold:#D39237;--rust:#B55A30;--paper:#F2E8D9;--ink:#20362e;--muted:#66746f;--white:#fffdfa;--line:#d8cfbf;--shadow:0 20px 55px rgba(45,65,56,.12)}*{box-sizing:border-box}html{background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{margin:0;min-height:100vh;background:radial-gradient(circle at 82% 5%,rgba(211,146,55,.12),transparent 28%),var(--paper)}button,textarea{font:inherit}button{cursor:pointer}.topbar{position:sticky;top:0;z-index:10;background:rgba(242,232,217,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(51,87,73,.12)}.topbar-inner{max-width:1080px;margin:auto;min-height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}.brand{display:flex;align-items:center;gap:12px;color:var(--green);text-decoration:none}.mark{width:35px;height:35px;border:2px solid currentColor;border-radius:12px;display:grid;place-items:center;font-weight:900}.brand strong{display:block;font-size:18px}.brand small{display:block;color:var(--muted);font-size:12px;margin-top:1px}.demo-tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rust);background:#fff7ee;border:1px solid rgba(181,90,48,.25);padding:8px 11px;border-radius:999px}.shell{max-width:1080px;margin:auto;padding:54px 24px 90px}.intro{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:36px;align-items:end;margin-bottom:30px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--gold)}h1{font-size:clamp(38px,6vw,72px);letter-spacing:-.055em;line-height:.98;margin:15px 0 18px;max-width:780px}.intro p{font-size:18px;line-height:1.6;color:#50615b;max-width:700px;margin:0}.city-card{background:var(--green);color:var(--paper);padding:22px;border-radius:24px;box-shadow:var(--shadow)}.city-card small{display:block;color:#d9d4c6;font-size:12px;text-transform:uppercase;letter-spacing:.12em}.city-card strong{display:block;font-size:23px;margin:7px 0 5px}.city-card p{color:#eee7d9;font-size:14px;line-height:1.5}.main-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:24px}.card{background:rgba(255,253,250,.86);border:1px solid rgba(51,87,73,.13);border-radius:28px;box-shadow:var(--shadow)}.composer{padding:28px}.composer h2,.status-card h2{font-size:25px;letter-spacing:-.025em;margin:0 0 8px}.composer>p,.status-card>p{color:var(--muted);margin:0 0 20px;line-height:1.5}.samples{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.sample{border:1px solid var(--line);background:#fffaf3;color:var(--ink);padding:9px 12px;border-radius:999px;font-size:13px}.sample:hover,.sample:focus-visible{border-color:var(--gold);outline:none}.field{display:grid;gap:8px}.field label{font-size:13px;font-weight:800;color:var(--green)}textarea{width:100%;min-height:136px;resize:vertical;border:1px solid var(--line);border-radius:18px;background:#fff;padding:16px;color:var(--ink);line-height:1.5;outline:none}textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(51,87,73,.1)}.consent{display:flex;gap:10px;align-items:flex-start;margin:16px 0;color:#53635e;font-size:13px;line-height:1.45}.consent input{margin-top:3px;accent-color:var(--green)}.primary,.secondary,.option{border-radius:14px;border:0;padding:13px 16px;font-weight:800}.primary{background:var(--green);color:#fff;min-height:48px}.primary:hover{filter:brightness(.96)}.primary:disabled,.secondary:disabled,.option:disabled{opacity:.55;cursor:not-allowed}.secondary{background:#f6efe4;color:var(--green);border:1px solid var(--line)}.actions{display:flex;gap:10px;flex-wrap:wrap}.fine{font-size:12px;color:#7c817d;line-height:1.55;margin-top:14px}.status-card{padding:28px;min-height:100%}.status-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.state-pill{font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;background:#edf3ef;color:var(--green);padding:7px 9px;border-radius:999px}.state-pill.warn{background:#fff1e8;color:var(--rust)}.status-message{font-size:19px;line-height:1.45;margin:12px 0 18px}.progress{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:18px 0 24px}.progress span{height:6px;border-radius:999px;background:#e7dfd1}.progress span.done{background:var(--green)}.progress span.active{background:var(--gold)}.detail{background:#f8f2e8;border-radius:18px;padding:16px;margin-top:14px}.detail strong{display:block;margin-bottom:5px}.detail p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}.options{display:grid;gap:10px;margin-top:14px}.option{text-align:left;background:#fff;border:1px solid var(--line);color:var(--ink)}.option:hover,.option:focus-visible{border-color:var(--green);outline:none;box-shadow:0 0 0 3px rgba(51,87,73,.08)}.option strong,.option span,.option small{display:block}.option span{margin-top:3px;color:var(--muted);font-size:13px}.option small{margin-top:7px;color:#6e6256}.empty{display:grid;place-items:center;text-align:center;min-height:330px;color:var(--muted);padding:30px}.empty b{display:block;color:var(--green);font-size:21px;margin:12px 0 6px}.dot{width:42px;height:42px;border-radius:50%;border:9px solid rgba(51,87,73,.12);border-top-color:var(--green)}.question{margin-top:14px}.question textarea{min-height:92px}.error-box{background:#fff0ea;border:1px solid rgba(181,90,48,.25);color:#7d3f28;padding:14px;border-radius:16px;margin-top:14px}.city-note{margin-top:25px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.city-note article{padding:17px;border-top:1px solid rgba(51,87,73,.2)}.city-note strong{display:block;font-size:14px;margin-bottom:5px}.city-note p{font-size:13px;color:var(--muted);margin:0;line-height:1.45}.toast-region{position:fixed;right:18px;bottom:18px;z-index:50;display:grid;gap:8px}.toast{max-width:360px;padding:12px 15px;background:var(--green);color:#fff;border-radius:12px;box-shadow:var(--shadow);font-size:14px}@media(max-width:820px){.shell{padding-top:34px}.intro,.main-grid{grid-template-columns:1fr}.city-card{max-width:none}.intro{gap:22px}.main-grid{gap:16px}.topbar-inner{padding:0 16px}.shell{padding-left:16px;padding-right:16px}.composer,.status-card{padding:21px}.city-note{grid-template-columns:1fr}.demo-tag{font-size:10px}.brand small{display:none}}@media(max-width:520px){h1{font-size:42px}.intro p{font-size:16px}.sample{width:100%;text-align:left}.primary,.secondary{width:100%}.actions{display:grid}.progress{gap:3px}.topbar-inner{min-height:64px}}
+</style>
 </head>
-<body class="consumer visual-v2 consumer-v017 consumer-v018 consumer-v019 consumer-v020 consumer-v021 consumer-v023 consumer-v025 consumer-v026">
-<div class="app-shell">
-  <header class="calm-header">
-    <a class="uai-brand" href="/" aria-label="Uai Perto">
-      <span class="uai-symbol" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="uai-wordmark"><b>Uai Perto</b><small>Seu assistente local</small></span>
-    </a>
-    <div class="calm-header-actions">
-      <span class="surface-label">Demonstração</span>
-      <button class="quiet-button" id="openNotifications" type="button" aria-label="Ver atualizações"><span aria-hidden="true">●</span><span class="notification-label">Atualizações</span><span class="quiet-dot"></span></button>
-    </div>
-  </header>
-
-  <main class="consumer-canvas">
-    <section class="conversation-home" id="conversationHome" aria-label="Conversa com o Uai Perto">
-      <div class="conversation-topline"><span><i></i> Uai Perto</span><small id="chatModeLabel">Conte do seu jeito</small></div>
-
-      <section id="firstResolution" class="first-resolution" aria-labelledby="firstResolutionTitle">
-        <span class="first-resolution-kicker">Sua primeira resolução</span>
-        <h1 id="firstResolutionTitle">O que você precisa resolver?</h1>
-        <p>Não procure categoria. Conte a situação como contaria para alguém que conhece Uberaba e vai ajudar a organizar o caminho.</p>
-        <div class="first-resolution-situations" aria-label="Situações para começar">
-          <button type="button" data-first-prompt="Preciso resolver uma coisa em casa."><strong>Algo em casa</strong><small>reparo, instalação, manutenção</small></button>
-          <button type="button" data-first-prompt="Meu carro está com um problema."><strong>Meu carro</strong><small>problema, revisão, peça</small></button>
-          <button type="button" data-first-prompt="Preciso organizar uma compra."><strong>Uma compra</strong><small>lista, produtos, entrega</small></button>
-        </div>
-      </section>
-
-      <section id="needContextStrip" class="need-context-strip" hidden aria-live="polite">
-        <div class="need-context-copy">
-          <span>O que estamos resolvendo</span>
-          <strong id="needContextObjective"></strong>
-          <div id="needContextMeta" class="need-context-meta"></div>
-        </div>
-        <button id="correctNeedContext" class="need-context-correct" type="button">Corrigir</button>
-      </section>
-
-      <div class="chat-thread" id="chatThread" aria-live="polite">
-        <div class="legacy-opening" hidden aria-hidden="true">
-          <article class="chat-row assistant">
-            <div class="chat-avatar" aria-hidden="true">U</div>
-            <div class="chat-bubble assistant-bubble"><p><strong>Oi. Me conta uma coisa que você precisa resolver hoje.</strong></p><p>Não precisa saber a categoria nem explicar bonito. Fala do seu jeito.</p></div>
-          </article>
-          <div class="chat-quick-row" id="chatOpeningActions">
-            <button id="chatCapabilities" class="chat-quick" type="button">O que você consegue fazer?</button>
-            <button id="chatShowMe" class="chat-quick quiet" type="button">Me mostra com algo meu</button>
-          </div>
-        </div>
-      </div>
-      <div id="chatActionTray" class="chat-action-tray" hidden></div>
-      <input id="chatPilotConsent" type="checkbox" hidden aria-hidden="true">
-      <form class="chat-composer" id="chatComposer">
-        <textarea id="chatInput" rows="1" maxlength="4000" placeholder="Conte a situação do seu jeito…" aria-label="Mensagem para o Uai Perto"></textarea>
-        <button id="chatSend" type="submit" aria-label="Enviar mensagem">↑</button>
-      </form>
-      <div class="chat-privacy">Nada vai para empresas até você mandar resolver.</div>
-    </section>
-
-    <section class="assistant-opening" hidden>
-      <div class="assistant-intro">
-        <span class="kicker">Seu assistente local</span>
-        <h1>O que você <em>precisa?</em></h1>
-        <p>Conte do seu jeito. Você pode resolver agora ou só anotar para depois.</p><span class="sr-only">resolver ou organizar</span>
-      </div>
-
-      <section class="assistant-composer" aria-labelledby="request-title">
-        <div class="composer-mode"><span>Falar → guardar → resolver</span><span class="live-pill"><i></i> pronto para ouvir</span></div>
-        <div class="field request-field">
-          <label id="request-title" for="text">Conte do seu jeito</label>
-          <textarea id="text" class="textarea intent" placeholder="Ex.: Meu carro faz barulho quando freio e amanhã preciso viajar."></textarea>
-          <span class="request-hint">Eu organizo o contexto. Empresa só entra quando você mandar resolver.</span>
-        </div>
-        <div class="assistant-shortcuts" aria-label="Atalhos">
-          <button class="assistant-chip" data-template="week" type="button"><span>Compras</span><small>montar lista</small></button>
-          <button class="assistant-chip" data-template="vehicle" type="button"><span>Carro</span><small>guardar pendência</small></button>
-          <button class="assistant-chip" data-template="pet" type="button"><span>Pet</span><small>cuidados</small></button>
-          <button class="assistant-chip" id="continueSomething" type="button"><span>Continuar</span><small>Meu Uai Perto</small></button>
-        </div>
-        <details class="optional-context">
-          <summary>Adicionar bairro ou localização <span>opcional</span></summary>
-          <div class="location-row compact-location">
-            <div class="field"><label for="region">Bairro ou região</label><input id="region" class="input" placeholder="Ex.: Centro" autocomplete="address-level3"></div>
-            <div class="field"><label>Localização aproximada</label><button id="geo" class="location-button" type="button">◎ Usar minha localização</button></div>
-          </div>
-        </details>
-        <input id="lat" type="hidden"><input id="lon" type="hidden"><input id="projectKind" type="hidden" value="NEED"><input id="projectArea" type="hidden" value="GENERAL"><input id="projectTitleSeed" type="hidden">
-        <label id="pilotConsentWrap" class="pilot-consent"><input id="pilotConsent" type="checkbox"><span><strong>Quero participar deste teste.</strong><small>Entendo que o Consumer ainda está em piloto e autorizo o uso dos dados desta experiência para operar e melhorar o teste. Nada é enviado a empresas até eu escolher “Resolver agora”.</small></span></label>
-        <div class="composer-actions">
-          <button id="createResolve" class="resolution-button primary-action" type="button"><span>Resolver agora</span><b aria-hidden="true">→</b></button>
-          <button id="create" class="resolution-button secondary-action" type="button"><span>Só anotar</span><span class="sr-only">Guardar e organizar</span><b aria-hidden="true">＋</b></button>
-        </div>
-        <div class="privacy-line"><span>◉</span> Guardar, editar e acompanhar não envia nada para empresas.</div>
-        <div id="msg" aria-live="polite"></div>
-      </section>
-    </section>
-
-    <section id="understandingCard" class="understanding-card" hidden aria-labelledby="understandingTitle">
-      <div class="understanding-head">
-        <div><span class="kicker">Leitura inicial do que você escreveu</span><h2 id="understandingTitle">Entendi assim.</h2></div>
-        <span class="understanding-badge"><i></i> ainda não virou procura</span>
-      </div>
-      <div class="understanding-objective"><small>O que você quer conseguir</small><strong id="understandingObjective"></strong></div>
-      <div class="understanding-grid">
-        <section id="understandingFactsWrap"><span>O que você me disse</span><ul id="understandingFacts"></ul></section>
-        <section id="understandingInferencesWrap"><span>O que parece envolver</span><ul id="understandingInferences"></ul></section>
-        <section id="understandingMissingWrap"><span>O que ainda vale confirmar</span><ul id="understandingMissing"></ul></section>
-      </div>
-      <p class="understanding-note">Você pode corrigir ou completar tudo no seu espaço abaixo. Esta leitura só organiza contexto; nenhuma empresa recebe isso até você escolher <strong>Resolver agora</strong>.</p>
-    </section>
-
-    <details class="life-areas compact-life-areas">
-      <summary><span><strong>Organizar por área</strong><small>Compras, casa, veículo, pet ou evento</small></span><b>＋</b></summary>
-      <div class="life-areas-content">
-      <div class="memory-heading">
-        <div><span class="kicker">O que o Uai Perto pode acompanhar com você</span><h2 id="areasTitle">Não espere virar urgência.</h2></div>
-        <p>Esses espaços servem para lembrar, organizar e acumular contexto. Quando chegar a hora, você decide se quer procurar uma solução.</p>
-      </div>
-      <div class="life-area-grid">
-        <button class="life-area-card" data-area-template="PURCHASES" type="button"><span class="life-area-icon">🛒</span><small>MINHA LISTA</small><strong>Compras</strong><p>Adicione itens aos poucos, preferências, substituições e orçamento.</p><b>Começar →</b></button>
-        <button class="life-area-card" data-area-template="HOME" type="button"><span class="life-area-icon">🏠</span><small>MINHA CASA</small><strong>Casa e obra</strong><p>Guarde medidas, materiais, etapas e o que falta fazer.</p><b>Organizar →</b></button>
-        <button class="life-area-card" data-area-template="VEHICLE" type="button"><span class="life-area-icon">🚗</span><small>MEU VEÍCULO</small><strong>Automóvel</strong><p>Km, revisões, serviços anteriores e pendências ficam juntos.</p><b>Acompanhar →</b></button>
-        <button class="life-area-card" data-area-template="PET" type="button"><span class="life-area-icon">🐶</span><small>MEU PET</small><strong>Pet</strong><p>Alimentação, vacinas, cuidados, restrições e próximas necessidades.</p><b>Acompanhar →</b></button>
-        <button class="life-area-card" data-area-template="EVENT" type="button"><span class="life-area-icon">🎉</span><small>MEU EVENTO</small><strong>Evento</strong><p>Data, convidados, orçamento e partes que ainda precisam ser resolvidas.</p><b>Planejar →</b></button>
-      </div>
-      </div>
-    </details>
-
-    <section id="projectsSection" class="projects-memory" aria-labelledby="projectsTitle">
-      <div class="memory-heading">
-        <div><span class="kicker">Seu espaço</span><h2 id="projectsTitle">Meu Uai Perto</h2></div>
-        <p>O que você anotou, está preparando, resolvendo ou já resolveu.</p>
-      </div>
-      <div id="projectsList" class="projects-list"></div>
-    </section>
-
-    <section id="projectWorkspace" class="project-workspace" hidden>
-      <div class="workspace-intro">
-        <div><span id="projectStatus" class="project-status">ORGANIZANDO</span><span id="workspaceArea" class="workspace-area">Seu espaço</span><h2 id="workspaceTitle">Seu espaço</h2></div>
-        <p>Você pode mexer aqui quantas vezes quiser. Enquanto você estiver organizando, nada é enviado para empresas. A procura só começa quando você mandar.</p>
-      </div>
-
-      <div class="project-layout">
-        <section class="project-main-card">
-          <div class="field"><label for="projectTitle">Como você quer chamar isso?</label><input id="projectTitle" class="input" maxlength="120"></div>
-          <div class="field"><label for="projectGoal">O que você quer conseguir quando chegar a hora?</label><textarea id="projectGoal" class="textarea project-goal" maxlength="4000"></textarea></div>
-          <div id="areaMemoryFields" class="area-memory-fields"></div>
-          <div class="project-facts">
-            <div class="field"><label for="desiredWindow">Quando isso precisa acontecer?</label><input id="desiredWindow" class="input" placeholder="Ex.: sábado à tarde"></div>
-            <div class="field"><label for="budgetMax">Orçamento máximo, se houver</label><input id="budgetMax" class="input" inputmode="decimal" placeholder="Ex.: 250"></div>
-          </div>
-          <div class="field"><label for="projectNotes">Alguma condição importante?</label><textarea id="projectNotes" class="textarea" placeholder="Ex.: pode trocar a marca, mas preciso de entrega."></textarea></div>
-          <button id="saveProject" class="btn btn-secondary" type="button">Salvar mudanças</button>
-        </section>
-
-        <div class="workspace-side-stack">
-          <aside class="project-list-card">
-            <div class="list-card-head"><div><span class="kicker">Lista e pendências</span><h3 id="itemsTitle">O que já entrou</h3></div><span id="itemCount" class="badge">0 itens</span></div>
-            <div class="item-add-row"><input id="newItem" class="input" placeholder="Ex.: 2 pacotes de café"><button id="addItem" class="btn btn-secondary" type="button">Adicionar</button></div>
-            <div id="projectItems" class="project-items"></div>
-          </aside>
-
-          <aside class="project-list-card routine-card">
-            <div class="list-card-head"><div><span class="kicker">Rotinas e lembretes</span><h3>O que volta a acontecer?</h3></div><span id="routineCount" class="badge">0</span></div>
-            <div class="routine-form-grid">
-              <input id="routineLabel" class="input" placeholder="Ex.: trocar óleo">
-              <input id="routineCadence" class="input" placeholder="Ex.: a cada 3.000 km">
-              <input id="routineNextDue" class="input" placeholder="Próxima vez / data">
-              <button id="addRoutine" class="btn btn-secondary" type="button">Guardar rotina</button>
-            </div>
-            <div id="projectRoutines" class="project-items"></div>
-          </aside>
-        </div>
-      </div>
-
-      <div class="ready-strip">
-        <div><span class="kicker">Você decide quando muda de fase</span><strong>Quer que eu use tudo isso para procurar uma solução?</strong><p>Somente esta ação autoriza o Uai Perto a começar a procurar um caminho para resolver.</p></div>
-        <button id="executeProject" class="resolution-button" type="button"><span>Resolver agora</span><b>→</b></button>
-      </div>
-    </section>
-
-    <section class="resolution-stage" aria-label="Caminho da sua necessidade">
-      <section id="clarifyCard" class="resolution-panel clarify-panel" hidden>
-        <div class="panel-index">01</div><div class="panel-content"><span class="kicker">Só falta o que muda a solução</span><h2>Preciso confirmar um detalhe.</h2><p id="unknowns" class="muted"></p><div class="field"><label for="answer">Sua resposta</label><textarea id="answer" class="textarea" placeholder="Responda só o que falta."></textarea></div><button id="clarify" class="btn btn-primary" type="button">Continuar procurando →</button></div>
-      </section>
-
-      <section id="searchCard" class="resolution-panel search-panel" hidden>
-        <div class="search-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="panel-content"><span class="kicker">Agora a procura trabalha</span><h2 id="searchTitle">Estou procurando quem consiga resolver nessas condições.</h2><p id="searchText" class="muted">Você não acompanha fila de empresas. Quando existir um caminho concreto, ele aparece aqui.</p></div>
-      </section>
-
-      <section id="companyQuestionCard" class="resolution-panel question-panel" hidden>
-        <div class="panel-index">?</div><div class="panel-content"><span class="kicker">Uma pergunta pode mudar o atendimento</span><h2>Antes da solução, a empresa precisa saber:</h2><blockquote id="companyQuestion" class="human-question"></blockquote><div class="field"><label for="companyAnswer">Sua resposta</label><textarea id="companyAnswer" class="textarea" placeholder="Responda sem precisar contar tudo de novo."></textarea></div><button id="sendCompanyAnswer" class="btn btn-primary" type="button">Responder e continuar →</button></div>
-      </section>
-
-      <section id="solutionsCard" class="solution-showcase" hidden>
-        <div class="solution-heading"><span class="kicker">A busca pode parar aqui</span><h2 id="solutionsTitle">Encontrei uma solução para você avaliar</h2><p id="solutionsLead">Veja o caminho completo antes de decidir.</p></div>
-        <div id="solutions"></div>
-        <button id="selectSolution" class="resolution-button" type="button"><span>Quero esta solução</span><b>→</b></button>
-      </section>
-
-      <section id="executionCard" class="execution-showcase" hidden>
-        <div class="execution-top"><div><span class="kicker">Solução escolhida</span><h2 id="executionTitle">Agora é execução</h2></div><span id="executionBadge" class="badge pulse"></span></div>
-        <div id="executionDetails"></div>
-        <div id="confirmBox" hidden class="confirmation-box"><strong>As partes informaram conclusão.</strong><p>Para o Uai Perto, só termina quando você disser se resolveu.</p><div class="actions"><button id="confirm" class="btn btn-primary" type="button">Sim, resolveu</button><button id="fail" class="btn btn-secondary" type="button">Ainda não resolveu</button></div></div>
-        <div id="repeatBox" class="repeat-box" hidden><div><strong>Quer guardar isso para a próxima?</strong><p>Seu espaço continua no histórico e pode virar uma nova cópia sem disparar nada sozinho.</p></div><button id="repeatCurrent" class="btn btn-secondary" type="button">Repetir esta necessidade</button></div>
-      </section>
-    </section>
-
-    <section id="pilotFeedbackCard" class="pilot-feedback-card" hidden aria-labelledby="pilotFeedbackTitle">
-      <div class="pilot-feedback-copy"><span class="kicker">Você já testou uma parte do Consumer</span><h2 id="pilotFeedbackTitle">Agora queremos aprender com o uso.</h2><p>Não precisamos de elogio. Queremos saber se isso realmente ajudaria você quando a Rede estiver ligada a empresas reais de Uberaba.</p></div>
-      <div id="pilotFeedbackForm" class="pilot-feedback-form">
-        <fieldset class="feedback-question"><legend>Se isso funcionasse com empresas reais de Uberaba hoje, você usaria?</legend><div class="feedback-picks"><label><input type="radio" name="wouldUse" value="SIM"><span>Sim</span></label><label><input type="radio" name="wouldUse" value="TALVEZ"><span>Talvez</span></label><label><input type="radio" name="wouldUse" value="NAO"><span>Não</span></label></div></fieldset>
-        <div class="field"><label for="pilotComment">O que pareceu útil ou o que faltou para você confiar?</label><textarea id="pilotComment" class="textarea" maxlength="1200" placeholder="Pode escrever do seu jeito. Este campo é opcional."></textarea></div>
-        <fieldset class="feedback-question publication-question"><legend>Este comentário pode aparecer publicamente como aprendizado do piloto?</legend><div class="publication-picks"><label><input type="radio" name="publication" value="PRIVATE" checked><span>Não. Só para pesquisa.</span></label><label><input type="radio" name="publication" value="ANONYMOUS"><span>Sim, anonimamente.</span></label><label><input type="radio" name="publication" value="FIRST_NAME"><span>Sim, com meu primeiro nome.</span></label></div></fieldset>
-        <div id="pilotFirstNameWrap" class="field" hidden><label for="pilotFirstName">Primeiro nome</label><input id="pilotFirstName" class="input" maxlength="80" autocomplete="given-name" placeholder="Ex.: Gabriel"></div>
-        <div class="feedback-actions"><button id="sendPilotFeedback" class="btn btn-primary" type="button">Enviar meu comentário</button><small>Seu comentário serve só para melhorar o teste. Ele não muda quais soluções aparecem para você.</small></div>
-      </div>
-      <div id="pilotFeedbackThanks" class="feedback-thanks" hidden><strong>Obrigado. Isso virou evidência do piloto.</strong><p>Seu comentário ajuda a decidir o que precisa melhorar antes de abrir a experiência para mais pessoas.</p></div>
-    </section>
-
-    <section class="quiet-details">
-      <details id="journeyPanel"><summary>Ver o caminho desta necessidade</summary><div class="dev-content"><div id="feed"></div></div></details>
-      <details id="notificationPanel"><summary>Atualizações e notificações</summary><div class="dev-content"><div id="notifications" class="notification-list"></div></div></details>
-    </section>
-
-    <div id="onboardingBackdrop" class="onboarding-backdrop" hidden></div>
-    <section id="onboardingSheet" class="onboarding-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
-      <div class="onboarding-handle" aria-hidden="true"></div>
-      <span class="kicker">Só agora eu preciso te pedir isso</span>
-      <h2 id="onboardingTitle">Para guardar ou procurar, preciso registrar esta experiência no piloto.</h2>
-      <p>Você pode conversar e testar antes disso. Ao continuar, esta necessidade fica vinculada à sua sessão de teste para o Uai Perto conseguir salvar, acompanhar e melhorar a experiência.</p>
-      <div class="onboarding-trust">
-        <span><i></i>Nada é enviado a empresas sem “Resolver agora”.</span>
-        <span><i></i>Seu comentário não altera quais soluções aparecem.</span>
-      </div>
-      <div class="onboarding-actions">
-        <button id="onboardingAccept" class="resolution-button" type="button"><span>Continuar no piloto</span><b>→</b></button>
-        <button id="onboardingCancel" class="onboarding-cancel" type="button">Agora não</button>
-      </div>
-    </section>
-  </main>
-  <nav class="phone-tabbar" aria-label="Navegação do Consumer">
-    <button type="button" data-phone-nav="home"><span aria-hidden="true">⌂</span><b>Início</b></button>
-    <button type="button" data-phone-nav="memory"><span aria-hidden="true">◎</span><b>Meu Uai Perto</b></button>
-    <button type="button" data-phone-nav="updates"><span aria-hidden="true">●</span><b>Atualizações</b></button>
-  </nav>
-</div>
-<script type="module" src="/assets/testar.js?v=0.27.0"></script>
-</body></html>
+<body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">U</span><span><strong>Uai Perto</strong><small>Seu assistente local</small></span></a><span class="demo-tag">Ambiente de demonstração</span></div></header>
+<main class="shell">
+<section class="intro"><div><span class="eyebrow"><i></i> Demonstração pública</span><h1>O que você precisa resolver?</h1><p>Conte a situação do seu jeito. O Uai Perto organiza a necessidade, procura capacidades na Rede fictícia e mostra apenas o que realmente consegue continuar.</p></div><aside class="city-card"><small>Cidade fictícia do teste</small><strong>Vereda Clara, MG</strong><p>Empresas, profissionais, produtos, preços, disponibilidade e entregas desta experiência são sintéticos. Nenhum negócio real é apresentado como parceiro.</p></aside></section>
+<section class="main-grid">
+<div class="card composer"><h2>Conte a necessidade</h2><p>Não precisa escolher categoria nem escrever de um jeito especial.</p><div class="samples" aria-label="Exemplos"><button class="sample" data-prompt="Preciso de 5 kg de arroz, 2 kg de feijão e leite.">Lista de compras</button><button class="sample" data-prompt="Meu carro está fazendo um barulho estranho.">Problema no carro</button><button class="sample" data-prompt="Minha torneira não para de pingar.">Torneira pingando</button><button class="sample" data-prompt="Preciso levar uma geladeira de um bairro para outro.">Transportar geladeira</button></div><div class="field"><label for="need">O que você precisa resolver?</label><textarea id="need" maxlength="4000" placeholder="Ex.: Meu chuveiro queimou e preciso de alguém para trocar hoje."></textarea></div><label class="consent"><input id="consent" type="checkbox"><span>Entendo que esta é uma cidade fictícia e autorizo o uso desta interação somente para operar e avaliar a demonstração. Nenhuma compra, pagamento, contratação ou entrega real será feita.</span></label><div class="actions"><button class="primary" id="start" type="button">Começar a resolver →</button><button class="secondary" id="reset" type="button">Nova necessidade</button></div><p class="fine">O teste usa a máquina real disponível por trás desta demonstração. Se faltar capacidade ou informação, a tela mostra o bloqueio em vez de inventar uma solução.</p></div>
+<div class="card status-card" id="statusCard"><div id="idle" class="empty"><div><div class="dot" aria-hidden="true"></div><b>A Rede aparece quando houver trabalho real.</b><span>Envie uma necessidade para acompanhar o caminho.</span></div></div><div id="result" hidden><div class="status-head"><span class="state-pill" id="statePill">Preparando</span><button class="secondary" id="refresh" type="button">Atualizar</button></div><h2 id="resultTitle">Estamos resolvendo</h2><p class="status-message" id="statusMessage"></p><div class="progress" id="progress" aria-label="Progresso"></div><div id="understanding" class="detail" hidden><strong>Entendi assim</strong><p id="understandingText"></p></div><div id="dynamic"></div></div></div>
+</section>
+<section class="city-note"><article><strong>Capacidades, não categorias</strong><p>A demonstração procura quem consegue executar a próxima parte necessária.</p></article><article><strong>Sem sucesso de fachada</strong><p>“Concluído” só aparece quando o próprio fluxo devolve conclusão verificada.</p></article><article><strong>Fronteira pública mínima</strong><p>Esta página conversa apenas com a camada pública do site; infraestrutura privada não é enviada ao navegador.</p></article></section>
+</main>
+<script type="module">
+import { consumerAction, qs, setBusy, toast, esc } from '/assets/testar-common.js';
+const phaseIndex={UNDERSTANDING:0,PLANNING:1,NEEDS_INFORMATION:1,WAITING_NETWORK:2,WAITING_SELECTION:2,READY_EXECUTION:3,WAITING_EXECUTION:3,WAITING_VERIFICATION:4,SUSPENDED:4,UNAVAILABLE:1,COMPLETE:5};
+const labels={UNDERSTANDING:'Entendendo',PLANNING:'Organizando',NEEDS_INFORMATION:'Precisa de informação',WAITING_NETWORK:'Rede sem capacidade',WAITING_SELECTION:'Escolha necessária',READY_EXECUTION:'Pronto para testar',WAITING_EXECUTION:'Executando',WAITING_VERIFICATION:'Verificando',SUSPENDED:'Interrompido',UNAVAILABLE:'Indisponível',COMPLETE:'Concluído'};
+let projectId='';let sessionId='';let originalNeed='';let extraContext=[];let currentView=null;let ready=false;
+const need=qs('need'),consent=qs('consent'),start=qs('start'),reset=qs('reset'),idle=qs('idle'),result=qs('result'),statePill=qs('statePill'),statusMessage=qs('statusMessage'),dynamic=qs('dynamic'),understanding=qs('understanding'),understandingText=qs('understandingText');
+for(const b of document.querySelectorAll('[data-prompt]'))b.onclick=()=>{need.value=b.dataset.prompt;need.focus()};
+function money(v){return v==null?'valor não informado':new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)/100)}
+function publicError(error){return error?.status>=500?'O Uai Perto está temporariamente indisponível para este teste.':(error?.message||'Não foi possível continuar esta etapa.');}
+function showResult(){idle.hidden=true;result.hidden=false}
+function setProgress(state){const index=phaseIndex[state]??1;qs('progress').innerHTML=Array.from({length:6},(_,i)=>`<span class="${i<index?'done':i===index?'active':''}"></span>`).join('')}
+function setState(state,message){showResult();statePill.textContent=labels[state]||state;statePill.classList.toggle('warn',['NEEDS_INFORMATION','WAITING_NETWORK','SUSPENDED','UNAVAILABLE'].includes(state));statusMessage.textContent=message||'';setProgress(state)}
+function resetClient(){projectId='';sessionId='';originalNeed='';extraContext=[];currentView=null;need.value='';consent.checked=false;understanding.hidden=true;dynamic.innerHTML='';result.hidden=true;idle.hidden=false;need.focus()}
+function goalText(){return [originalNeed,...extraContext.map(x=>`Contexto adicional: ${x}`)].join('\n')}
+async function ensureReady(){if(ready)return true;const status=await consumerAction('CLOSED_LOOP_STATUS',{},0);if(status?.enabled!==true||status?.mode!=='closed-loop'||status?.synthetic_demo!==true)throw Object.assign(new Error('A demonstração operacional não está disponível neste ambiente.'),{status:503});ready=true;return true}
+async function ensureOnboarded(){const s=await consumerAction('ONBOARDING_STATUS',{},0).catch(()=>null);if(s?.status==='ONBOARDED')return;await consumerAction('ACCEPT_ONBOARDING',{},0)}
+async function preview(text){try{const p=await consumerAction('PREVIEW_UNDERSTANDING',{text},0);const objective=p?.understanding?.objective;if(objective){understandingText.textContent=objective;understanding.hidden=false}}catch{understanding.hidden=true}}
+async function createProject(){const created=await consumerAction('CREATE_PROJECT',{title:originalNeed.slice(0,96),goal:goalText(),kind:'NEED',area:'GENERAL',location:null},0);projectId=created?.project_id||created?.id||'';if(!projectId)throw new Error('A demonstração não conseguiu criar sua necessidade.');return projectId}
+async function restartProject(){if(!projectId)return createProject();await consumerAction('UPDATE_PROJECT',{project_id:projectId,patch:{goal:goalText()}},0);return projectId}
+async function begin(){const view=await consumerAction('START_CLOSED_LOOP',{project_id:projectId},0);sessionId=view?.session_id||sessionId;await render(view)}
+async function refresh(){if(!sessionId)return;const view=await consumerAction('READ_CLOSED_LOOP',{session_id:sessionId},0);await render(view)}
+async function render(view){currentView=view;const state=view?.state||'UNAVAILABLE';setState(state,view?.message||'Aguardando estado da demonstração.');dynamic.innerHTML='';
+ if(state==='WAITING_SELECTION'){const data=await consumerAction('READ_CLOSED_LOOP_OPTIONS',{session_id:sessionId},0);const items=data?.items||[];if(!items.length){dynamic.innerHTML='<div class="error-box">A Rede não retornou opções selecionáveis para esta etapa.</div>';return}const box=document.createElement('div');box.className='detail';box.innerHTML='<strong>Escolha uma capacidade fictícia</strong><p>Estas opções existem somente na cidade de demonstração.</p><div class="options"></div>';const wrap=box.querySelector('.options');for(const item of items){const b=document.createElement('button');b.type='button';b.className='option';const product=(item.products||[])[0],plan=item.resource_plan;const detail=product?`${product.name} · ${money(product.price_minor)}`:plan?`Plano de recurso · ${money(plan.price_minor)}`:(item.delivery_available?'Entrega de teste disponível':'Capacidade disponível');b.innerHTML=`<strong>${esc(item.provider_name||'Capacidade disponível')}</strong><span>${esc(item.provider_kind||'Fornecedor fictício')}</span><small>${esc(detail)}</small>`;b.onclick=async()=>{setBusy(b,true,'Selecionando…');try{const next=await consumerAction('SELECT_CLOSED_LOOP_OPTION',{session_id:sessionId,consumer_option_id:item.consumer_option_id},0);await render(next)}catch(e){toast(publicError(e),{kind:'error'})}finally{setBusy(b,false)}};wrap.append(b)}dynamic.append(box);return}
+ if(state==='READY_EXECUTION'){const can=Boolean(view?.operating?.can_execute_synthetic);const box=document.createElement('div');box.className='detail';box.innerHTML=`<strong>Etapa pronta no ambiente fictício</strong><p>${can?'Você pode executar esta etapa de teste. Isso não compra, contrata ou entrega nada de verdade.':'A execução de teste não está liberada para esta etapa.'}</p>`;if(can){const b=document.createElement('button');b.type='button';b.className='primary';b.style.marginTop='12px';b.textContent='Executar etapa fictícia →';b.onclick=async()=>{setBusy(b,true,'Executando…');try{const next=await consumerAction('EXECUTE_CLOSED_LOOP_SYNTHETIC',{session_id:sessionId},0);await render(next)}catch(e){toast(publicError(e),{kind:'error'})}finally{setBusy(b,false)}};box.append(b)}dynamic.append(box);return}
+ if(state==='NEEDS_INFORMATION'){const box=document.createElement('div');box.className='question';box.innerHTML='<div class="detail"><strong>Complete o contexto</strong><p>A máquina parou antes de executar porque falta uma informação que pode mudar o caminho.</p><textarea id="more" maxlength="1200" placeholder="Acrescente o detalhe que faltou…"></textarea><button id="continue" class="primary" type="button" style="margin-top:10px">Continuar com este contexto →</button></div>';dynamic.append(box);qs('continue').onclick=async()=>{const text=qs('more').value.trim();if(!text)return toast('Escreva o contexto adicional.',{kind:'error'});setBusy(qs('continue'),true,'Atualizando…');try{extraContext.push(text);await restartProject();await begin()}catch(e){toast(publicError(e),{kind:'error'})}finally{setBusy(qs('continue'),false)}};return}
+ if(state==='WAITING_NETWORK'){dynamic.innerHTML='<div class="detail"><strong>Faltou capacidade na Rede fictícia</strong><p>A necessidade foi entendida, mas não há capacidade observada para a próxima etapa. A demonstração não inventa fornecedor para preencher essa falta.</p></div>';return}
+ if(state==='COMPLETE'){qs('resultTitle').textContent='Necessidade concluída no ambiente de teste';dynamic.innerHTML='<div class="detail"><strong>Resultado verificado</strong><p>A conclusão veio do fluxo da demonstração depois das etapas necessárias; não é uma animação pré-programada.</p></div>';return}
+ if(['SUSPENDED','UNAVAILABLE'].includes(state)){dynamic.innerHTML='<div class="error-box">A execução não foi tratada como concluída. Você pode iniciar uma nova necessidade.</div>';return}
+ dynamic.innerHTML='<div class="detail"><strong>Fluxo em andamento</strong><p>Use “Atualizar” para consultar novamente o estado observado.</p></div>';
+}
+start.onclick=async()=>{const text=need.value.trim();if(!text)return toast('Conte o que você precisa resolver.',{kind:'error'});if(!consent.checked)return toast('Confirme que entendeu o ambiente de demonstração.',{kind:'error'});setBusy(start,true,'Preparando…');qs('resultTitle').textContent='Estamos resolvendo';try{await ensureReady();await ensureOnboarded();originalNeed=text;extraContext=[];await preview(text);await createProject();await begin()}catch(e){setState('UNAVAILABLE',publicError(e));dynamic.innerHTML='<div class="error-box">Nenhuma solução foi simulada para esconder esta falha.</div>';toast(publicError(e),{kind:'error'})}finally{setBusy(start,false)}};
+qs('refresh').onclick=async()=>{setBusy(qs('refresh'),true,'Atualizando…');try{await refresh()}catch(e){toast(publicError(e),{kind:'error'})}finally{setBusy(qs('refresh'),false)}};reset.onclick=resetClient;
+ensureReady().catch(()=>{});
+</script>
+</body>
+</html>
