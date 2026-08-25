@@ -15,14 +15,17 @@
 .entry-fieldset legend,
 .contact-consent,
 .survey-consent,
-.entry-check{
+.entry-check,
+.form-field label{
   font-size:var(--uai-form-label)!important;
   line-height:1.55!important;
 }
 
 .field input,.field select,.field textarea,
 .survey-field input,.survey-field select,.survey-field textarea,
-.entry-field input,.entry-field select,.entry-field textarea{
+.entry-field input,.entry-field select,.entry-field textarea,
+.form-field input,.form-field select,.form-field textarea,
+.consumer-now textarea{
   font-size:var(--uai-form-copy)!important;
   line-height:1.5!important;
   min-height:54px!important;
@@ -31,7 +34,8 @@
 
 .field textarea,
 .survey-field textarea,
-.entry-field textarea{min-height:124px!important}
+.entry-field textarea,
+.form-field textarea{min-height:124px!important}
 
 input::placeholder,textarea::placeholder{
   font-size:1rem!important;
@@ -52,7 +56,8 @@ input::placeholder,textarea::placeholder{
 .basis-note,
 .quote-warning,
 .contact-dynamic p,
-.selected-condition span{
+.selected-condition span,
+.form-help{
   font-size:var(--uai-form-small)!important;
   line-height:1.6!important;
 }
@@ -110,6 +115,33 @@ input::placeholder,textarea::placeholder{
 .company-confirmation-head p{font-size:.98rem!important;line-height:1.6!important}
 .price-display small,.price-display span,.price-line span{font-size:.98rem!important;line-height:1.55!important}
 
+/* Meu Uai Perto / áreas pessoais */
+.consumer-promise-row span{font-size:.96rem!important;line-height:1.45!important;padding:9px 12px!important}
+.consumer-now-kicker{font-size:.9rem!important;line-height:1.4!important}
+.consumer-now label{font-size:1.08rem!important;line-height:1.5!important}
+.quick-examples button{font-size:.96rem!important;line-height:1.4!important;padding:9px 12px!important}
+.consumer-life-scenes span{font-size:.88rem!important;line-height:1.4!important}
+.consumer-life-scenes strong{font-size:1.08rem!important;line-height:1.5!important}
+.consumer-life-scenes small{font-size:.96rem!important;line-height:1.5!important;color:rgba(255,255,255,.9)!important}
+.consumer-starter-card small{font-size:.9rem!important;line-height:1.4!important}
+.consumer-starter-card h3{font-size:1.16rem!important;line-height:1.4!important}
+.consumer-starter-card p{font-size:1rem!important;line-height:1.62!important}
+.consumer-starter-card strong{font-size:.98rem!important;line-height:1.45!important}
+.engine-strip span{font-size:.98rem!important;line-height:1.55!important}
+.engine-strip b{font-size:.9rem!important;line-height:1.4!important}
+.context-type,.engine-tags span{font-size:.9rem!important;line-height:1.4!important}
+.context-card p,.experience-choice p,.consumer-empty p{font-size:1rem!important;line-height:1.62!important}
+.context-meta small{font-size:.94rem!important;line-height:1.45!important}
+.consumer-form-cta-panel p{font-size:1.04rem!important;line-height:1.68!important;color:#fff!important}
+.consumer-form-cta-actions small{font-size:.94rem!important;line-height:1.5!important;color:#fff!important}
+.intent-summary small{font-size:.9rem!important;line-height:1.4!important}
+.intent-summary strong{font-size:1.18rem!important;line-height:1.45!important}
+.intent-block h3{font-size:1rem!important;line-height:1.4!important}
+.intent-block p{font-size:1rem!important;line-height:1.62!important}
+.intent-flow span{font-size:.94rem!important;line-height:1.4!important}
+.intent-warning{font-size:.98rem!important;line-height:1.6!important}
+.consumer-toast{font-size:.98rem!important;line-height:1.45!important}
+
 /* Pequenos rótulos institucionais que aparecem junto a formulários */
 .breadcrumb{font-size:.96rem!important;line-height:1.5!important}
 .step-kicker,.price-stage small,.fact-card small,.decision-card small,.scenario small{font-size:.9rem!important;line-height:1.4!important}
@@ -124,4 +156,5 @@ input::placeholder,textarea::placeholder{
   .survey-section,.survey-intro{padding:22px!important}
   .choice-option span{font-size:1rem!important;min-height:56px!important}
   .entry-progress li{min-width:165px!important}
+  .consumer-life-scenes small,.consumer-starter-card p,.context-card p,.experience-choice p{font-size:.98rem!important}
 }
