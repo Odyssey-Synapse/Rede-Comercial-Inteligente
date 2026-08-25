@@ -2,9 +2,9 @@
    Carregada por último para impedir que CSS legado volte a criar microcopy. */
 
 :root{
-  --uai-form-copy:1.03rem;
-  --uai-form-small:.96rem;
-  --uai-form-label:1.04rem;
+  --uai-form-copy:1.08rem;
+  --uai-form-small:1rem;
+  --uai-form-label:1.08rem;
 }
 
 /* Campos e rótulos */
@@ -18,7 +18,7 @@
 .entry-check,
 .form-field label{
   font-size:var(--uai-form-label)!important;
-  line-height:1.55!important;
+  line-height:1.58!important;
 }
 
 .field input,.field select,.field textarea,
@@ -27,19 +27,19 @@
 .form-field input,.form-field select,.form-field textarea,
 .consumer-now textarea{
   font-size:var(--uai-form-copy)!important;
-  line-height:1.5!important;
-  min-height:54px!important;
-  padding:14px 15px!important;
+  line-height:1.52!important;
+  min-height:58px!important;
+  padding:15px 16px!important;
 }
 
 .field textarea,
 .survey-field textarea,
 .entry-field textarea,
-.form-field textarea{min-height:124px!important}
+.form-field textarea{min-height:132px!important}
 
 input::placeholder,textarea::placeholder{
-  font-size:1rem!important;
-  opacity:.82!important;
+  font-size:1.04rem!important;
+  opacity:.84!important;
 }
 
 /* Ajuda, validação, consentimento e feedback */
@@ -59,102 +59,102 @@ input::placeholder,textarea::placeholder{
 .selected-condition span,
 .form-help{
   font-size:var(--uai-form-small)!important;
-  line-height:1.6!important;
+  line-height:1.64!important;
 }
 
 .contact-consent span,
 .survey-consent span,
 .entry-check span{
-  font-size:1rem!important;
-  line-height:1.62!important;
+  font-size:1.04rem!important;
+  line-height:1.66!important;
 }
 
 /* Formulário de participação */
 .participation-shell{max-width:1180px!important}
 .profile-choice{gap:20px!important}
-.profile-choice button{padding:28px!important;min-height:170px!important}
-.profile-choice small{font-size:.9rem!important;line-height:1.4!important}
-.profile-choice strong{font-size:1.42rem!important;line-height:1.22!important}
-.profile-choice span{font-size:1rem!important;line-height:1.6!important}
-.survey-intro p{font-size:1.04rem!important;line-height:1.65!important}
-.survey-section{padding:30px!important}
+.profile-choice button{padding:30px!important;min-height:176px!important}
+.profile-choice small{font-size:.94rem!important;line-height:1.42!important}
+.profile-choice strong{font-size:1.48rem!important;line-height:1.22!important}
+.profile-choice span{font-size:1.05rem!important;line-height:1.62!important}
+.survey-intro p{font-size:1.08rem!important;line-height:1.68!important}
+.survey-section{padding:32px!important}
 .survey-section-head{margin-bottom:24px!important}
-.survey-section-head h3{font-size:1.3rem!important;line-height:1.3!important}
-.survey-section-head p{font-size:1rem!important;line-height:1.6!important}
-.survey-number{width:38px!important;height:38px!important;flex-basis:38px!important;font-size:1rem!important}
-.choice-grid{gap:11px!important}
-.choice-option span{font-size:1rem!important;line-height:1.5!important;min-height:58px!important;padding:14px 15px!important}
-.choice-option span::before{width:24px!important;height:24px!important;flex-basis:24px!important}
-.example-box summary{font-size:1rem!important}
-.example-item small{font-size:.9rem!important;line-height:1.4!important}
-.example-item p{font-size:1rem!important;line-height:1.6!important}
+.survey-section-head h3{font-size:1.36rem!important;line-height:1.32!important}
+.survey-section-head p{font-size:1.05rem!important;line-height:1.62!important}
+.survey-number{width:40px!important;height:40px!important;flex-basis:40px!important;font-size:1.04rem!important}
+.choice-grid{gap:12px!important}
+.choice-option span{font-size:1.05rem!important;line-height:1.52!important;min-height:62px!important;padding:15px 16px!important}
+.choice-option span::before{width:25px!important;height:25px!important;flex-basis:25px!important}
+.example-box summary{font-size:1.04rem!important}
+.example-item small{font-size:.94rem!important;line-height:1.42!important}
+.example-item p{font-size:1.04rem!important;line-height:1.62!important}
 
 /* Entrada da empresa */
-.entry-progress li{padding:16px!important}
-.entry-progress li small{font-size:.88rem!important;line-height:1.35!important}
-.entry-progress li strong{font-size:1rem!important;line-height:1.3!important}
-.entry-copy>p,.entry-card>p,.entry-card .locked-state p{font-size:1.04rem!important;line-height:1.68!important}
-.stage-kicker{font-size:.94rem!important}
-.stage-kicker b{font-size:.96rem!important}
-.status-chip{font-size:.86rem!important;line-height:1.2!important;padding:8px 11px!important}
-.condition-summary small,.condition-meta small{font-size:.9rem!important;line-height:1.45!important}
-.condition-summary span,.condition-meta strong{font-size:1rem!important;line-height:1.5!important}
-.entry-check{padding:14px 15px!important}
-.entry-feedback{min-height:26px!important}
+.entry-progress li{padding:17px!important}
+.entry-progress li small{font-size:.92rem!important;line-height:1.38!important}
+.entry-progress li strong{font-size:1.04rem!important;line-height:1.32!important}
+.entry-copy>p,.entry-card>p,.entry-card .locked-state p{font-size:1.08rem!important;line-height:1.7!important}
+.stage-kicker{font-size:.98rem!important}
+.stage-kicker b{font-size:1rem!important}
+.status-chip{font-size:.9rem!important;line-height:1.22!important;padding:9px 12px!important}
+.condition-summary small,.condition-meta small{font-size:.94rem!important;line-height:1.46!important}
+.condition-summary span,.condition-meta strong{font-size:1.04rem!important;line-height:1.52!important}
+.entry-check{padding:15px 16px!important}
+.entry-feedback{min-height:28px!important}
 
 /* Calculadora e resultados */
-.participation-pick span{padding:26px 70px 26px 26px!important}
-.participation-pick strong{font-size:1.24rem!important;line-height:1.3!important}
-.participation-pick small{font-size:1rem!important;line-height:1.6!important}
-.participation-pick span::after{font-size:.9rem!important;line-height:1.4!important}
-.calc-price-stack small,.calc-price-stack span{font-size:.96rem!important;line-height:1.5!important}
-.quote-badge,.company-active-badge{font-size:.86rem!important;line-height:1.3!important}
-.quote-meta small,.company-data-grid small,.quote-company small,.contact-dynamic small{font-size:.9rem!important;line-height:1.45!important}
-.quote-meta strong,.company-data-grid strong,.quote-company strong,.contact-dynamic strong,.activity-item strong{font-size:1rem!important;line-height:1.45!important}
-.activity-item span,.activity-item small{font-size:.9rem!important;line-height:1.45!important}
-.company-confirmation-head p{font-size:.98rem!important;line-height:1.6!important}
-.price-display small,.price-display span,.price-line span{font-size:.98rem!important;line-height:1.55!important}
+.participation-pick span{padding:28px 72px 28px 28px!important}
+.participation-pick strong{font-size:1.3rem!important;line-height:1.32!important}
+.participation-pick small{font-size:1.05rem!important;line-height:1.62!important}
+.participation-pick span::after{font-size:.94rem!important;line-height:1.42!important}
+.calc-price-stack small,.calc-price-stack span{font-size:1rem!important;line-height:1.52!important}
+.quote-badge,.company-active-badge{font-size:.9rem!important;line-height:1.32!important}
+.quote-meta small,.company-data-grid small,.quote-company small,.contact-dynamic small{font-size:.94rem!important;line-height:1.46!important}
+.quote-meta strong,.company-data-grid strong,.quote-company strong,.contact-dynamic strong,.activity-item strong{font-size:1.04rem!important;line-height:1.46!important}
+.activity-item span,.activity-item small{font-size:.94rem!important;line-height:1.46!important}
+.company-confirmation-head p{font-size:1.02rem!important;line-height:1.62!important}
+.price-display small,.price-display span,.price-line span{font-size:1.02rem!important;line-height:1.57!important}
 
 /* Meu Uai Perto / áreas pessoais */
-.consumer-promise-row span{font-size:.96rem!important;line-height:1.45!important;padding:9px 12px!important}
-.consumer-now-kicker{font-size:.9rem!important;line-height:1.4!important}
-.consumer-now label{font-size:1.08rem!important;line-height:1.5!important}
-.quick-examples button{font-size:.96rem!important;line-height:1.4!important;padding:9px 12px!important}
-.consumer-life-scenes span{font-size:.88rem!important;line-height:1.4!important}
-.consumer-life-scenes strong{font-size:1.08rem!important;line-height:1.5!important}
-.consumer-life-scenes small{font-size:.96rem!important;line-height:1.5!important;color:rgba(255,255,255,.9)!important}
-.consumer-starter-card small{font-size:.9rem!important;line-height:1.4!important}
-.consumer-starter-card h3{font-size:1.16rem!important;line-height:1.4!important}
-.consumer-starter-card p{font-size:1rem!important;line-height:1.62!important}
-.consumer-starter-card strong{font-size:.98rem!important;line-height:1.45!important}
-.engine-strip span{font-size:.98rem!important;line-height:1.55!important}
-.engine-strip b{font-size:.9rem!important;line-height:1.4!important}
-.context-type,.engine-tags span{font-size:.9rem!important;line-height:1.4!important}
-.context-card p,.experience-choice p,.consumer-empty p{font-size:1rem!important;line-height:1.62!important}
-.context-meta small{font-size:.94rem!important;line-height:1.45!important}
-.consumer-form-cta-panel p{font-size:1.04rem!important;line-height:1.68!important;color:#fff!important}
-.consumer-form-cta-actions small{font-size:.94rem!important;line-height:1.5!important;color:#fff!important}
-.intent-summary small{font-size:.9rem!important;line-height:1.4!important}
-.intent-summary strong{font-size:1.18rem!important;line-height:1.45!important}
-.intent-block h3{font-size:1rem!important;line-height:1.4!important}
-.intent-block p{font-size:1rem!important;line-height:1.62!important}
-.intent-flow span{font-size:.94rem!important;line-height:1.4!important}
-.intent-warning{font-size:.98rem!important;line-height:1.6!important}
-.consumer-toast{font-size:.98rem!important;line-height:1.45!important}
+.consumer-promise-row span{font-size:1rem!important;line-height:1.47!important;padding:10px 13px!important}
+.consumer-now-kicker{font-size:.94rem!important;line-height:1.42!important}
+.consumer-now label{font-size:1.12rem!important;line-height:1.52!important}
+.quick-examples button{font-size:1rem!important;line-height:1.42!important;padding:10px 13px!important}
+.consumer-life-scenes span{font-size:.92rem!important;line-height:1.42!important}
+.consumer-life-scenes strong{font-size:1.12rem!important;line-height:1.52!important}
+.consumer-life-scenes small{font-size:1rem!important;line-height:1.52!important;color:rgba(255,255,255,.92)!important}
+.consumer-starter-card small{font-size:.94rem!important;line-height:1.42!important}
+.consumer-starter-card h3{font-size:1.2rem!important;line-height:1.42!important}
+.consumer-starter-card p{font-size:1.04rem!important;line-height:1.64!important}
+.consumer-starter-card strong{font-size:1.02rem!important;line-height:1.47!important}
+.engine-strip span{font-size:1.02rem!important;line-height:1.57!important}
+.engine-strip b{font-size:.94rem!important;line-height:1.42!important}
+.context-type,.engine-tags span{font-size:.94rem!important;line-height:1.42!important}
+.context-card p,.experience-choice p,.consumer-empty p{font-size:1.04rem!important;line-height:1.64!important}
+.context-meta small{font-size:.98rem!important;line-height:1.47!important}
+.consumer-form-cta-panel p{font-size:1.08rem!important;line-height:1.7!important;color:#fff!important}
+.consumer-form-cta-actions small{font-size:.98rem!important;line-height:1.52!important;color:#fff!important}
+.intent-summary small{font-size:.94rem!important;line-height:1.42!important}
+.intent-summary strong{font-size:1.22rem!important;line-height:1.47!important}
+.intent-block h3{font-size:1.04rem!important;line-height:1.42!important}
+.intent-block p{font-size:1.04rem!important;line-height:1.64!important}
+.intent-flow span{font-size:.98rem!important;line-height:1.42!important}
+.intent-warning{font-size:1.02rem!important;line-height:1.62!important}
+.consumer-toast{font-size:1.02rem!important;line-height:1.47!important}
 
 /* Pequenos rótulos institucionais que aparecem junto a formulários */
-.breadcrumb{font-size:.96rem!important;line-height:1.5!important}
-.step-kicker,.price-stage small,.fact-card small,.decision-card small,.scenario small{font-size:.9rem!important;line-height:1.4!important}
+.breadcrumb{font-size:1rem!important;line-height:1.52!important}
+.step-kicker,.price-stage small,.fact-card small,.decision-card small,.scenario small{font-size:.94rem!important;line-height:1.42!important}
 
 @media(max-width:720px){
   :root{
-    --uai-form-copy:1rem;
-    --uai-form-small:.95rem;
-    --uai-form-label:1.02rem;
+    --uai-form-copy:1.04rem;
+    --uai-form-small:.98rem;
+    --uai-form-label:1.05rem;
   }
-  .profile-choice button{padding:24px!important;min-height:150px!important}
-  .survey-section,.survey-intro{padding:22px!important}
-  .choice-option span{font-size:1rem!important;min-height:56px!important}
-  .entry-progress li{min-width:165px!important}
-  .consumer-life-scenes small,.consumer-starter-card p,.context-card p,.experience-choice p{font-size:.98rem!important}
+  .profile-choice button{padding:25px!important;min-height:156px!important}
+  .survey-section,.survey-intro{padding:23px!important}
+  .choice-option span{font-size:1.04rem!important;min-height:60px!important}
+  .entry-progress li{min-width:170px!important}
+  .consumer-life-scenes small,.consumer-starter-card p,.context-card p,.experience-choice p{font-size:1.02rem!important}
 }
