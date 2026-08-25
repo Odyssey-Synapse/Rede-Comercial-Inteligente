@@ -1,3 +1,12 @@
+function ensureConsumerReadability(){
+  if(document.querySelector('link[href^="/assets/testar-readability.css"]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='/assets/testar-readability.css?v=0.1.1';
+  document.head.append(link);
+}
+ensureConsumerReadability();
+
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const unavailable='O Uai Perto está temporariamente indisponível para a demonstração.';
 async function startSession(){const response=await fetch('/api/consumer-demo/session',{method:'POST',headers:{'content-type':'application/json'},credentials:'same-origin',body:'{}'});if(!response.ok)throw Object.assign(new Error(unavailable),{status:response.status});}
