@@ -20,6 +20,7 @@
   --warm:#f5ead9;
   --danger:#B55A30;
   --shadow:0 16px 42px rgba(51,87,73,.10);
+  --max:1320px;
 }
 html[data-theme="dark"]{
   --bg:#335749;
@@ -175,4 +176,57 @@ html[data-theme="dark"] .section-head>p,html[data-theme="dark"] .card p,html[dat
 @media(prefers-reduced-motion:reduce){
   .participation-choice,.demo-side,.demo-bridge-core{transition:none!important}
   .participation-choice:hover,.participation-choice:active,.button:active,.icon-button:active,.example-chip:active,.step-button:active{transform:none!important}
+}
+
+/* V3.1.25 — escala visual e legibilidade globais */
+html{font-size:18px}
+body{font-size:1rem;line-height:1.68}
+.container{width:min(var(--max),calc(100% - 72px))}
+.narrow{max-width:980px}
+.section{padding:clamp(76px,7.5vw,118px) 0}
+.section-sm{padding:clamp(54px,5.5vw,82px) 0}
+.display{font-size:clamp(3rem,5vw,5.3rem);line-height:.98;letter-spacing:-.05em}
+.h1{font-size:clamp(2.65rem,4.5vw,4.7rem)}
+.h2{font-size:clamp(2.1rem,3.35vw,3.45rem)}
+.h3{font-size:clamp(1.35rem,1.8vw,1.7rem)}
+.lead{font-size:clamp(1.12rem,1.35vw,1.3rem);line-height:1.62}
+p,li{font-size:1rem}
+.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p{font-size:1.05rem;line-height:1.7}
+.card h3,.scenario h3,.story-panel h3,.decision-card h3,.language-card h3,.fact-card h3{font-size:clamp(1.25rem,1.55vw,1.55rem)}
+.eyebrow{font-size:.82rem;letter-spacing:.065em}
+.fine{font-size:.98rem;line-height:1.65}
+.button{font-size:1rem;padding:14px 20px}
+.button-small{font-size:.94rem}
+.nav-links{font-size:.96rem;gap:26px}
+.footer-brand-text,.footer-col a,.footer-bottom{font-size:.98rem;line-height:1.65}
+.trust-item strong{font-size:1rem}
+.trust-item span,.hero-note span{font-size:.9rem;line-height:1.55}
+.human-band p,.human-band li,.human-list span,.human-list strong{font-size:1.08rem;line-height:1.68}
+.human-band .eyebrow{font-size:.86rem}
+.cta-panel p{font-size:1.08rem;line-height:1.65;color:#fff}
+.participation-choice-type{font-size:.86rem}
+.participation-choice p{font-size:1.06rem;line-height:1.68}
+.page-hero .lead,.hero-copy .lead{max-width:76ch}
+
+@media(min-width:1440px){
+  :root{--max:1380px}
+  .container{width:min(var(--max),calc(100% - 96px))}
+}
+@media(max-width:980px){
+  html{font-size:17px}
+  .container{width:min(var(--max),calc(100% - 44px))}
+}
+@media(max-width:720px){
+  html{font-size:16.5px}
+  .container{width:min(var(--max),calc(100% - 32px))}
+  .section{padding:64px 0}
+  .section-sm{padding:44px 0}
+  .display{font-size:clamp(2.45rem,12vw,3.6rem);line-height:1}
+  .h1{font-size:clamp(2.25rem,10vw,3.25rem)}
+  .h2{font-size:clamp(1.85rem,8.5vw,2.75rem)}
+  .lead{font-size:1.1rem}
+  .section-head>p,.card p{font-size:1.03rem}
+  .fine{font-size:.96rem}
+  .eyebrow{font-size:.78rem}
+  .human-band p,.human-band li,.human-list span,.human-list strong,.cta-panel p{font-size:1.05rem}
 }
