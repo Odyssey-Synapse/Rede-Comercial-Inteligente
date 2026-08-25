@@ -22,6 +22,16 @@ function ensureBrandStyles(){
   document.head.append(link);
 }
 ensureBrandStyles();
+
+function ensureReadabilityOverrides(){
+  if(document.querySelector('link[href^="/assets/readability-overrides.css"]'))return;
+  const link=document.createElement("link");
+  link.rel="stylesheet";
+  link.href="/assets/readability-overrides.css?v=3.1.27";
+  link.dataset.uaiReadability="3.1.27";
+  document.head.append(link);
+}
+ensureReadabilityOverrides();
 document.documentElement.dataset.brand="uai-perto";
 
 const pages=[["/rede.html","A Rede"],["/empresas.html","Para empresas"],["/tecnologia.html","Tecnologia"],["/transparencia.html","Transparência"],["/contato.html","Contato"]];
