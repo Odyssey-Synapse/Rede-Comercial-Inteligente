@@ -24,14 +24,53 @@
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/uai-perto.css?v=3.1.20">
   <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+  <style>
+    .home-hero-inner{grid-template-columns:minmax(0,1fr)!important;padding-block:clamp(70px,9vw,126px)!important}
+    .home-hero-copy{max-width:820px!important}
+    .home-hero-copy .display{max-width:12ch}
+    .home-hero-copy .lead{max-width:700px}
+    .home-hero-copy>p:not(.lead){max-width:680px;color:var(--muted);font-size:1.03rem}
+    .home-problem{padding-top:clamp(72px,8vw,112px)}
+    .home-problem-head{max-width:760px;margin-bottom:34px}
+    .home-problem-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:30px}
+    .home-problem-step{min-height:190px;display:flex;flex-direction:column;justify-content:space-between;padding:24px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(51,87,73,.055)}
+    .home-problem-step span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--green-soft);font-weight:900;color:var(--ink)}
+    .home-problem-step p{margin:26px 0 0;font-size:1.05rem;line-height:1.5;color:var(--ink);font-weight:700}
+    .home-problem-result{margin-top:18px;padding:clamp(24px,4vw,36px);border-radius:24px;background:var(--brand-green);color:var(--brand-pristine);display:grid;grid-template-columns:1fr minmax(260px,.7fr);gap:28px;align-items:end}
+    .home-problem-result h3{margin:0;font-size:clamp(1.45rem,2.6vw,2.35rem);line-height:1.08}
+    .home-problem-result p{margin:0;color:#e8e1d6;font-size:1.04rem}
+    .home-start-grid .card{min-height:220px;display:flex;flex-direction:column;justify-content:flex-end}
+    .home-question-grid .card{min-height:150px;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--surface) 90%,var(--brand-sunflower) 10%)}
+    .home-question-grid .card h3{margin:0;font-size:1.12rem}
+    .home-questions-head{margin-top:56px!important;margin-bottom:24px!important}
+    .home-company-band .quote-big{max-width:10ch}
+    .home-uberaba{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:clamp(36px,6vw,72px);align-items:center}
+    .home-uberaba-card{padding:clamp(28px,5vw,48px);border:1px solid var(--line);border-radius:28px;background:var(--warm);box-shadow:var(--shadow)}
+    .home-uberaba-card strong{display:block;font-size:clamp(1.55rem,3vw,2.8rem);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+    .home-uberaba-card span{display:block;margin-top:16px;color:var(--muted)}
+    .home-final-cta{margin-top:8px}
+    @media(max-width:980px){
+      .home-problem-path{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .home-problem-result,.home-uberaba{grid-template-columns:1fr}
+    }
+    @media(max-width:720px){
+      .home-hero-inner{padding-block:58px 72px!important}
+      .home-hero-copy .display{max-width:13ch}
+      .home-problem-path{grid-template-columns:1fr}
+      .home-problem-step{min-height:0}
+      .home-problem-result{padding:26px}
+      .home-question-grid{grid-template-columns:1fr!important}
+      .home-question-grid .card{min-height:118px}
+    }
+  </style>
 </head>
 <body>
 <div id="site-header"></div>
 
 <section class="hero">
   <canvas class="hero-canvas" id="network-canvas" aria-hidden="true"></canvas>
-  <div class="container hero-content" style="grid-template-columns:minmax(0,1fr);">
-    <div class="hero-copy reveal" style="max-width:860px;">
+  <div class="container hero-content home-hero-inner">
+    <div class="hero-copy reveal home-hero-copy">
       <span class="eyebrow">UBERABA · UAI PERTO</span>
       <h1 class="display">Precisa de alguma coisa em Uberaba?</h1>
       <p class="lead"><strong>Fala o que você precisa. O Uai Perto te ajuda a encontrar.</strong></p>
@@ -48,24 +87,37 @@
   </div>
 </section>
 
-<!-- Impede a antiga seção dinâmica "Meu Uai Perto" de ser injetada logo após o hero. -->
 <div id="meu-uai-perto" hidden aria-hidden="true"></div>
 
-<section class="section">
-  <div class="container narrow">
-    <div class="reveal">
+<section class="section home-problem">
+  <div class="container">
+    <div class="home-problem-head reveal">
       <span class="eyebrow">UMA COISA SIMPLES NÃO PRECISA VIRAR UM TRABALHÃO</span>
       <h2 class="h2">Hoje, encontrar uma coisa simples pode dar trabalho</h2>
-      <p class="lead">Você pesquisa no Google.</p>
-      <p class="lead">Olha no Instagram.</p>
-      <p class="lead">Entra no perfil de uma loja.</p>
-      <p class="lead">Procura o WhatsApp.</p>
-      <p class="lead">Pergunta se tem.</p>
-      <p class="lead">Espera alguém responder.</p>
-      <p class="lead">Às vezes não tem.</p>
-      <p class="lead">Aí você procura outra loja e começa tudo de novo.</p>
-      <p class="lead"><strong>É esse trabalho que o Uai Perto quer diminuir.</strong></p>
-      <p class="lead">Você fala o que precisa e ele te ajuda a chegar em quem pode atender.</p>
+    </div>
+
+    <div class="home-problem-path">
+      <article class="home-problem-step reveal">
+        <span>1</span>
+        <p>Você pesquisa no Google.<br>Olha no Instagram.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="1">
+        <span>2</span>
+        <p>Entra no perfil de uma loja.<br>Procura o WhatsApp.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="2">
+        <span>3</span>
+        <p>Pergunta se tem.<br>Espera alguém responder.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="3">
+        <span>4</span>
+        <p>Às vezes não tem.<br>Aí você procura outra loja e começa tudo de novo.</p>
+      </article>
+    </div>
+
+    <div class="home-problem-result reveal">
+      <h3>É esse trabalho que o Uai Perto quer diminuir.</h3>
+      <p>Você fala o que precisa e ele te ajuda a chegar em quem pode atender.</p>
     </div>
   </div>
 </section>
@@ -80,7 +132,7 @@
       <p>Às vezes você sabe exatamente o que quer. Às vezes só sabe o que aconteceu. Tudo bem.</p>
     </div>
 
-    <div class="grid-2">
+    <div class="grid-2 home-start-grid">
       <article class="card reveal">
         <span class="icon-square">01</span>
         <h3>“Preciso de 5 kg de carne para churrasco.”</h3>
@@ -93,14 +145,14 @@
       </article>
     </div>
 
-    <div class="section-head reveal" style="margin-top:48px;">
+    <div class="section-head reveal home-questions-head">
       <div>
         <h3 class="h3">O Uai Perto vai perguntando o que precisa para continuar.</h3>
       </div>
       <p>Perguntas simples, uma de cada vez.</p>
     </div>
 
-    <div class="grid-4">
+    <div class="grid-4 home-question-grid">
       <article class="card reveal"><h3>“Precisa resolver hoje?”</h3></article>
       <article class="card reveal" data-delay="1"><h3>“Quer retirar ou receber em casa?”</h3></article>
       <article class="card reveal" data-delay="2"><h3>“Qual é o seu bairro?”</h3></article>
@@ -113,7 +165,7 @@
   </div>
 </section>
 
-<section class="human-band">
+<section class="human-band home-company-band">
   <div class="container human-grid">
     <div class="reveal">
       <span class="eyebrow eyebrow-light">TEM UMA EMPRESA?</span>
@@ -133,18 +185,21 @@
 </section>
 
 <section class="section">
-  <div class="container narrow">
+  <div class="container home-uberaba">
     <div class="reveal">
       <span class="eyebrow">COMEÇANDO AQUI</span>
       <h2 class="h2">Por que Uberaba?</h2>
       <p class="lead">Porque o Uai Perto começa daqui.</p>
       <p class="lead">Quanto mais empresas da cidade participarem, mais coisas as pessoas poderão encontrar sem precisar procurar lugar por lugar.</p>
-      <p class="lead">E quando uma pessoa compra de uma empresa daqui, o dinheiro continua rodando por aqui também.</p>
     </div>
+    <aside class="home-uberaba-card reveal" data-delay="1">
+      <strong>E quando uma pessoa compra de uma empresa daqui, o dinheiro continua rodando por aqui também.</strong>
+      <span>Uberaba mais perto de você.</span>
+    </aside>
   </div>
 </section>
 
-<section class="section-sm">
+<section class="section-sm home-final-cta">
   <div class="container cta-panel reveal">
     <div>
       <span class="eyebrow eyebrow-cta">UAI PERTO</span>
