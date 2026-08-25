@@ -1,3 +1,12 @@
+function ensureAssistantReadability(){
+  if(document.querySelector('link[href^="/assets/assistant-readability.css"]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='/assets/assistant-readability.css?v=1.0.1';
+  document.head.append(link);
+}
+ensureAssistantReadability();
+
 const form=document.querySelector('#assistant-form');
 const input=document.querySelector('#assistant-input');
 const sendButton=document.querySelector('#send-button');
