@@ -1,0 +1,28 @@
+/* Uai Perto Assistente — legibilidade alinhada ao restante do site */
+html{font-size:18px!important}
+.city-pill{font-size:.92rem!important;line-height:1.4!important}
+.eyebrow{font-size:.9rem!important;line-height:1.4!important}
+.intro>p:not(.demo-note){font-size:1.1rem!important;line-height:1.7!important}
+.example-list span{font-size:.9rem!important;line-height:1.4!important}
+.example-list strong{font-size:1rem!important;line-height:1.45!important}
+.demo-note{font-size:.98rem!important;line-height:1.6!important}
+.assistant-identity strong{font-size:1.06rem!important}
+.assistant-identity span{font-size:.92rem!important;line-height:1.4!important}
+.reset-button{font-size:.96rem!important;line-height:1.4!important}
+.message span{font-size:.9rem!important;line-height:1.4!important}
+.message p{font-size:1.03rem!important;line-height:1.62!important;padding:14px 16px!important}
+.message-avatar{font-size:.9rem!important}
+.typing small{font-size:.92rem!important;line-height:1.4!important}
+.composer textarea{font-size:1.03rem!important;line-height:1.5!important}
+.composer textarea::placeholder{font-size:1rem!important}
+.composer p{font-size:.9rem!important;line-height:1.4!important}
+footer{font-size:.94rem!important;line-height:1.45!important}
+@media(max-width:940px){
+  .example-list strong{font-size:.98rem!important}
+}
+@media(max-width:620px){
+  .city-pill{font-size:.86rem!important}
+  .intro>p:not(.demo-note){font-size:1.04rem!important}
+  .message p{font-size:1rem!important}
+  .composer p{display:none!important}
+}
