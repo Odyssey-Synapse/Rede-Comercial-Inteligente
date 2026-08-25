@@ -20,7 +20,7 @@
   --warm:#f5ead9;
   --danger:#B55A30;
   --shadow:0 16px 42px rgba(51,87,73,.10);
-  --max:1320px;
+  --max:1360px;
 }
 html[data-theme="dark"]{
   --bg:#335749;
@@ -87,9 +87,7 @@ html[data-theme="dark"] .site-footer .footer-col a,html[data-theme="dark"] .site
 html[data-theme="dark"] .site-footer .footer-col strong{color:#F2E8D9}
 html[data-theme="dark"] .uai-brand-lockup{background:#F2E8D9;border-radius:14px;padding:8px 10px}
 html[data-theme="dark"] .uai-brand-lockup-footer{display:inline-flex}
-@media(max-width:980px){
-  .uai-brand-lockup img{width:172px}
-}
+@media(max-width:980px){.uai-brand-lockup img{width:172px}}
 @media(max-width:720px){
   .uai-brand-lockup{padding:6px 0}
   .uai-brand-lockup img{width:154px}
@@ -97,46 +95,57 @@ html[data-theme="dark"] .uai-brand-lockup-footer{display:inline-flex}
   .uai-hero-brand{max-width:min(330px,92vw);padding:12px 14px}
 }
 
-
-/* V3.1.18 — nitidez e hierarquia das copys */
-html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
-body{font-weight:500;line-height:1.66;letter-spacing:-.006em}
-p,li,label,input,select,textarea{line-height:1.66}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal;font-size:19px}
+body{font-weight:500;line-height:1.72;letter-spacing:-.006em;font-size:1rem}
+p,li,label,input,select,textarea{line-height:1.72}
 .display,.h1,.h2,.h3,h1,h2,h3{font-weight:850;letter-spacing:-.032em;line-height:1.08;text-wrap:balance}
-.display{line-height:1.02}
-.lead{font-weight:600;line-height:1.58;letter-spacing:-.012em;color:var(--ink)}
-.section-head>p,.page-hero .lead,.hero-copy .lead,.founder-copy>p,.split-feature>div>p{max-width:68ch}
-.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p{font-size:1rem;line-height:1.65;color:var(--muted)}
-.card h3,.scenario h3,.story-panel h3,.decision-card h3,.language-card h3,.fact-card h3{font-weight:820;line-height:1.2;letter-spacing:-.018em}
-.fine{font-size:.88rem;line-height:1.6;color:var(--muted);font-weight:550}
-.eyebrow{font-weight:850;letter-spacing:.075em;line-height:1.35}
-.button,.nav-links a,.footer-col strong{font-weight:800}
-.trust-item strong,.human-list strong,.benefit-list strong,.founder-benefits span{font-weight:800}
-.trust-item span,.human-list span,.benefit-list p,.hero-note span{font-weight:550;line-height:1.48}
-.demo-caption strong,.demo-message p,.demo-opportunity p,.demo-neg,.demo-quote{font-weight:570}
-input,select,textarea{font-size:1rem;font-weight:550;color:var(--ink);background:var(--surface)}
-input::placeholder,textarea::placeholder{opacity:.78;color:var(--muted)}
-.brand-orb{background:#F2E8D9 url("/assets/uai-perto-symbol.png") center/72% auto no-repeat!important;color:transparent!important;font-size:0!important}
-html[data-theme="dark"] .lead{color:#F2E8D9}
-html[data-theme="dark"] .section-head>p,html[data-theme="dark"] .card p,html[data-theme="dark"] .fine{color:#e8e1d6}
-@media(max-width:720px){
-  body{line-height:1.62}
-  .display,.h1{letter-spacing:-.026em}
-  .h2{letter-spacing:-.024em}
-  .lead{line-height:1.55}
-  .section-head>p,.card p{font-size:.98rem}
-  .fine{font-size:.86rem}
+.display{font-size:clamp(3rem,4.6vw,5.15rem);line-height:.98;letter-spacing:-.048em}
+.h1{font-size:clamp(2.7rem,4.2vw,4.6rem)}
+.h2{font-size:clamp(2.15rem,3.2vw,3.4rem)}
+.h3{font-size:clamp(1.4rem,1.8vw,1.75rem)}
+.lead{font-size:clamp(1.22rem,1.4vw,1.38rem);font-weight:620;line-height:1.64;letter-spacing:-.012em;color:var(--ink)}
+.section-head>p,.page-hero .lead,.hero-copy .lead,.founder-copy>p,.split-feature>div>p{max-width:76ch}
+.container{width:min(var(--max),calc(100% - 80px))}
+.narrow{max-width:1040px}
+.section{padding:clamp(78px,7.5vw,120px) 0}
+.section-sm{padding:clamp(56px,5.5vw,84px) 0}
+
+p,li,
+.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p,.participation-choice p,.benefit-list p,.footer-brand-text,.footer-col a,.footer-bottom{
+  font-size:1.10rem;
+  line-height:1.72;
 }
+.card h3,.scenario h3,.story-panel h3,.decision-card h3,.language-card h3,.fact-card h3{font-size:clamp(1.28rem,1.55vw,1.58rem);font-weight:820;line-height:1.22;letter-spacing:-.018em}
+.fine{font-size:1.04rem;line-height:1.68;color:var(--muted);font-weight:560}
+.eyebrow{font-size:.94rem;font-weight:850;letter-spacing:.07em;line-height:1.45}
+.button{font-size:1.04rem;padding:15px 21px;font-weight:800}
+.button-small{font-size:.98rem}
+.nav-links{font-size:1rem;gap:26px}
+.footer-col strong{font-size:1.02rem;font-weight:800}
+.trust-item strong{font-size:1.04rem}
+.trust-item span,.hero-note span,.live-pill,.demo-tag,.participation-choice-type{
+  font-size:.98rem;
+  line-height:1.58;
+}
+input,select,textarea{font-size:1.06rem;font-weight:550;color:var(--ink);background:var(--surface)}
+input::placeholder,textarea::placeholder{opacity:.82;color:var(--muted)}
+.brand-orb{background:#F2E8D9 url("/assets/uai-perto-symbol.png") center/72% auto no-repeat!important;color:transparent!important;font-size:0!important}
 
+.human-band p,.human-band li,.human-band .fine,.human-list span,.human-list strong,.cta-panel p{
+  font-size:1.16rem;
+  line-height:1.72;
+  color:#fff;
+}
+.human-band .eyebrow,.cta-panel .eyebrow{font-size:.98rem;color:#fff}
+.human-list span{color:#fff}
+.human-list strong{font-weight:820}
+.cta-panel p{color:#fff}
 
-/* V3.1.20 — participação, toque móvel, logo retina e foco da demonstração */
-.uai-brand-lockup img,.uai-hero-brand img{image-rendering:auto;object-fit:contain}
 .participation-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .participation-choice{min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(26px,4vw,40px);border:1px solid var(--line);border-radius:28px;background:var(--surface);box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
 .participation-choice:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--brand-sunflower) 48%,var(--line));box-shadow:0 20px 48px rgba(51,87,73,.14)}
-.participation-choice-type{display:inline-flex;align-self:flex-start;margin-bottom:auto;padding:7px 10px;border-radius:999px;background:var(--green-soft);color:var(--ink);font-size:.76rem;font-weight:850}
-.participation-choice h2{font-size:clamp(1.55rem,2.6vw,2.35rem);line-height:1.08;letter-spacing:-.035em;margin:28px 0 12px}
-.participation-choice p{color:var(--muted);margin:0 0 22px;max-width:48ch}
+.participation-choice-type{display:inline-flex;align-self:flex-start;margin-bottom:auto;padding:7px 10px;border-radius:999px;background:var(--green-soft);color:var(--ink);font-weight:850}
+.participation-choice h2{font-size:clamp(1.65rem,2.6vw,2.45rem);line-height:1.08;letter-spacing:-.035em;margin:28px 0 12px}
 .participation-choice strong{color:var(--ink);font-weight:850}
 .participation-choice-company{background:color-mix(in srgb,var(--surface) 88%,var(--brand-sunflower) 12%)}
 .participation-note{text-align:center;margin:0}
@@ -149,84 +158,38 @@ html[data-theme="dark"] .section-head>p,html[data-theme="dark"] .card p,html[dat
 .demo-side{transition:opacity .28s ease,transform .28s ease,box-shadow .28s ease,filter .28s ease}
 .demo-assistant.reading-focus,.demo-message.reading-focus{outline:2px solid color-mix(in srgb,var(--brand-sunflower) 55%,transparent);outline-offset:3px}
 
+html[data-theme="dark"] .lead{color:#F2E8D9}
+html[data-theme="dark"] .section-head>p,html[data-theme="dark"] .card p,html[data-theme="dark"] .fine{color:#f4eee5}
+
 @media (pointer:coarse),(max-width:760px){
   .button,.icon-button,.example-chip,.step-button,.demo-speed,.nav-links a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(211,146,55,.18)}
-  .button{min-height:48px;padding-block:12px}
+  .button{min-height:50px;padding-block:13px}
   .icon-button,.demo-controls .icon-button{height:48px;min-width:48px}
   .demo-speed{height:48px;min-height:48px;padding-inline:14px}
   .example-chip{min-height:44px;padding:10px 14px}
   .step-button{min-height:48px}
   .nav-links a{min-height:44px;display:flex;align-items:center}
   .button:active,.icon-button:active,.example-chip:active,.step-button:active,.participation-choice:active{transform:scale(.98)}
-  .demo-controls{gap:10px}
 }
 @media(max-width:760px){
+  html{font-size:18px}
+  .container{width:min(var(--max),calc(100% - 36px))}
+  body{line-height:1.68}
+  p,li,.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p,.participation-choice p,.footer-brand-text,.footer-col a,.footer-bottom{font-size:1.04rem;line-height:1.68}
+  .lead{font-size:1.15rem;line-height:1.62}
+  .fine{font-size:1rem}
+  .eyebrow{font-size:.90rem}
+  .human-band p,.human-band li,.human-band .fine,.human-list span,.human-list strong,.cta-panel p{font-size:1.08rem;line-height:1.68}
+  .trust-item span,.hero-note span,.live-pill,.demo-tag,.participation-choice-type{font-size:.94rem}
   .participation-choice-grid{grid-template-columns:1fr}
   .participation-choice{min-height:260px}
   .demo-stage .demo-side.inactive{display:none}
-  .demo-stage[data-focus="bridge"] .demo-side.active{opacity:.55;transform:none;filter:saturate(.82)}
-  .demo-toolbar{gap:12px}
 }
 @media(max-width:430px){
+  .container{width:min(var(--max),calc(100% - 28px))}
   .participation-choice{min-height:240px;padding:24px}
-  .demo-controls{display:grid;grid-template-columns:repeat(4,48px) minmax(96px,1fr);overflow:visible}
-  .demo-controls .button{min-width:0;padding-inline:10px}
-  .demo-speed{max-width:none;width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   .participation-choice,.demo-side,.demo-bridge-core{transition:none!important}
   .participation-choice:hover,.participation-choice:active,.button:active,.icon-button:active,.example-chip:active,.step-button:active{transform:none!important}
-}
-
-/* V3.1.25 — escala visual e legibilidade globais */
-html{font-size:18px}
-body{font-size:1rem;line-height:1.68}
-.container{width:min(var(--max),calc(100% - 72px))}
-.narrow{max-width:980px}
-.section{padding:clamp(76px,7.5vw,118px) 0}
-.section-sm{padding:clamp(54px,5.5vw,82px) 0}
-.display{font-size:clamp(3rem,5vw,5.3rem);line-height:.98;letter-spacing:-.05em}
-.h1{font-size:clamp(2.65rem,4.5vw,4.7rem)}
-.h2{font-size:clamp(2.1rem,3.35vw,3.45rem)}
-.h3{font-size:clamp(1.35rem,1.8vw,1.7rem)}
-.lead{font-size:clamp(1.12rem,1.35vw,1.3rem);line-height:1.62}
-p,li{font-size:1rem}
-.section-head>p,.card p,.scenario p,.story-panel p,.decision-card p,.language-card p,.fact-card p,.contact-card p,.legal-note p{font-size:1.05rem;line-height:1.7}
-.card h3,.scenario h3,.story-panel h3,.decision-card h3,.language-card h3,.fact-card h3{font-size:clamp(1.25rem,1.55vw,1.55rem)}
-.eyebrow{font-size:.82rem;letter-spacing:.065em}
-.fine{font-size:.98rem;line-height:1.65}
-.button{font-size:1rem;padding:14px 20px}
-.button-small{font-size:.94rem}
-.nav-links{font-size:.96rem;gap:26px}
-.footer-brand-text,.footer-col a,.footer-bottom{font-size:.98rem;line-height:1.65}
-.trust-item strong{font-size:1rem}
-.trust-item span,.hero-note span{font-size:.9rem;line-height:1.55}
-.human-band p,.human-band li,.human-list span,.human-list strong{font-size:1.08rem;line-height:1.68}
-.human-band .eyebrow{font-size:.86rem}
-.cta-panel p{font-size:1.08rem;line-height:1.65;color:#fff}
-.participation-choice-type{font-size:.86rem}
-.participation-choice p{font-size:1.06rem;line-height:1.68}
-.page-hero .lead,.hero-copy .lead{max-width:76ch}
-
-@media(min-width:1440px){
-  :root{--max:1380px}
-  .container{width:min(var(--max),calc(100% - 96px))}
-}
-@media(max-width:980px){
-  html{font-size:17px}
-  .container{width:min(var(--max),calc(100% - 44px))}
-}
-@media(max-width:720px){
-  html{font-size:16.5px}
-  .container{width:min(var(--max),calc(100% - 32px))}
-  .section{padding:64px 0}
-  .section-sm{padding:44px 0}
-  .display{font-size:clamp(2.45rem,12vw,3.6rem);line-height:1}
-  .h1{font-size:clamp(2.25rem,10vw,3.25rem)}
-  .h2{font-size:clamp(1.85rem,8.5vw,2.75rem)}
-  .lead{font-size:1.1rem}
-  .section-head>p,.card p{font-size:1.03rem}
-  .fine{font-size:.96rem}
-  .eyebrow{font-size:.78rem}
-  .human-band p,.human-band li,.human-list span,.human-list strong,.cta-panel p{font-size:1.05rem}
 }
