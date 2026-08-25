@@ -37,18 +37,25 @@
     .home-problem-step span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--green-soft);font-weight:900;color:var(--ink)}
     .home-problem-step p{margin:26px 0 0;font-size:1.05rem;line-height:1.5;color:var(--ink);font-weight:700}
     .home-problem-result{margin-top:18px;padding:clamp(24px,4vw,36px);border-radius:24px;background:var(--brand-green);color:var(--brand-pristine);display:grid;grid-template-columns:1fr minmax(260px,.7fr);gap:28px;align-items:end}
-    .home-problem-result h3{margin:0;font-size:clamp(1.45rem,2.6vw,2.35rem);line-height:1.08}
-    .home-problem-result p{margin:0;color:#e8e1d6;font-size:1.04rem}
+    .home-problem-result h3{margin:0;font-size:clamp(1.45rem,2.6vw,2.35rem);line-height:1.08;color:#fff}
+    .home-problem-result p{margin:0;color:#fff;font-size:1.16rem;line-height:1.6;font-weight:650}
     .home-start-grid .card{min-height:220px;display:flex;flex-direction:column;justify-content:flex-end}
     .home-question-grid .card{min-height:150px;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--surface) 90%,var(--brand-sunflower) 10%)}
     .home-question-grid .card h3{margin:0;font-size:1.12rem}
     .home-questions-head{margin-top:56px!important;margin-bottom:24px!important}
     .home-company-band .quote-big{max-width:10ch}
+    .home-company-band p{font-size:1.12rem;line-height:1.65;color:#fff}
+    .home-company-band p strong{color:#fff}
+    .home-company-band .human-list strong{font-size:1.08rem;line-height:1.35;color:#fff}
+    .home-company-band .human-list span{font-size:1rem;line-height:1.6;color:#fff}
+    .home-company-band .eyebrow-light{font-size:.82rem;letter-spacing:.085em;color:#fff}
     .home-uberaba{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:clamp(36px,6vw,72px);align-items:center}
     .home-uberaba-card{padding:clamp(28px,5vw,48px);border:1px solid var(--line);border-radius:28px;background:var(--warm);box-shadow:var(--shadow)}
     .home-uberaba-card strong{display:block;font-size:clamp(1.55rem,3vw,2.8rem);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
     .home-uberaba-card span{display:block;margin-top:16px;color:var(--muted)}
     .home-final-cta{margin-top:8px}
+    .home-final-cta .cta-panel p{font-size:1.08rem;line-height:1.6;color:#fff}
+    .home-final-cta .eyebrow-cta{font-size:.82rem;letter-spacing:.085em;color:#fff}
     @media(max-width:980px){
       .home-problem-path{grid-template-columns:repeat(2,minmax(0,1fr))}
       .home-problem-result,.home-uberaba{grid-template-columns:1fr}
@@ -59,8 +66,12 @@
       .home-problem-path{grid-template-columns:1fr}
       .home-problem-step{min-height:0}
       .home-problem-result{padding:26px}
+      .home-problem-result p{font-size:1.08rem}
       .home-question-grid{grid-template-columns:1fr!important}
       .home-question-grid .card{min-height:118px}
+      .home-company-band p{font-size:1.06rem}
+      .home-company-band .human-list strong{font-size:1.05rem}
+      .home-company-band .human-list span{font-size:.98rem}
     }
   </style>
 </head>
