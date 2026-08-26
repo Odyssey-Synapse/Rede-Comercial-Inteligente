@@ -1,3 +1,0 @@
-import { assertFounderAdmin } from "../lib/founder-admin-auth.mjs";
-import { founderAdminSnapshot } from "../lib/founder-zero-store.mjs";
-export default async function handler(req,res){res.setHeader("Cache-Control","no-store");if(req.method!=="GET")return res.status(405).json({error:"METHOD_NOT_ALLOWED"});try{assertFounderAdmin(req);return res.status(200).json(await founderAdminSnapshot())}catch(e){const m=String(e?.message||"FOUNDER_ADMIN_FAILED");const c=m==="FOUNDER_ADMIN_UNAUTHORIZED"?401:["FOUNDER_ADMIN_NOT_CONFIGURED","DATABASE_URL_MISSING"].includes(m)?503:500;return res.status(c).json({error:m})}}

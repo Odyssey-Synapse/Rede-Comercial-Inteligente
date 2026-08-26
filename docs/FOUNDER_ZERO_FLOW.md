@@ -35,7 +35,7 @@ Webhook processing validates `x-signature` with HMAC-SHA256, fetches the payment
 
 `DATABASE_URL`, `COMPANY_LOOKUP_SIGNING_SECRET`, existing CNPJ/Turnstile configuration, `FOUNDER_ADMIN_TOKEN`, `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`, optional `PUBLIC_BASE_URL`.
 
-Configure the Mercado Pago payment webhook as `https://<production-domain>/api/payment-webhook`.
+Configure the Mercado Pago payment webhook as `https://<production-domain>/api/founder-status?action=payment_webhook`.
 
 ## Production gate
 
