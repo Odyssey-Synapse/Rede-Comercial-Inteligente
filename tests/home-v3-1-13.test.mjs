@@ -47,3 +47,4 @@ test("painel da demo mantém métrica contextual e não volta ao rótulo HOJE",(
   assert.match(js,/contextMetricLabel/);
   assert.doesNotMatch(html,/id="demo-today"/);
 });
+

@@ -1,10 +1,11 @@
 {
   "name": "projeto-rli-site-institucional-v3-1-preproducao",
-  "version": "3.1.22",
+  "version": "3.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "test:consumer": "node --test tests/assistant-api.test.mjs tests/consumer-surface.test.mjs",
     "preview": "python3 -m http.server 3000",
     "readiness": "node scripts/readiness.mjs",
     "generate:secrets": "node scripts/generate-secrets.mjs",

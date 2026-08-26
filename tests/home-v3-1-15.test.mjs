@@ -1,32 +1,36 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 
 const publicFiles=[
-  "index.html","rede.html","empresas.html","tecnologia.html","transparencia.html",
-  "calculadora.html","contato.html","privacidade.html","assets/site.js","assets/home-demo.js",
-  "assets/calculator-page.js","assets/contact-page.js","api/contact.js"
+  'index.html','rede.html','empresas.html','tecnologia.html','transparencia.html',
+  'calculadora.html','contato.html','privacidade.html','assets/site.js','assets/home-demo.js',
+  'assets/capacity-calculator.js','assets/contact-page.js','api/contact.js'
 ];
 
-test("V3.1.15 remove a denominação anterior das superfícies públicas",()=>{
+test('superfícies públicas não reintroduzem denominações históricas',()=>{
   for(const file of publicFiles){
-    const text=readFileSync(file,"utf8");
-    assert.doesNotMatch(text,/Achei Aqui|achei aqui|ACHEI AQUI/);
+    const text=readFileSync(file,'utf8');
+    assert.doesNotMatch(text,/Achei Aqui|Projeto RLI/i,file);
   }
 });
 
-test("V3.1.15 deixa explícito que Projeto RLI é nome provisório",()=>{
-  const home=readFileSync("index.html","utf8");
-  const site=readFileSync("assets/site.js","utf8");
-  assert.match(home,/Projeto RLI/);
-  assert.match(home,/nome provisório/i);
-  assert.match(home,/razão social/i);
-  assert.match(site,/NOME PROVISÓRIO/);
+test('Uai Perto é a identidade pública consistente',()=>{
+  const home=readFileSync('index.html','utf8');
+  const site=readFileSync('assets/site.js','utf8');
+  assert.match(home,/Uai Perto/);
+  assert.match(home,/Uberaba mais perto de você/);
+  assert.match(site,/BRAND_NAME="Uai Perto"/);
+  assert.match(site,/BRAND_TAGLINE="Uberaba mais perto de você\."/);
 });
 
-test("V3.1.15 separa produto e pessoa jurídica",()=>{
-  const home=readFileSync("index.html","utf8");
-  const empresas=readFileSync("empresas.html","utf8");
-  assert.match(home,/Operadora da Rede/);
-  assert.match(empresas,/Operadora da Rede/);
+test('aquisição comercial permanece distinta da experiência do Assistente',()=>{
+  const home=readFileSync('index.html','utf8');
+  const empresas=readFileSync('empresas.html','utf8');
+  const assistant=readFileSync('assistente.html','utf8');
+  assert.match(home,/href="\/empresas\.html"/);
+  assert.match(home,/href="\/assistente"/);
+  assert.match(empresas,/TENHO UMA EMPRESA|Sua empresa vende alguma coisa/);
+  assert.match(assistant,/id="assistant-form"/);
+  assert.doesNotMatch(empresas,/id="assistant-form"/);
 });

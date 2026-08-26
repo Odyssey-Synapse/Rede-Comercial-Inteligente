@@ -1,0 +1,11 @@
+# Somente artefatos de desenvolvimento e documentação interna.
+docs/
+migrations/
+scripts/
+tests/
+VALIDACAO_*
+RELEASE_NOTES_*
+V2_MANIFESTO.json
+V3_MANIFESTO.json
+V3_1_MANIFESTO.json
+.env.example

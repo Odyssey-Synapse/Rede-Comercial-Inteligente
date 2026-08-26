@@ -3,207 +3,232 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Diga o que você precisa resolver. O Uai Perto trabalha para aproximar sua necessidade de empresas, produtos, serviços e soluções locais em Uberaba.">
+  <meta name="description" content="Precisa de alguma coisa em Uberaba? Fala o que você precisa. O Uai Perto te ajuda a encontrar produtos, serviços e empresas daqui.">
   <meta name="theme-color" content="#335749">
   <title>Uai Perto · Uberaba mais perto de você</title>
-  <meta property="og:title" content="Uai Perto | Pare de procurar empresa por empresa">
-  <meta property="og:description" content="Diga o que você precisa resolver. Veja como o Uai Perto pretende encurtar o caminho até uma solução em Uberaba.">
+  <meta property="og:title" content="Uai Perto | Precisou? Tem perto.">
+  <meta property="og:description" content="Fala o que você precisa. O Uai Perto te ajuda a encontrar produtos, serviços e empresas em Uberaba.">
   <meta property="og:image" content="https://rede-comercial-inteligente.vercel.app/og-uai-perto.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="Uai Perto — Uberaba está prestes a ficar mais perto.">
+  <meta property="og:image:alt" content="Uai Perto — Uberaba mais perto de você.">
   <meta property="og:url" content="https://rede-comercial-inteligente.vercel.app/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Uai Perto">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Uai Perto | Pare de procurar empresa por empresa">
-  <meta name="twitter:description" content="Diga o que você precisa resolver. Veja como o Uai Perto pretende encurtar o caminho até uma solução em Uberaba.">
+  <meta name="twitter:title" content="Uai Perto | Precisou? Tem perto.">
+  <meta name="twitter:description" content="Fala o que você precisa. O Uai Perto te ajuda a encontrar produtos, serviços e empresas em Uberaba.">
   <meta name="twitter:image" content="https://rede-comercial-inteligente.vercel.app/og-uai-perto.jpg">
   <script>(function(){try{document.documentElement.dataset.theme=localStorage.getItem("aa-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}})()</script>
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/uai-perto.css?v=3.1.20">
-  <link rel="stylesheet" href="/assets/demo-impact.css?v=3.1.24">
   <link rel="icon" type="image/png" href="/assets/uai-perto-symbol.png">
+  <style>
+    .home-hero-inner{grid-template-columns:minmax(0,1fr)!important;padding-block:clamp(70px,9vw,126px)!important}
+    .home-hero-copy{max-width:820px!important}
+    .home-hero-copy .display{max-width:12ch}
+    .home-hero-copy .lead{max-width:700px}
+    .home-hero-copy>p:not(.lead){max-width:680px;color:var(--muted);font-size:1.03rem}
+    .home-problem{padding-top:clamp(72px,8vw,112px)}
+    .home-problem-head{max-width:760px;margin-bottom:34px}
+    .home-problem-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:30px}
+    .home-problem-step{min-height:190px;display:flex;flex-direction:column;justify-content:space-between;padding:24px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(51,87,73,.055)}
+    .home-problem-step span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--green-soft);font-weight:900;color:var(--ink)}
+    .home-problem-step p{margin:26px 0 0;font-size:1.05rem;line-height:1.5;color:var(--ink);font-weight:700}
+    .home-problem-result{margin-top:18px;padding:clamp(24px,4vw,36px);border-radius:24px;background:var(--brand-green);color:var(--brand-pristine);display:grid;grid-template-columns:1fr minmax(260px,.7fr);gap:28px;align-items:end}
+    .home-problem-result h3{margin:0;font-size:clamp(1.45rem,2.6vw,2.35rem);line-height:1.08;color:#fff}
+    .home-problem-result p{margin:0;color:#fff;font-size:1.16rem;line-height:1.6;font-weight:650}
+    .home-start-grid .card{min-height:220px;display:flex;flex-direction:column;justify-content:flex-end}
+    .home-question-grid .card{min-height:150px;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--surface) 90%,var(--brand-sunflower) 10%)}
+    .home-question-grid .card h3{margin:0;font-size:1.12rem}
+    .home-questions-head{margin-top:56px!important;margin-bottom:24px!important}
+    .home-company-band .quote-big{max-width:10ch}
+    .home-company-band p{font-size:1.12rem;line-height:1.65;color:#fff}
+    .home-company-band p strong{color:#fff}
+    .home-company-band .human-list strong{font-size:1.08rem;line-height:1.35;color:#fff}
+    .home-company-band .human-list span{font-size:1rem;line-height:1.6;color:#fff}
+    .home-company-band .eyebrow-light{font-size:.82rem;letter-spacing:.085em;color:#fff}
+    .home-uberaba{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:clamp(36px,6vw,72px);align-items:center}
+    .home-uberaba-card{padding:clamp(28px,5vw,48px);border:1px solid var(--line);border-radius:28px;background:var(--warm);box-shadow:var(--shadow)}
+    .home-uberaba-card strong{display:block;font-size:clamp(1.55rem,3vw,2.8rem);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+    .home-uberaba-card span{display:block;margin-top:16px;color:var(--muted)}
+    .home-final-cta{margin-top:8px}
+    .home-final-cta .cta-panel p{font-size:1.08rem;line-height:1.6;color:#fff}
+    .home-final-cta .eyebrow-cta{font-size:.82rem;letter-spacing:.085em;color:#fff}
+    @media(max-width:980px){
+      .home-problem-path{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .home-problem-result,.home-uberaba{grid-template-columns:1fr}
+    }
+    @media(max-width:720px){
+      .home-hero-inner{padding-block:58px 72px!important}
+      .home-hero-copy .display{max-width:13ch}
+      .home-problem-path{grid-template-columns:1fr}
+      .home-problem-step{min-height:0}
+      .home-problem-result{padding:26px}
+      .home-problem-result p{font-size:1.08rem}
+      .home-question-grid{grid-template-columns:1fr!important}
+      .home-question-grid .card{min-height:118px}
+      .home-company-band p{font-size:1.06rem}
+      .home-company-band .human-list strong{font-size:1.05rem}
+      .home-company-band .human-list span{font-size:.98rem}
+    }
+  </style>
 </head>
 <body>
 <div id="site-header"></div>
 
 <section class="hero">
   <canvas class="hero-canvas" id="network-canvas" aria-hidden="true"></canvas>
-  <div class="container hero-content">
-    <div class="hero-copy reveal">
+  <div class="container hero-content home-hero-inner">
+    <div class="hero-copy reveal home-hero-copy">
       <span class="eyebrow">UBERABA · UAI PERTO</span>
-      <h1 class="display">Pare de procurar empresa por empresa. Diga o que você precisa resolver.</h1>
-      <p class="lead">O Uai Perto está sendo construído para fazer a procura trabalhar por você: entender a situação e aproximar seu pedido de soluções locais que façam sentido.</p>
+      <h1 class="display">Precisa de alguma coisa em Uberaba?</h1>
+      <p class="lead"><strong>Fala o que você precisa. O Uai Perto te ajuda a encontrar.</strong></p>
+      <p class="lead">Pode ser um produto, um serviço ou alguma coisa que você precisa resolver.</p>
+      <p>Você escolhe por onde quer começar e fala o que está procurando.</p>
+      <p>O Uai Perto faz algumas perguntas, se precisar, e te mostra empresas daqui que podem ter o que você procura.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#demonstracao">Ver funcionando →</a>
-        <a class="button button-ghost" href="/participar.html?perfil=consumidor">Se existisse hoje, o que você pediria?</a>
+        <a class="button button-primary" href="/testar">Ver como funciona →</a>
       </div>
       <div class="hero-note">
-        <span><i></i>Você fala do seu jeito</span>
-        <span><i></i>A procura parte do seu problema</span>
         <span><i></i>Começando por Uberaba</span>
       </div>
-      <p class="fine">Pré-lançamento. As demonstrações abaixo são ilustrativas e mostram a lógica do produto em construção.</p>
-    </div>
-
-    <div class="experience-card reveal" data-delay="2">
-      <div class="experience-top"><span>EXEMPLOS DE PEDIDOS</span><span class="live-pill">situações ilustrativas</span></div>
-      <div class="example-switcher" role="tablist" aria-label="Exemplos de necessidades">
-        <button class="example-chip active" data-example="casa">Casa</button>
-        <button class="example-chip" data-example="visita">Visita</button>
-        <button class="example-chip" data-example="carro">Carro</button>
-      </div>
-      <div id="example-content" class="example-content" aria-live="polite"></div>
     </div>
   </div>
 </section>
 
-<section class="section demo-network-section" id="demonstracao">
+<div id="meu-uai-perto" hidden aria-hidden="true"></div>
+
+<section class="section home-problem">
   <div class="container">
-    <div class="section-head reveal">
-      <div><span class="eyebrow">Primeiro veja. Depois a gente explica.</span><h2 class="h2">Uma pessoa conta o problema. O outro lado recebe uma oportunidade que faz sentido.</h2></div>
-      <p>Veja primeiro em poucos segundos. Se quiser entender como a Rede chegou ali, abra o passo a passo.</p>
+    <div class="home-problem-head reveal">
+      <span class="eyebrow">UMA COISA SIMPLES NÃO PRECISA VIRAR UM TRABALHÃO</span>
+      <h2 class="h2">Hoje, encontrar uma coisa simples pode dar trabalho</h2>
     </div>
 
-    <div class="demo-mode-switcher reveal" aria-label="Modo da demonstração">
-      <button class="button button-primary button-small active" id="demo-mode-impact" type="button">Ver em 15 segundos</button>
-      <button class="button button-ghost button-small" id="demo-mode-xray" type="button">Ver passo a passo</button>
+    <div class="home-problem-path">
+      <article class="home-problem-step reveal">
+        <span>1</span>
+        <p>Você pesquisa no Google.<br>Olha no Instagram.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="1">
+        <span>2</span>
+        <p>Entra no perfil de uma loja.<br>Procura o WhatsApp.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="2">
+        <span>3</span>
+        <p>Pergunta se tem.<br>Espera alguém responder.</p>
+      </article>
+      <article class="home-problem-step reveal" data-delay="3">
+        <span>4</span>
+        <p>Às vezes não tem.<br>Aí você procura outra loja e começa tudo de novo.</p>
+      </article>
     </div>
 
-    <div class="network-demo reveal" data-delay="1" id="network-demo" aria-label="Demonstração automatizada da Rede">
-      <section class="impact-demo" id="demo-impact" aria-live="polite">
-        <div class="impact-top">
-          <div><small>DEMONSTRAÇÃO — cenário hipotético</small><strong id="impact-scenario-label">Exemplo 1 de 3 · urgência em casa</strong></div>
-          <span class="impact-counter" id="impact-phase-label">1 · você conta o problema</span>
-        </div>
-        <div class="impact-progress" aria-hidden="true"><span id="impact-progress-1"></span><span id="impact-progress-2"></span><span id="impact-progress-3"></span><span id="impact-progress-4"></span></div>
-        <div class="impact-flow">
-          <article class="impact-card" id="impact-request-card"><span class="impact-arrow">→</span><small>VOCÊ</small><h3 id="impact-request"></h3></article>
-          <article class="impact-card" id="impact-understand-card"><span class="impact-arrow">→</span><small>UAI PERTO ENTENDE</small><h3 id="impact-understand-title"></h3><div class="impact-tags" id="impact-tags"></div></article>
-          <article class="impact-card" id="impact-company-card"><span class="impact-arrow">→</span><small>DO OUTRO LADO</small><h3 id="impact-company"></h3><p id="impact-opportunity"></p></article>
-          <article class="impact-card solution" id="impact-solution-card"><small>SOLUÇÃO VOLTA</small><strong id="impact-solution"></strong><p id="impact-solution-detail"></p></article>
-        </div>
-        <div class="impact-ending" id="impact-ending" hidden>
-          <div><strong id="impact-closing"></strong><p>Foi o problema que guiou a procura — não uma lista de empresas para você pesquisar.</p></div>
-          <div class="impact-ending-actions"><a class="button button-primary button-small" href="/participar.html?perfil=consumidor">O que você pediria? →</a><button class="button button-ghost button-small" id="demo-show-xray" type="button">Como chegou nisso?</button></div>
-        </div>
-      </section>
-
-      <section id="demo-xray" hidden>
-        <div class="demo-xray-intro"><div><strong>Agora abra o capô.</strong><p>A mesma situação, mostrando as 10 etapas de entendimento, conversa e solução.</p></div><button class="button button-ghost button-small" id="demo-back-impact" type="button">← Voltar ao modo rápido</button></div>
-        <div class="demo-toolbar">
-          <div class="demo-identity"><span class="demo-hypothetical">MODO RAIO-X — cenário hipotético</span><strong id="demo-scenario-label">Exemplo 1 de 3 · urgência em casa</strong></div>
-          <div class="demo-controls" aria-label="Controles da demonstração">
-            <button class="icon-button" id="demo-prev" type="button" aria-label="Voltar etapa">←</button>
-            <button class="button button-primary button-small" id="demo-play" type="button">Pausar</button>
-            <button class="icon-button" id="demo-next" type="button" aria-label="Avançar etapa">→</button>
-            <button class="icon-button" id="demo-restart" type="button" aria-label="Reiniciar exemplos">↻</button>
-            <select class="demo-speed" id="demo-speed" aria-label="Velocidade da demonstração"><option value="1.28">Lenta</option><option value="1" selected>Normal</option><option value=".78">Rápida</option></select>
-          </div>
-        </div>
-        <div class="demo-progress"><span id="demo-step-label">Etapa 1 de 10</span><div><i id="demo-progress-bar"></i></div><span id="demo-loop-label">loop contínuo</span></div>
-
-        <div class="demo-stage">
-          <article class="demo-side consumer active" id="demo-consumer">
-            <div class="demo-side-head"><div class="demo-avatar">P</div><div><strong>Consumidor</strong><small>experiência demonstrativa</small></div><span>ativo</span></div>
-            <div class="demo-feed">
-              <div class="demo-message user show" id="demo-request"><small>Você</small><p></p></div>
-              <div class="demo-ai" id="demo-ai"><div class="demo-ai-head"><i></i><div><strong>Assistente da Rede</strong><small id="demo-ai-status">entendendo sua mensagem…</small></div></div><div class="demo-ai-steps"><span id="demo-ai-1">Entender</span><span id="demo-ai-2">Contexto</span><span id="demo-ai-3">Organizar</span></div></div>
-              <div class="demo-parsed" id="demo-parsed"><small>O QUE REALMENTE IMPORTA NESTE PEDIDO</small><div class="parsed-tags" id="demo-tags"></div></div>
-              <div class="demo-message" id="demo-assistant"><small>Assistente da Rede</small><p id="demo-assistant-text"></p></div>
-              <div class="demo-solutions" id="demo-solutions"></div>
-              <div class="demo-message" id="demo-company-question"><small id="demo-company-question-name"></small><p></p></div>
-              <div class="demo-message user" id="demo-consumer-answer"><small>Você</small><p></p></div>
-              <div class="demo-message" id="demo-consumer-quote"><small id="demo-quote-name"></small><p></p></div>
-              <div class="demo-message user" id="demo-consumer-accept"><small>Você</small><p>Aceito esta solução.</p></div>
-              <div class="demo-message" id="demo-consumer-done"><small>Assistente da Rede</small><p></p></div>
-            </div>
-          </article>
-
-          <div class="demo-bridge" aria-hidden="true"><div class="demo-bridge-line"></div><div class="demo-packet" id="demo-packet"></div><div class="demo-bridge-core" id="demo-bridge-core"><span>UAI<br>PERTO</span></div></div>
-
-          <article class="demo-side company inactive" id="demo-company">
-            <div class="demo-side-head"><div class="demo-avatar" id="demo-company-avatar">E</div><div><strong id="demo-company-name">Empresa demonstrativa</strong><small id="demo-company-role">painel da empresa</small></div><span>disponível</span></div>
-            <div class="demo-company-body">
-              <div class="demo-metrics"><div><small>ABERTAS</small><strong id="demo-open">0</strong></div><div><small>NOVAS</small><strong id="demo-new">0</strong></div><div><small id="demo-context-metric-label">CAPACIDADE</small><strong id="demo-context-metric-value">68%</strong></div></div>
-              <div class="demo-opportunity" id="demo-opportunity"><small>NOVA OPORTUNIDADE DEMONSTRATIVA</small><h3 id="demo-opportunity-title"></h3><p id="demo-opportunity-meta"></p><div class="demo-match-tags" id="demo-match-tags"></div></div>
-              <div class="demo-company-chat" id="demo-company-chat"><small>CONVERSA PARA COMPLETAR O PEDIDO</small><div class="demo-neg company" id="demo-n1"></div><div class="demo-neg" id="demo-n2"></div><div class="demo-neg company" id="demo-n3"></div></div>
-              <div class="demo-quote" id="demo-quote"><small>SOLUÇÃO DEMONSTRATIVA</small><div><span id="demo-quote-service"></span><strong id="demo-quote-price"></strong></div><div><span>Janela</span><strong id="demo-quote-time"></strong></div><div class="demo-quote-total"><span>TOTAL DEMONSTRATIVO</span><strong id="demo-quote-total"></strong></div><b id="demo-quote-state">✓ Solução aceita pelo consumidor</b></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="demo-caption"><span id="demo-caption-kicker">ETAPA 1</span><div><strong id="demo-caption-title">A pessoa conta o que está acontecendo.</strong><p id="demo-caption-text">A Rede parte da situação real, e não de uma categoria escolhida antes.</p></div></div>
-      </section>
-    </div>
-
-    <p class="fine demo-disclaimer">Demonstração conceitual. Empresas, nomes, valores, horários, disponibilidade, negociação e resultados são fictícios. O exemplo ilustra a proposta do produto e não representa clientes, parceiros ativos, vendas realizadas ou garantia de funcionalidade comercial disponível.</p>
-  </div>
-</section>
-
-<section class="human-band">
-  <div class="container human-grid">
-    <div class="reveal"><span class="eyebrow eyebrow-light">A ideia em uma frase</span><p class="quote-big">Você não quer procurar empresas. Você quer parar de procurar porque encontrou quem pode resolver.</p></div>
-    <div class="human-list reveal" data-delay="2">
-      <div><strong>Você conta o problema</strong><span>sem precisar adivinhar a categoria perfeita</span></div>
-      <div><strong>A Rede organiza a procura</strong><span>usando as condições que realmente importam</span></div>
-      <div><strong>A solução encurta o caminho</strong><span>quando existe capacidade compatível</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">A vida não vem separada em categorias</span><h2 class="h2">O pedido pode ser simples, urgente ou envolver várias partes.</h2></div><p>O Uai Perto precisa conseguir começar pelo problema real sem inventar complexidade quando ela não existe.</p></div>
-    <div class="grid-3">
-      <article class="card reveal"><span class="icon-square">01</span><h3>“Onde encontro isso hoje?”</h3><p>Quando a necessidade é simples, o melhor caminho também deve ser simples.</p></article>
-      <article class="card reveal" data-delay="1"><span class="icon-square">02</span><h3>“Preciso resolver isso agora.”</h3><p>Horário, localização e urgência podem importar mais do que uma lista de opções próximas.</p></article>
-      <article class="card reveal" data-delay="2"><span class="icon-square">03</span><h3>“Isso envolve mais de uma coisa.”</h3><p>Quando a solução realmente exige parceiros diferentes, a visão é coordenar sem obrigar você a começar várias buscas do zero.</p></article>
+    <div class="home-problem-result reveal">
+      <h3>É esse trabalho que o Uai Perto quer diminuir.</h3>
+      <p>Você fala o que precisa e ele te ajuda a chegar em quem pode atender.</p>
     </div>
   </div>
 </section>
 
 <section class="section section-alt">
-  <div class="container split-feature">
-    <div class="reveal"><span class="eyebrow">Quando uma empresa sozinha não basta</span><h2 class="h2">“Meu chuveiro queimou e eu não tenho outro. Preciso resolver hoje.”</h2><p class="lead">Você não deveria ter que descobrir separadamente onde comprar, quem instala e como o produto chega até o ponto certo.</p><p>O Uai Perto pode organizar capacidades diferentes dentro do mesmo caminho quando isso realmente for necessário.</p><p class="fine">Exemplo conceitual de uma operação em construção. Disponibilidade, valores e participantes são ilustrativos.</p></div>
-    <div class="decision-card reveal" data-delay="1"><small>UMA NECESSIDADE · VÁRIAS CAPACIDADES</small><h3>Para você, continua sendo um problema só.</h3><div class="decision-row"><span>Loja local</span><strong>fornece o produto</strong></div><div class="decision-row"><span>Eletricista</span><strong>diagnostica + instala</strong></div><div class="decision-row"><span>Resolva Aí</span><strong>coleta e movimenta</strong></div><div class="decision-divider"></div><p><strong>Uai Perto:</strong> organiza o caminho para a necessidade terminar resolvida.</p></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">COMECE COM O QUE VOCÊ SABE</span>
+        <h2 class="h2">Você não precisa saber tudo para começar</h2>
+      </div>
+      <p>Às vezes você sabe exatamente o que quer. Às vezes só sabe o que aconteceu. Tudo bem.</p>
+    </div>
+
+    <div class="grid-2 home-start-grid">
+      <article class="card reveal">
+        <span class="icon-square">01</span>
+        <h3>“Preciso de 5 kg de carne para churrasco.”</h3>
+        <p>Quando você já sabe o que quer, pode começar direto pelo pedido.</p>
+      </article>
+      <article class="card reveal" data-delay="1">
+        <span class="icon-square">02</span>
+        <h3>“Meu chuveiro parou de funcionar.”</h3>
+        <p>Quando você ainda não sabe exatamente o que precisa, começa pelo problema.</p>
+      </article>
+    </div>
+
+    <div class="section-head reveal home-questions-head">
+      <div>
+        <h3 class="h3">O Uai Perto vai perguntando o que precisa para continuar.</h3>
+      </div>
+      <p>Perguntas simples, uma de cada vez.</p>
+    </div>
+
+    <div class="grid-4 home-question-grid">
+      <article class="card reveal"><h3>“Precisa resolver hoje?”</h3></article>
+      <article class="card reveal" data-delay="1"><h3>“Quer retirar ou receber em casa?”</h3></article>
+      <article class="card reveal" data-delay="2"><h3>“Qual é o seu bairro?”</h3></article>
+      <article class="card reveal" data-delay="3"><h3>“Você já tem a peça?”</h3></article>
+    </div>
+
+    <div class="hero-actions reveal">
+      <a class="button button-primary" href="/testar">Testar o Uai Perto →</a>
+    </div>
+  </div>
+</section>
+
+<section class="human-band home-company-band">
+  <div class="container human-grid">
+    <div class="reveal">
+      <span class="eyebrow eyebrow-light">TEM UMA EMPRESA?</span>
+      <p class="quote-big">Você também participa.</p>
+      <p><strong>Cadastre o que sua empresa vende ou faz.</strong></p>
+      <p>Se alguém estiver procurando alguma coisa que sua empresa oferece, ela pode aparecer para essa pessoa.</p>
+      <div class="hero-actions">
+        <a class="button button-light" href="/empresas.html">Tenho uma empresa →</a>
+      </div>
+    </div>
+    <div class="human-list reveal" data-delay="1">
+      <div><strong>Tem uma padaria?</strong><span>Quem estiver procurando pão, bolo ou outros produtos de padaria pode encontrar você.</span></div>
+      <div><strong>É eletricista?</strong><span>Quem estiver precisando de um serviço elétrico pode chegar até você.</span></div>
+      <div><strong>Tem uma loja de peças?</strong><span>Quem estiver procurando uma peça para o carro pode encontrar sua loja.</span></div>
+    </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">Depois que você entende o valor, vem a confiança</span><h2 class="h2">Algumas regras precisam continuar verdadeiras quando a Rede crescer.</h2></div></div>
-    <div class="grid-3">
-      <article class="card reveal"><h3>A necessidade vem primeiro.</h3><p>O pedido deve ser interpretado pelo que precisa ser resolvido.</p></article>
-      <article class="card reveal" data-delay="1"><h3>Pagamento não substitui compatibilidade.</h3><p>Uma empresa não deve parecer a melhor solução só porque paga uma condição comercial maior.</p></article>
-      <article class="card reveal" data-delay="2"><h3>Quando falta informação, a Rede precisa admitir.</h3><p>É melhor pedir contexto ou reconhecer uma lacuna do que fabricar certeza para parecer inteligente.</p></article>
+  <div class="container home-uberaba">
+    <div class="reveal">
+      <span class="eyebrow">COMEÇANDO AQUI</span>
+      <h2 class="h2">Por que Uberaba?</h2>
+      <p class="lead">Porque o Uai Perto começa daqui.</p>
+      <p class="lead">Quanto mais empresas da cidade participarem, mais coisas as pessoas poderão encontrar sem precisar procurar lugar por lugar.</p>
     </div>
-    <div class="hero-actions reveal"><a class="button button-ghost" href="/transparencia.html">Conhecer as regras de transparência</a><a class="button button-ghost" href="/tecnologia.html">Ver como a tecnologia entra nisso</a></div>
+    <aside class="home-uberaba-card reveal" data-delay="1">
+      <strong>E quando uma pessoa compra de uma empresa daqui, o dinheiro continua rodando por aqui também.</strong>
+      <span>Uberaba mais perto de você.</span>
+    </aside>
   </div>
 </section>
 
-<section class="section" id="escolha-perfil">
-  <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">Agora é com você</span><h2 class="h2">Se o Uai Perto existisse hoje, de que lado você estaria?</h2></div><p>Consumidores mostram o que Uberaba precisa resolver. Empresas mostram produtos, serviços e capacidades que conseguem colocar na Rede.</p></div>
-    <div class="participation-choice-grid">
-      <a class="participation-choice reveal" href="/participar.html?perfil=consumidor"><span class="participation-choice-type">SOU CONSUMIDOR</span><h2>O que você pediria se o Uai Perto estivesse funcionando agora?</h2><p>Conte uma necessidade real e ajude a mostrar o que a Rede precisa aprender a resolver em Uberaba.</p><strong>Contar o que eu pediria →</strong></a>
-      <a class="participation-choice participation-choice-company reveal" data-delay="1" href="/empresas.html"><span class="participation-choice-type">TENHO UMA EMPRESA</span><h2>O que sua empresa vende ou consegue resolver?</h2><p>Conheça Catálogo, Serviço, a condição Fundador e simule sua referência.</p><strong>Conhecer participação empresarial →</strong></a>
-    </div>
-  </div>
-</section>
-
-<section class="section-sm">
+<section class="section-sm home-final-cta">
   <div class="container cta-panel reveal">
-    <div><span class="eyebrow eyebrow-cta">Uai Perto está chegando a Uberaba</span><h2>Ajude a construir uma Rede que comece pelos problemas reais da cidade.</h2><p>Você pode contar o que gostaria de resolver ou apresentar uma empresa capaz de fornecer ou executar uma parte da solução.</p></div>
-    <div class="after-founder-buttons"><a class="button button-light" href="/participar.html?perfil=consumidor">O que eu pediria →</a><a class="button founder-contact-button" href="/empresas.html">Tenho uma empresa →</a></div>
+    <div>
+      <span class="eyebrow eyebrow-cta">UAI PERTO</span>
+      <h2>Precisou? Tem perto.</h2>
+      <p>Produtos e serviços de Uberaba mais fáceis de encontrar.</p>
+    </div>
+    <div class="after-founder-buttons">
+      <a class="button button-light" href="/testar">Ver como funciona →</a>
+    </div>
   </div>
 </section>
 
 <section class="section section-alt" id="instagram">
   <div class="container">
-    <div class="section-head reveal"><div><span class="eyebrow">Instagram oficial</span><h2 class="h2">Acompanhe o Uai Perto em Uberaba.</h2></div><p>Veja novidades, bastidores do lançamento e a construção da Rede.</p></div>
+    <div class="section-head reveal">
+      <div><span class="eyebrow">Instagram oficial</span><h2 class="h2">Acompanhe o Uai Perto em Uberaba.</h2></div>
+      <p>Veja novidades e acompanhe o lançamento.</p>
+    </div>
     <div class="card reveal" style="max-width:520px;margin:0 auto;text-align:center;">
       <a href="https://www.instagram.com/uaiperto/" target="_blank" rel="noopener noreferrer" aria-label="Abrir o Instagram oficial do Uai Perto" style="display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:368px;background:#fff;border-radius:28px;overflow:hidden;"><img src="/assets/uaiperto-instagram-qr.png?v=2" alt="QR Code do Instagram @uaiperto" width="320" height="368" decoding="sync" style="display:block!important;width:min(100%,320px);height:auto;margin:0 auto;border-radius:28px;background:#fff;opacity:1!important;visibility:visible!important;object-fit:contain;"></a>
       <p style="margin:18px 0 6px;"><a href="https://www.instagram.com/uaiperto/" target="_blank" rel="noopener noreferrer" style="font-size:1.15rem;font-weight:800;">@uaiperto</a></p>
@@ -214,6 +239,5 @@
 
 <div id="site-footer"></div>
 <script type="module" src="/assets/site.js"></script>
-<script type="module" src="/assets/home-demo.js?v=3.1.24"></script>
 </body>
 </html>

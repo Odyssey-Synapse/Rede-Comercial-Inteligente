@@ -1,40 +1,39 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-const here=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(here,"..");
-const read=f=>fs.readFileSync(path.join(root,f),"utf8");
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
-test("Founder tem caminho direto para proposta e contato sem CTA agressivo",()=>{
- const html=read("index.html");
- assert.match(html,/Calcular proposta →/);
- assert.match(html,/Falar com a Rede/);
- assert.match(html,/Entrar em contato/);
- assert.match(html,/condição de Parceiro Fundador é comercial e não representa participação societária/i);
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+
+test('empresa tem caminhos diretos para simulação e apresentação comercial',()=>{
+  const html=read('empresas.html');
+  assert.match(html,/Abrir calculadora →/);
+  assert.match(html,/Apresentar empresa →/);
+  assert.match(html,/href="\/calculadora\.html"/);
+  assert.match(html,/href="\/participar\.html\?perfil=empresa"/);
 });
 
-test("status de vagas usa API real e possui fallback sem inventar disponibilidade",()=>{
- const module=read("assets/founder-status.js");
- const home=read("index.html");
- assert.match(module,/\/api\/founder-status/);
- assert.match(module,/A disponibilidade é confirmada no fluxo comercial/);
- assert.match(module,/remaining/);
- assert.match(home,/data-founder-status/);
+test('API de status Founder permanece real e o fallback não inventa disponibilidade',()=>{
+  const module=read('assets/founder-status.js');
+  assert.match(module,/\/api\/founder-status/);
+  assert.match(module,/A disponibilidade é confirmada no fluxo comercial/);
+  assert.match(module,/remaining/);
 });
 
-test("calculadora conecta proposta convencional ao Programa de Fundadores",()=>{
- const js=read("assets/calculator-page.js");
- assert.match(js,/Este valor representa a condição comercial convencional/);
- assert.match(js,/mensalidade Founder de <strong>R\$ 0<\/strong>/);
- assert.match(js,/A entrada no Programa é confirmada separadamente/);
- assert.match(js,/q\.founderVerified/);
- assert.match(js,/quote-founder-status/);
+test('calculadora conecta os três modelos à condição Fundador vigente',()=>{
+  const js=read('assets/capacity-calculator.js');
+  assert.match(js,/catalogo:\{name:'Catálogo',monthly:49,founderAdhesion:149/);
+  assert.match(js,/servico:\{name:'Serviço',monthly:79,founderAdhesion:199/);
+  assert.match(js,/ambos:\{name:'Serviço \+ Catálogo',monthly:99,founderAdhesion:249/);
+  assert.match(js,/SE FOR CONFIRMADO ENTRE OS 54 INICIAIS/);
+  assert.match(js,/mensalidade recorrente: R\$ 0/);
 });
 
-test("Founder reconhecido continua exibindo R$ 0 sem alterar regra contratual",()=>{
- const js=read("assets/calculator-page.js");
- const calc=read("lib/calculator.mjs");
- assert.match(js,/Este CNPJ está reconhecido como Parceiro Fundador/);
- assert.match(calc,/founderVerified \? policy\.founderMonthlyCents : pmeCents/);
+test('limite Founder canônico continua sendo aplicado server-side',()=>{
+  const registry=read('lib/founder-registry.mjs');
+  assert.match(registry,/maxExpected:\s*54/);
+  assert.match(registry,/registry\.length > 54/);
+  assert.match(registry,/FOUNDER_REGISTRY_LIMIT_EXCEEDED/);
 });

@@ -1,0 +1,10 @@
+{
+  "name": "Uai Perto · Demonstração em Vereda Clara",
+  "short_name": "Uai Perto",
+  "description": "Demonstração pública do Uai Perto em uma cidade fictícia.",
+  "start_url": "/testar",
+  "display": "standalone",
+  "background_color": "#F2E8D9",
+  "theme_color": "#335749",
+  "lang": "pt-BR"
+}
