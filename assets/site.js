@@ -39,11 +39,25 @@ const currentPath=location.pathname.endsWith("/")&&location.pathname!=="/"?locat
 const header=document.querySelector("#site-header");
 const footer=document.querySelector("#site-footer");
 
-if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
+if(header)header.innerHTML=`<header class="site-header"><div class="container nav"><a class="brand uai-brand-lockup" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><nav class="nav-links" id="nav-links" aria-label="Navegação principal">${pages.map(([href,label])=>`<a href="${href}" class="${currentPath===href?'active':''}">${label}</a>`).join("")}</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" aria-label="Alternar modo claro e escuro"><span id="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="button button-primary button-small" id="launch-primary-cta" href="/participar.html">Quero participar</a><button class="icon-button menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">☰</button></div></div></header>`;
 
-if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><p class="footer-brand-text">Você conta o que precisa resolver. O Uai Perto trabalha para aproximar sua necessidade de soluções locais em Uberaba.</p></div><div class="footer-col"><strong>Conheça</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Participar</strong><a href="/empresas.html">Para empresas</a><a href="/participar.html?perfil=consumidor">Sou consumidor</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Começando por Uberaba.</span></div></div></footer>`;
+if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand uai-brand-lockup uai-brand-lockup-footer" href="/" aria-label="Uai Perto — ${BRAND_TAGLINE}"><img src="/assets/uai-perto-logo-horizontal.svg" width="240" height="66" alt="Uai Perto — ${BRAND_TAGLINE}"></a><p class="footer-brand-text">Você conta o que precisa resolver. O Uai Perto trabalha para aproximar sua necessidade de soluções locais em Uberaba.</p></div><div class="footer-col"><strong>Conheça</strong><a href="/rede.html">A Rede</a><a href="/tecnologia.html">Tecnologia</a><a href="/transparencia.html">Transparência</a><a href="/privacidade.html">Privacidade</a></div><div class="footer-col"><strong>Participar</strong><a href="/empresas.html">Para empresas</a><a id="launch-consumer-cta" href="/participar.html?perfil=consumidor">Sou consumidor</a><a href="/contato.html">Contato</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Uai Perto.</span><span>Começando por Uberaba.</span></div></div></footer>`;
 
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
+
+async function alignLaunchCtasWithPublicState(){
+  const primary=document.querySelector("#launch-primary-cta");
+  const consumer=document.querySelector("#launch-consumer-cta");
+  try{
+    const response=await fetch("/api/public-config",{cache:"no-store"});
+    if(!response.ok)return;
+    const config=await response.json();
+    if(config.contactFormEnabled)return;
+    if(primary){primary.href="/testar";primary.textContent="Testar agora";primary.setAttribute("aria-label","Testar demonstração do Uai Perto")}
+    if(consumer){consumer.href="/testar";consumer.textContent="Testar como consumidor"}
+  }catch{}
+}
+alignLaunchCtasWithPublicState();
 
 function getTheme(){try{return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}catch{return document.documentElement.dataset.theme||"light"}}
 function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem("aa-theme",theme)}catch{}document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}
