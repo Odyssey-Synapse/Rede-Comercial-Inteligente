@@ -11,8 +11,8 @@ const exists=file=>fs.existsSync(path.join(root,file));
 test('homepage atual apresenta proposta local e leva para a demonstracao publica',()=>{
   const html=read('index.html');
   assert.match(html,/Precisa de alguma coisa em Uberaba\?/);
-  assert.match(html,/href="\/testar">Ver como funciona →/);
-  assert.match(html,/Começando por Uberaba/);
+  assert.match(html,/href="\/testar">Ver demonstração →/);
+  assert.match(html,/Rede real de Uberaba em formação/);
   assert.doesNotMatch(html,/id="assistant-form"/);
 });
 
