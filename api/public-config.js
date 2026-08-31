@@ -1,14 +1,5 @@
-export default async function handler(req, res) {
+export default function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "METHOD_NOT_ALLOWED" });
-  if (req.query?.testReset) {
-    const { resetFounderTestCompany } = await import("../lib/founder-test-reset.mjs");
-    try {
-      const result = await resetFounderTestCompany(req.query.testReset);
-      return res.status(200).json(result);
-    } catch (error) {
-      return res.status(404).json({ error: String(error?.message || "NOT_FOUND") });
-    }
-  }
   return res.status(200).json({
     contactEmail: process.env.PUBLIC_CONTACT_EMAIL || null,
     contactWhatsapp: process.env.PUBLIC_CONTACT_WHATSAPP || null,
