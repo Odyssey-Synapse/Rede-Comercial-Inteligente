@@ -18,6 +18,18 @@ test("contato possui validacao honeypot rate-limit e turnstile",()=>{
  const api=read("api/contact.js");
  for(const token of ["website","rateLimited","verifyTurnstileToken","CONSENT_REQUIRED"]) assert.ok(api.includes(token),token);
 });
+test("mapa de demanda do consumidor pode ser anônimo como a interface promete",()=>{
+ const api=read("api/contact.js"),participacao=read("assets/participacao.js");
+ assert.match(participacao,/subject:isCompany\?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor"/);
+ assert.match(api,/"Mapa de demanda — consumidor"/);
+ assert.match(api,/isConsumerSurvey&&email&&!emailRe\.test\(email\)/);
+});
+test("formulario de contato trata falha de carregamento do Turnstile sem apagar campos",()=>{
+ const front=read("assets/contact-page.js");
+ assert.match(front,/script\.onerror/);
+ assert.match(front,/os campos continuam preenchidos/i);
+ assert.match(front,/"error-callback"/);
+});
 test("readiness exige configuracao Resend",async()=>{
  const {productionReadiness}=await import("../lib/readiness.mjs");
  const r=productionReadiness({});
@@ -26,7 +38,7 @@ test("readiness exige configuracao Resend",async()=>{
 
 test("canal de privacidade pode reutilizar formulario Resend",async()=>{
  const {productionReadiness}=await import("../lib/readiness.mjs");
- const env={RESEND_API_KEY:"re_x",RESEND_FROM_EMAIL:"Projeto RLI - nome provisorio <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test"};
+ const env={RESEND_API_KEY:"re_x",RESEND_FROM_EMAIL:"Uai Perto <contato@example.test>",CONTACT_DESTINATION_EMAIL:"owner@example.test"};
  const r=productionReadiness(env);
  assert.equal(r.blockers.some(x=>x.id==="PRIVACY_CHANNEL"),false);
 });
