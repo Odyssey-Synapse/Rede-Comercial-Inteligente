@@ -4,8 +4,8 @@ import {readFileSync} from 'node:fs';
 
 const publicFiles=[
   'index.html','rede.html','empresas.html','tecnologia.html','transparencia.html',
-  'calculadora.html','contato.html','privacidade.html','assets/site.js','assets/home-demo.js',
-  'assets/capacity-calculator.js','assets/contact-page.js','api/contact.js'
+  'calculadora.html','contato.html','privacidade.html','assistente.html','testar.html',
+  'assets/site.js','assets/capacity-calculator.js','assets/contact-page.js','api/contact.js'
 ];
 
 test('superfícies públicas não reintroduzem denominações históricas',()=>{
@@ -24,13 +24,16 @@ test('Uai Perto é a identidade pública consistente',()=>{
   assert.match(site,/BRAND_TAGLINE="Uberaba mais perto de você\."/);
 });
 
-test('aquisição comercial permanece distinta da experiência do Assistente',()=>{
+test('aquisição comercial, teste Consumer e Assistente permanecem superfícies distintas',()=>{
   const home=readFileSync('index.html','utf8');
   const empresas=readFileSync('empresas.html','utf8');
   const assistant=readFileSync('assistente.html','utf8');
+  const demo=readFileSync('testar.html','utf8');
   assert.match(home,/href="\/empresas\.html"/);
-  assert.match(home,/href="\/assistente"/);
+  assert.match(home,/href="\/testar"/);
   assert.match(empresas,/TENHO UMA EMPRESA|Sua empresa vende alguma coisa/);
   assert.match(assistant,/id="assistant-form"/);
+  assert.match(demo,/Cidade fictícia do teste/);
   assert.doesNotMatch(empresas,/id="assistant-form"/);
+  assert.doesNotMatch(demo,/id="assistant-form"/);
 });
