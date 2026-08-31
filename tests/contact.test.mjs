@@ -26,6 +26,14 @@ test("coleta comercial falha fechada sem politica aprovada mas privacidade conti
  assert.match(config,/privacyFormEnabled:\s*contactProviderConfigured/);
  assert.match(front,/isPrivacyRequest\(\)\?config\.privacyFormEnabled/);
 });
+test("participacao bloqueada avisa antes do preenchimento e nao carrega Turnstile",()=>{
+ const front=read("assets/participacao.js");
+ assert.match(front,/function applyCollectionGate\(profile\)/);
+ assert.match(front,/submitButtons\[profile\]\.disabled=blocked/);
+ assert.match(front,/if\(applyCollectionGate\(profile\)\)ensureTurnstile\(profile\)/);
+ assert.match(front,/if\(!applyCollectionGate\(profile\)\)return/);
+ assert.match(front,/collectionBlockedMessage\(\)/);
+});
 test("mapa de demanda do consumidor pode ser anônimo como a interface promete",()=>{
  const api=read("api/contact.js"),participacao=read("assets/participacao.js");
  assert.match(participacao,/subject:isCompany\?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor"/);
