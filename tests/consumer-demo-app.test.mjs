@@ -70,5 +70,5 @@ test('CTAs atuais levam à demo; captura de demanda continua separada',()=>{
   assert.match(personal,/href="\/testar">/);
   assert.match(site,/href="\/testar">Quero testar como consumidor/);
   assert.match(personalScript,/location\.href='\/testar'/);
-  assert.match(home,/href="\/participar\.html\?perfil=consumidor"/);
+  assert.match(site,/href="\/participar\.html\?perfil=consumidor">Sou consumidor/);
 });
