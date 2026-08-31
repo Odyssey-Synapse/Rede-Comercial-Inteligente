@@ -13,8 +13,11 @@ test('preview social usa asset estático e não função dinâmica',()=>{
   assert.equal(fs.existsSync(new URL('../assets/uai-perto-symbol.png',import.meta.url)),true);
 });
 
-test('home continua declarando imagem social absoluta',()=>{
+test('home declara imagem social absoluta com tipo real',()=>{
   const html=read('index.html');
   assert.match(html,/property="og:image" content="https:\/\/rede-comercial-inteligente\.vercel\.app\/og-uai-perto\.jpg"/);
+  assert.match(html,/property="og:image:type" content="image\/png"/);
+  assert.doesNotMatch(html,/property="og:image:type" content="image\/jpeg"/);
+  assert.doesNotMatch(html,/property="og:image:(?:width|height)"/);
   assert.match(html,/name="twitter:image" content="https:\/\/rede-comercial-inteligente\.vercel\.app\/og-uai-perto\.jpg"/);
 });
