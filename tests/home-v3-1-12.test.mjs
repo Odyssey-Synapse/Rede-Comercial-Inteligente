@@ -15,11 +15,12 @@ test('empresa tem caminhos diretos para simulação e apresentação comercial',
   assert.match(html,/href="\/participar\.html\?perfil=empresa"/);
 });
 
-test('API de status Founder permanece real e o fallback não inventa disponibilidade',()=>{
-  const module=read('assets/founder-status.js');
-  assert.match(module,/\/api\/founder-status/);
-  assert.match(module,/A disponibilidade é confirmada no fluxo comercial/);
-  assert.match(module,/remaining/);
+test('API de status Founder permanece autoritativa e usa capacidade 54',()=>{
+  const api=read('api/founder-status.js');
+  assert.match(api,/founderCapacityStatus/);
+  assert.match(api,/capacity:54/);
+  assert.match(api,/authority:db\?"DATABASE":"LEGACY_ENV"/);
+  assert.doesNotMatch(api,/capacity:25/);
 });
 
 test('calculadora conecta os três modelos à condição Fundador vigente',()=>{
