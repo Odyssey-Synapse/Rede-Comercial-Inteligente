@@ -2,7 +2,10 @@ import { verifyTurnstileToken } from "../lib/turnstile.mjs";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const buckets = new Map();
-const CONSUMER_SURVEY_SUBJECT = "Pesquisa do consumidor — pré-lançamento";
+const CONSUMER_SURVEY_SUBJECTS = new Set([
+  "Pesquisa do consumidor — pré-lançamento",
+  "Mapa de demanda — consumidor"
+]);
 
 function clean(value, max = 500) {
   return String(value || "").replace(/\u0000/g, "").trim().slice(0, max);
@@ -39,7 +42,7 @@ export default async function handler(req, res) {
   const subject = clean(body.subject, 120);
   const message = clean(body.message, 4000);
   const consent = body.consent === true || body.consent === "true";
-  const isConsumerSurvey = subject === CONSUMER_SURVEY_SUBJECT;
+  const isConsumerSurvey = CONSUMER_SURVEY_SUBJECTS.has(subject);
 
   if (name.length < 2) return res.status(400).json({ error: "INVALID_NAME" });
   if ((!isConsumerSurvey && !emailRe.test(email)) || (isConsumerSurvey && email && !emailRe.test(email))) return res.status(400).json({ error: "INVALID_EMAIL" });
