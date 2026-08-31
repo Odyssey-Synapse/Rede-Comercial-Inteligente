@@ -22,7 +22,7 @@ test("mapa de demanda do consumidor pode ser anônimo como a interface promete",
  const api=read("api/contact.js"),participacao=read("assets/participacao.js");
  assert.match(participacao,/subject:isCompany\?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor"/);
  assert.match(api,/"Mapa de demanda — consumidor"/);
- assert.match(api,/isConsumerSurvey&&email&&!emailRe\.test\(email\)/);
+ assert.match(api,/isConsumerSurvey\s*&&\s*email\s*&&\s*!emailRe\.test\(email\)/);
 });
 test("formulario de contato trata falha de carregamento do Turnstile sem apagar campos",()=>{
  const front=read("assets/contact-page.js");
