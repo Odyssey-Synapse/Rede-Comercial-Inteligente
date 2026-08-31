@@ -7,17 +7,17 @@ import { fileURLToPath } from "node:url";
 const here=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(here,"..");
 const read=f=>fs.readFileSync(path.join(root,f),"utf8");
 
-test("proposta oficial oferece aceite comercial antes de imprimir",()=>{
-  const js=read("assets/calculator-page.js");
-  assert.match(js,/Aceitar proposta e continuar/);
-  assert.match(js,/quote-acceptance-form/);
-  assert.match(js,/\/api\/quote-accept/);
-  assert.match(js,/acceptedTerms:true/);
+test("calculadora deixa claro que simulação não é proposta oficial nem aceite",()=>{
+  const js=read("assets/capacity-calculator.js"),html=read("calculadora.html");
+  assert.match(js,/não é proposta oficial, contrato, cobrança automática nem reserva/i);
+  assert.doesNotMatch(js+html,/Aceitar proposta e continuar|quote-acceptance-form/);
 });
 
-test("aceite deixa claro que não é assinatura qualificada ou avançada",()=>{
-  const js=read("assets/calculator-page.js");
-  assert.match(js,/não é apresentado como assinatura eletrônica qualificada ou avançada/i);
+test("aceite oficial permanece somente na API e política de aceite",()=>{
+  const api=read("api/quote-accept.js"),policy=read("lib/acceptance-policy.mjs");
+  assert.match(api,/ACEITE_COMERCIAL_REGISTRADO/);
+  assert.match(policy,/acceptedTerms !== true/);
+  assert.doesNotMatch(api+policy,/assinatura eletrônica qualificada|assinatura eletrônica avançada/i);
 });
 
 test("API de aceite impede duplicidade, vencimento e cancelamento",()=>{
