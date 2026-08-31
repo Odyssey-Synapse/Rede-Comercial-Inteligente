@@ -13,29 +13,18 @@ test('versão do pacote preserva a evolução institucional e incorpora o Assist
   assert.match(pkg.scripts['test:consumer'],/assistant-api\.test\.mjs/);
 });
 
-test('home integra demo multi-cenário claramente hipotética',()=>{
+test('home mantém demonstração fora da landing e aponta para /testar',()=>{
   const html=read('index.html');
-  assert.match(html,/id="demonstracao"/);
-  assert.match(html,/DEMONSTRAÇÃO — cenário hipotético/);
-  assert.match(html,/assets\/home-demo\.js/);
-  assert.match(html,/não representa clientes, parceiros ativos, vendas realizadas ou garantia de funcionalidade comercial disponível/i);
+  assert.doesNotMatch(html,/id="demonstracao"|assets\/home-demo\.js/);
+  assert.match(html,/href="\/testar">Ver como funciona →/);
+  assert.match(html,/href="\/testar">Testar o Uai Perto →/);
+  assert.match(read('testar.html'),/Ambiente de demonstração/);
+  assert.match(read('testar.html'),/Nenhum negócio real é apresentado como parceiro/);
 });
 
-test('demo possui três cenários e loops contínuos',()=>{
-  const js=read('assets/home-demo.js');
-  for(const term of ['urgência em casa','resolução composta','restrição de deslocamento']) assert.ok(js.includes(term),term);
-  assert.match(js,/scenarioIndex=\(scenarioIndex\+1\)%scenarios\.length/);
-  assert.match(js,/while\(id===impactRun/);
-  assert.match(js,/while\(id===xrayRun/);
-  assert.match(js,/const base=1120/);
-});
-
-test('demo preserva controles e velocidade padrão confortável',()=>{
+test('home não reintroduz controles de uma demo incorporada obsoleta',()=>{
   const html=read('index.html');
-  for(const id of ['id="demo-prev"','id="demo-play"','id="demo-next"','id="demo-restart"','id="demo-speed"']) assert.ok(html.includes(id),id);
-  assert.match(html,/value="1" selected>Normal/);
-  assert.match(html,/value="1\.28">Lenta/);
-  assert.match(html,/value="\.78">Rápida/);
+  for(const id of ['demo-prev','demo-play','demo-next','demo-restart','demo-speed']) assert.doesNotMatch(html,new RegExp(`id=["']${id}["']`));
 });
 
 test('condição Fundador aparece na página comercial com o contrato vigente',()=>{
