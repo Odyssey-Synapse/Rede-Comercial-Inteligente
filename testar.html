@@ -23,10 +23,12 @@
 </main>
 <script type="module">
 import { consumerAction, qs, setBusy, toast, esc } from '/assets/testar-common.js';
+const PREFILL_KEY='uai-testar-prefill-v1';
 const phaseIndex={UNDERSTANDING:0,PLANNING:1,NEEDS_INFORMATION:1,WAITING_NETWORK:2,WAITING_SELECTION:2,READY_EXECUTION:3,WAITING_EXECUTION:3,WAITING_VERIFICATION:4,SUSPENDED:4,UNAVAILABLE:1,COMPLETE:5};
 const labels={UNDERSTANDING:'Entendendo',PLANNING:'Organizando',NEEDS_INFORMATION:'Precisa de informação',WAITING_NETWORK:'Rede sem capacidade',WAITING_SELECTION:'Escolha necessária',READY_EXECUTION:'Pronto para testar',WAITING_EXECUTION:'Executando',WAITING_VERIFICATION:'Verificando',SUSPENDED:'Interrompido',UNAVAILABLE:'Indisponível',COMPLETE:'Concluído'};
 let projectId='';let sessionId='';let originalNeed='';let extraContext=[];let currentView=null;let ready=false;
 const need=qs('need'),consent=qs('consent'),start=qs('start'),reset=qs('reset'),idle=qs('idle'),result=qs('result'),statePill=qs('statePill'),statusMessage=qs('statusMessage'),dynamic=qs('dynamic'),understanding=qs('understanding'),understandingText=qs('understandingText');
+try{const raw=sessionStorage.getItem(PREFILL_KEY);if(raw){sessionStorage.removeItem(PREFILL_KEY);const prefill=JSON.parse(raw);if(prefill?.need){need.value=String(prefill.need).slice(0,4000);setTimeout(()=>{need.focus();toast('Contexto trazido do Meu Uai Perto.',{kind:'success'})},30)}}}catch{}
 for(const b of document.querySelectorAll('[data-prompt]'))b.onclick=()=>{need.value=b.dataset.prompt;need.focus()};
 function money(v){return v==null?'valor não informado':new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)/100)}
 function publicError(error){return error?.status>=500?'O Uai Perto está temporariamente indisponível para este teste.':(error?.message||'Não foi possível continuar esta etapa.');}
