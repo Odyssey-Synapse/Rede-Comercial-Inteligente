@@ -29,9 +29,13 @@ test('Participação vira coluna única e mantém controles grandes no celular',
   assert.match(css,/@media\(max-width:760px\)[\s\S]*?\.choice-option span\{[^}]*min-height:50px/);
 });
 
-test('Demonstração pública colapsa grids e ações em telas pequenas',()=>{
+test('Demonstração pública colapsa grids, ações e bloqueia overflow no celular',()=>{
   const html=read('testar.html');
-  assert.match(html,/@media\(max-width:820px\)\{[^}]*\.intro,\.main-grid\{grid-template-columns:1fr\}/);
+  const css=read('assets/testar-readability.css');
+  assert.match(html,/@media\(max-width:820px\)[\s\S]*?\.intro,\.main-grid\{grid-template-columns:1fr\}/);
   assert.match(html,/@media\(max-width:520px\)[\s\S]*?\.primary,\.secondary\{width:100%\}/);
-  assert.match(html,/html\{[^}]*overflow-x:hidden/);
+  assert.match(css,/html\{[^}]*overflow-x:hidden/);
+  assert.match(css,/body\{overflow-x:hidden\}/);
+  assert.match(css,/textarea\{[^}]*max-width:100%/);
+  assert.match(css,/\.toast\{[^}]*max-width:calc\(100vw - 36px\)/);
 });
