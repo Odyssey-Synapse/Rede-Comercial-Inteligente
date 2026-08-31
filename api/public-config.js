@@ -11,6 +11,7 @@ export default function handler(req, res) {
     privacyPolicyApproved,
     turnstileSiteKey: process.env.PUBLIC_TURNSTILE_SITE_KEY || null,
     turnstileRequired: String(process.env.TURNSTILE_REQUIRED || "false").toLowerCase() === "true",
-    contactFormEnabled: privacyPolicyApproved && contactProviderConfigured
+    contactFormEnabled: privacyPolicyApproved && contactProviderConfigured,
+    privacyFormEnabled: contactProviderConfigured
   });
 }
