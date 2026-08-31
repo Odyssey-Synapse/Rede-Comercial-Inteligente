@@ -45,15 +45,15 @@ if(footer)footer.innerHTML=`<footer class="site-footer"><div class="container"><
 
 document.querySelector("#year")?.replaceChildren(String(new Date().getFullYear()));
 
-function getTheme(){return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}
-function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("aa-theme",theme);document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}
+function getTheme(){try{return document.documentElement.dataset.theme||localStorage.getItem("aa-theme")||"light"}catch{return document.documentElement.dataset.theme||"light"}}
+function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem("aa-theme",theme)}catch{}document.querySelector("#theme-icon")?.replaceChildren(theme==="dark"?"☀":"☾")}
 setTheme(getTheme());
 document.querySelector("#theme-toggle")?.addEventListener("click",()=>setTheme(getTheme()==="dark"?"light":"dark"));
 
 const menu=document.querySelector("#menu-toggle");
 const nav=document.querySelector("#nav-links");
-menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open")||false;menu.setAttribute("aria-expanded",String(open));menu.textContent=open?"×":"☰"});
-nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");if(menu)menu.textContent="☰"}));
+menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open")||false;menu.setAttribute("aria-expanded",String(open));menu.setAttribute("aria-label",open?"Fechar menu":"Abrir menu");menu.textContent=open?"×":"☰"});
+nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");menu?.setAttribute("aria-label","Abrir menu");if(menu)menu.textContent="☰"}));
 
 if("IntersectionObserver" in window){
   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.1});
@@ -96,23 +96,25 @@ if(stepContent)renderStep("understand");
 const canvas=document.querySelector("#network-canvas");
 if(canvas&&!location.search.includes("static=1")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
   const ctx=canvas.getContext("2d");
-  let width=0,height=0,dpr=1,pointer={x:-999,y:-999};
-  const count=innerWidth<720?18:32;
-  const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));
-  const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);width=canvas.clientWidth;height=canvas.clientHeight;canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};
-  resize();
-  addEventListener("resize",resize,{passive:true});
-  canvas.addEventListener("pointermove",event=>{const rect=canvas.getBoundingClientRect();pointer={x:event.clientX-rect.left,y:event.clientY-rect.top}});
-  canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});
-  function draw(){
-    ctx.clearRect(0,0,width,height);
-    const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
-    for(const node of nodes){node.x+=node.vx;node.y+=node.vy;if(node.x<0||node.x>1)node.vx*=-1;if(node.y<0||node.y>1)node.vy*=-1}
-    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*width,ay=a.y*height,bx=b.x*width,by=b.y*height,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}
-    for(const node of nodes){const x=node.x*width,y=node.y*height,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?node.r*1.6:node.r,0,Math.PI*2);ctx.fill()}
-    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  if(ctx){
+    let width=0,height=0,dpr=1,pointer={x:-999,y:-999};
+    const count=innerWidth<720?18:32;
+    const nodes=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.00007,vy:(Math.random()-.5)*.00007,r:1.2+Math.random()*1.7}));
+    const resize=()=>{dpr=Math.min(devicePixelRatio||1,2);width=canvas.clientWidth;height=canvas.clientHeight;canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};
+    resize();
+    addEventListener("resize",resize,{passive:true});
+    canvas.addEventListener("pointermove",event=>{const rect=canvas.getBoundingClientRect();pointer={x:event.clientX-rect.left,y:event.clientY-rect.top}});
+    canvas.addEventListener("pointerleave",()=>pointer={x:-999,y:-999});
+    function draw(){
+      ctx.clearRect(0,0,width,height);
+      const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+      for(const node of nodes){node.x+=node.vx;node.y+=node.vy;if(node.x<0||node.x>1)node.vx*=-1;if(node.y<0||node.y>1)node.vy*=-1}
+      for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],ax=a.x*width,ay=a.y*height,bx=b.x*width,by=b.y*height,dist=Math.hypot(ax-bx,ay-by);if(dist<150){ctx.globalAlpha=(1-dist/150)*.12;ctx.strokeStyle=accent;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke()}}
+      for(const node of nodes){const x=node.x*width,y=node.y*height,pd=Math.hypot(x-pointer.x,y-pointer.y);ctx.globalAlpha=pd<120?.6:.26;ctx.fillStyle=accent;ctx.beginPath();ctx.arc(x,y,pd<120?node.r*1.6:node.r,0,Math.PI*2);ctx.fill()}
+      ctx.globalAlpha=1;requestAnimationFrame(draw);
+    }
+    draw();
   }
-  draw();
 }
 
 function applyBrandMetadata(){
@@ -140,7 +142,10 @@ function ensureHeroBrand(){
 
 function ensureHomeMeuUaiPerto(){
   const isHome=location.pathname==="/"||location.pathname==="/index.html";
-  if(!isHome||document.querySelector("#meu-uai-perto"))return;
+  if(!isHome)return;
+  const existing=document.querySelector("#meu-uai-perto");
+  if(existing?.matches("section.home-uai-life"))return;
+  if(existing?.hidden)existing.remove();
   const hero=document.querySelector(".hero");
   if(!hero)return;
 
@@ -170,7 +175,6 @@ function ensureHomeMeuUaiPerto(){
     <p class="home-uai-life-note">Guardar não inicia nenhuma procura. Você decide quando o Uai Perto deve agir.</p>
   </div>`;
   hero.insertAdjacentElement("afterend",section);
-
 }
 
 applyBrandMetadata();
