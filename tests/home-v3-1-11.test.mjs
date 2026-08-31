@@ -16,8 +16,9 @@ test('versão do pacote preserva a evolução institucional e incorpora o Assist
 test('home mantém demonstração fora da landing e aponta para /testar',()=>{
   const html=read('index.html');
   assert.doesNotMatch(html,/id="demonstracao"|assets\/home-demo\.js/);
-  assert.match(html,/href="\/testar">Ver como funciona →/);
+  assert.match(html,/href="\/testar">Ver demonstração →/);
   assert.match(html,/href="\/testar">Testar o Uai Perto →/);
+  assert.match(html,/cidade e empresas fictícias/i);
   assert.match(read('testar.html'),/Ambiente de demonstração/);
   assert.match(read('testar.html'),/Nenhum negócio real é apresentado como parceiro/);
 });
