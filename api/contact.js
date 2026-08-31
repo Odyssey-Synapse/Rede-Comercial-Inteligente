@@ -6,6 +6,7 @@ const CONSUMER_SURVEY_SUBJECTS = new Set([
   "Pesquisa do consumidor — pré-lançamento",
   "Mapa de demanda — consumidor"
 ]);
+const PRIVACY_SUBJECT = "Privacidade";
 
 function clean(value, max = 500) {
   return String(value || "").replace(/\u0000/g, "").trim().slice(0, max);
@@ -31,15 +32,8 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "METHOD_NOT_ALLOWED" });
   res.setHeader("Cache-Control", "no-store");
 
-  if (process.env.PRIVACY_POLICY_STATUS !== "APPROVED") {
-    return res.status(503).json({ error: "PRIVACY_POLICY_NOT_APPROVED" });
-  }
-
   const body = req.body || {};
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
-
-  const ip = clientIp(req);
-  if (rateLimited(ip)) return res.status(429).json({ error: "RATE_LIMITED", message: "Muitas tentativas. Tente novamente mais tarde." });
 
   const name = clean(body.name, 120);
   const email = clean(body.email, 254).toLowerCase();
@@ -47,6 +41,14 @@ export default async function handler(req, res) {
   const message = clean(body.message, 4000);
   const consent = body.consent === true || body.consent === "true";
   const isConsumerSurvey = CONSUMER_SURVEY_SUBJECTS.has(subject);
+  const isPrivacyRequest = subject === PRIVACY_SUBJECT;
+
+  if (!isPrivacyRequest && process.env.PRIVACY_POLICY_STATUS !== "APPROVED") {
+    return res.status(503).json({ error: "PRIVACY_POLICY_NOT_APPROVED" });
+  }
+
+  const ip = clientIp(req);
+  if (rateLimited(ip)) return res.status(429).json({ error: "RATE_LIMITED", message: "Muitas tentativas. Tente novamente mais tarde." });
 
   if (name.length < 2) return res.status(400).json({ error: "INVALID_NAME" });
   if ((!isConsumerSurvey && !emailRe.test(email)) || (isConsumerSurvey && email && !emailRe.test(email))) return res.status(400).json({ error: "INVALID_EMAIL" });
