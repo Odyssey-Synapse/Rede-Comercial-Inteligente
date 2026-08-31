@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/og-uai-perto.jpg", "destination": "/api/og-uai-perto" }
+    { "source": "/og-uai-perto.jpg", "destination": "/assets/uai-perto-symbol.png" }
   ],
   "functions": {
     "api/assistant/**/*.js": { "maxDuration": 30 },
