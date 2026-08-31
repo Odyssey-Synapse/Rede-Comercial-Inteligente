@@ -27,6 +27,13 @@ function loadTurnstile(){
 
 function setFeedback(profile,text,type=""){const el=feedbacks[profile];if(!el)return;el.textContent=text;el.className=`participation-feedback ${type}`.trim()}
 function setSuccess(profile,html){const el=feedbacks[profile];if(!el)return;el.innerHTML=html;el.className="participation-feedback success"}
+function collectionBlockedMessage(){return config.privacyPolicyApproved===false?"O envio está temporariamente fechado enquanto a política de privacidade não está liberada para coleta.":"O envio pelo site está temporariamente indisponível."}
+function applyCollectionGate(profile){
+  const blocked=config.contactFormEnabled===false;
+  if(submitButtons[profile])submitButtons[profile].disabled=blocked;
+  if(blocked)setFeedback(profile,collectionBlockedMessage(),"error");
+  return !blocked;
+}
 function waitForTurnstileToken(profile,timeoutMs=8000){
   if(tokens[profile])return Promise.resolve(true);
   return new Promise(resolve=>{
@@ -70,7 +77,7 @@ function activateProfile(profile,updateUrl=true){
   profileButtons.forEach(button=>{const active=button.dataset.profileTarget===profile;button.classList.toggle("active",active);button.setAttribute("aria-pressed",String(active))});
   Object.entries(panels).forEach(([key,panel])=>{panel.hidden=key!==profile});
   if(updateUrl){const url=new URL(location.href);url.searchParams.set("perfil",profile);history.replaceState({},"",url)}
-  ensureTurnstile(profile);
+  if(applyCollectionGate(profile))ensureTurnstile(profile);
   panels[profile].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
 }
 profileButtons.forEach(button=>button.addEventListener("click",()=>activateProfile(button.dataset.profileTarget)));
@@ -305,9 +312,9 @@ function isTurnstileError(error){return error?.message==="ANTIABUSE_REJECTED"||S
 async function submitParticipation(profile,event){
   event.preventDefault();
   const form=forms[profile];if(!form)return;setFeedback(profile,"");
+  if(!applyCollectionGate(profile))return;
   const groupsOk=validateGroups(form);const contactOk=profile!=="consumidor"||validConsumerContact(form);
   if(!form.checkValidity()||!groupsOk||!contactOk){form.reportValidity();setFeedback(profile,contactOk?"Revise os campos indicados antes de enviar.":"Informe um e-mail ou WhatsApp válido para receber o aviso.","error");return}
-  if(config.contactFormEnabled===false){setFeedback(profile,config.privacyPolicyApproved===false?"O envio está temporariamente fechado enquanto a política de privacidade não está liberada para coleta.":"O envio pelo site está temporariamente indisponível.","error");return}
   if(config.turnstileRequired&&!tokens[profile]){
     const ready=await ensureTurnstile(profile);
     if(!ready)return;
@@ -337,8 +344,8 @@ async function submitParticipation(profile,event){
     else setSuccess(profile,"Resposta enviada. Sua necessidade agora ajuda a mostrar onde o Uai Perto precisa começar em Uberaba.");
   }catch(error){
     if(isTurnstileError(error))resetTurnstileProfile(profile);
-    const friendly=error.message==="PRIVACY_POLICY_NOT_APPROVED"?"O envio está temporariamente fechado enquanto a política de privacidade não está liberada para coleta.":isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Tente enviar novamente; seus campos continuam preenchidos.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
-  }finally{submit.disabled=false;submit.textContent=originalText}
+    const friendly=error.message==="PRIVACY_POLICY_NOT_APPROVED"?collectionBlockedMessage():isTurnstileError(error)?"A verificação de segurança precisa ser refeita. Tente enviar novamente; seus campos continuam preenchidos.":error.message==="CONTACT_NOT_CONFIGURED"?"O canal ainda está sendo configurado.":error.message==="RATE_LIMITED"?"Muitas tentativas em pouco tempo. Tente novamente mais tarde.":"Não foi possível enviar agora. Tente novamente em alguns minutos.";setFeedback(profile,friendly,"error");
+  }finally{submit.disabled=false;submit.textContent=originalText;applyCollectionGate(profile)}
 }
 forms.consumidor?.addEventListener("submit",event=>submitParticipation("consumidor",event));
 forms.empresa?.addEventListener("submit",event=>submitParticipation("empresa",event));
