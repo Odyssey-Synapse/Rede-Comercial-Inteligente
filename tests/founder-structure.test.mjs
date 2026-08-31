@@ -20,3 +20,19 @@ test("founder não é exposto como lista na API pública",()=>{
   assert.match(s,/count/);
   assert.doesNotMatch(s,/FOUNDER_CNPJ_REGISTRY/);
 });
+test("Founder real falha fechado sem privacidade aprovada mas sandbox continua testável",()=>{
+  const api=read("api/founder-status.js"),config=read("api/public-config.js");
+  assert.match(api,/founderEnrollmentAllowed=.*mercadoPagoTestMode\(\).*PRIVACY_POLICY_STATUS===?"APPROVED"/);
+  assert.match(api,/function assertFounderEnrollmentAllowed/);
+  assert.ok((api.match(/assertFounderEnrollmentAllowed\(\)/g)||[]).length>=5);
+  assert.match(config,/founderEnrollmentEnabled:\s*privacyPolicyApproved\s*\|\|\s*mercadoPagoTestMode/);
+});
+test("Founder explica uso de dados e provedor de Pix antes de concluir entrada",()=>{
+  const html=read("fundador.html"),privacy=read("privacidade.html");
+  assert.match(html,/Veja como os dados deste fluxo são tratados/);
+  assert.match(html,/Pix é processado pelo Mercado Pago/);
+  assert.match(html,/não pede senha bancária/);
+  assert.match(privacy,/Empresa Fundadora/);
+  assert.match(privacy,/Mercado Pago/);
+  assert.match(privacy,/CNPJ, razão social, nome fantasia/);
+});
