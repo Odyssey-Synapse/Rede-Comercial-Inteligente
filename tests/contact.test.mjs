@@ -18,6 +18,12 @@ test("contato possui validacao honeypot rate-limit e turnstile",()=>{
  const api=read("api/contact.js");
  for(const token of ["website","rateLimited","verifyTurnstileToken","CONSENT_REQUIRED"]) assert.ok(api.includes(token),token);
 });
+test("coleta publica falha fechada sem politica de privacidade aprovada",()=>{
+ const api=read("api/contact.js"),config=read("api/public-config.js");
+ assert.match(api,/PRIVACY_POLICY_STATUS\s*!==\s*"APPROVED"/);
+ assert.match(api,/PRIVACY_POLICY_NOT_APPROVED/);
+ assert.match(config,/contactFormEnabled:\s*privacyPolicyApproved\s*&&\s*contactProviderConfigured/);
+});
 test("mapa de demanda do consumidor pode ser anônimo como a interface promete",()=>{
  const api=read("api/contact.js"),participacao=read("assets/participacao.js");
  assert.match(participacao,/subject:isCompany\?"Mapa de capacidade — empresa interessada":"Mapa de demanda — consumidor"/);
