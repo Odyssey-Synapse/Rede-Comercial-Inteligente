@@ -7,6 +7,20 @@ function ensureConsumerReadability(){
 }
 ensureConsumerReadability();
 
+function ensureDynamicConsumerAccessibility(root=document){
+  const more=root.querySelector?.('#more');
+  if(more&&!more.hasAttribute('aria-label')&&!more.hasAttribute('aria-labelledby'))more.setAttribute('aria-label','Contexto adicional para continuar a necessidade');
+}
+ensureDynamicConsumerAccessibility();
+if('MutationObserver' in window){
+  const accessibilityObserver=new MutationObserver(records=>{
+    for(const record of records)for(const node of record.addedNodes){
+      if(node?.nodeType===1)ensureDynamicConsumerAccessibility(node.matches?.('#more')?node.parentElement||node:node);
+    }
+  });
+  accessibilityObserver.observe(document.documentElement,{childList:true,subtree:true});
+}
+
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const unavailable='O Uai Perto está temporariamente indisponível para a demonstração.';
 async function startSession(){const response=await fetch('/api/consumer-demo/session',{method:'POST',headers:{'content-type':'application/json'},credentials:'same-origin',body:'{}'});if(!response.ok)throw Object.assign(new Error(unavailable),{status:response.status});}
