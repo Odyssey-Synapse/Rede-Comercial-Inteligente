@@ -90,9 +90,11 @@ test('campos estáticos com id têm label correspondente ou nome acessível expl
   assert.deepEqual(bad,[],bad.join('\n'));
 });
 
-test('controle dinâmico de contexto do Consumer recebe nome acessível',()=>{
-  const html=read('testar.html');
-  assert.match(html,/Complete o contexto[\s\S]*?<textarea id="more"[^>]*(?:aria-label="[^"]+"|aria-labelledby="[^"]+")/);
+test('controle dinâmico de contexto do Consumer recebe nome acessível no DOM',()=>{
+  const common=read('assets/testar-common.js');
+  assert.match(common,/querySelector\?\.\('#more'\)/);
+  assert.match(common,/more\.setAttribute\('aria-label','Contexto adicional para continuar a necessidade'\)/);
+  assert.match(common,/new MutationObserver/);
 });
 
 test('feedback crítico dos fluxos transacionais usa região viva',()=>{
