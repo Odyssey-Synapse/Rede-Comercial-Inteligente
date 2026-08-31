@@ -32,3 +32,12 @@ test('falhas operacionais e clipboard do admin geram mensagem humana',()=>{
   assert.match(js,/Link de Fundador copiado/);
   assert.match(js,/O link ficou selecionado para você copiar no dispositivo/);
 });
+
+test('Admin e API Founder são explicitamente no-store',()=>{
+  const config=JSON.parse(read('vercel.json'));
+  const admin=config.headers.find(item=>item.source==='/admin-founders')?.headers||[];
+  const api=config.headers.find(item=>item.source==='/api/founder-status')?.headers||[];
+  assert.equal(admin.find(h=>h.key==='Cache-Control')?.value,'private, no-store, max-age=0');
+  assert.equal(admin.find(h=>h.key==='X-Robots-Tag')?.value,'noindex, nofollow');
+  assert.equal(api.find(h=>h.key==='Cache-Control')?.value,'private, no-store, max-age=0');
+});
