@@ -59,13 +59,15 @@ test('Consumer público não liga superfícies operacionais de empresa ou backof
   assert.doesNotMatch(publicFiles,/fetch\([^\n]*(?:\/v1\/companies|\/v1\/backoffice|\/v1\/logistics)/i);
 });
 
-test('CTAs atuais levam à demo; captura de demanda continua separada',()=>{
+test('CTAs atuais levam à demo e a Home avisa a fronteira antes do clique',()=>{
   const home=read('index.html');
   const network=read('rede.html');
   const personal=read('meu-uai-perto.html');
   const site=read('assets/site.js');
   const personalScript=read('assets/meu-uai-perto.js');
-  assert.match(home,/href="\/testar">(?:Ver como funciona|Testar o Uai Perto) →/);
+  assert.match(home,/href="\/testar">(?:Ver demonstração|Testar o Uai Perto) →/);
+  assert.match(home,/Demonstração com cidade e empresas fictícias/);
+  assert.match(home,/Rede real de Uberaba em formação/);
   assert.match(network,/href="\/testar">/);
   assert.match(personal,/href="\/testar">/);
   assert.match(site,/href="\/testar">Quero testar como consumidor/);
