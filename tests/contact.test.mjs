@@ -18,11 +18,13 @@ test("contato possui validacao honeypot rate-limit e turnstile",()=>{
  const api=read("api/contact.js");
  for(const token of ["website","rateLimited","verifyTurnstileToken","CONSENT_REQUIRED"]) assert.ok(api.includes(token),token);
 });
-test("coleta publica falha fechada sem politica de privacidade aprovada",()=>{
- const api=read("api/contact.js"),config=read("api/public-config.js");
- assert.match(api,/PRIVACY_POLICY_STATUS\s*!==\s*"APPROVED"/);
+test("coleta comercial falha fechada sem politica aprovada mas privacidade continua disponivel",()=>{
+ const api=read("api/contact.js"),config=read("api/public-config.js"),front=read("assets/contact-page.js");
+ assert.match(api,/!isPrivacyRequest\s*&&\s*process\.env\.PRIVACY_POLICY_STATUS\s*!==\s*"APPROVED"/);
  assert.match(api,/PRIVACY_POLICY_NOT_APPROVED/);
  assert.match(config,/contactFormEnabled:\s*privacyPolicyApproved\s*&&\s*contactProviderConfigured/);
+ assert.match(config,/privacyFormEnabled:\s*contactProviderConfigured/);
+ assert.match(front,/isPrivacyRequest\(\)\?config\.privacyFormEnabled/);
 });
 test("mapa de demanda do consumidor pode ser anônimo como a interface promete",()=>{
  const api=read("api/contact.js"),participacao=read("assets/participacao.js");
@@ -30,11 +32,16 @@ test("mapa de demanda do consumidor pode ser anônimo como a interface promete",
  assert.match(api,/"Mapa de demanda — consumidor"/);
  assert.match(api,/isConsumerSurvey\s*&&\s*email\s*&&\s*!emailRe\.test\(email\)/);
 });
-test("formulario de contato trata falha de carregamento do Turnstile sem apagar campos",()=>{
- const front=read("assets/contact-page.js");
- assert.match(front,/script\.onerror/);
- assert.match(front,/os campos continuam preenchidos/i);
- assert.match(front,/"error-callback"/);
+test("formularios recuperam Turnstile sem pedir reload nem apagar campos",()=>{
+ const contact=read("assets/contact-page.js"),participacao=read("assets/participacao.js");
+ for(const front of [contact,participacao]){
+   assert.match(front,/script\.onerror/);
+   assert.match(front,/campos continuam preenchidos/i);
+   assert.match(front,/"error-callback"/);
+   assert.doesNotMatch(front,/Atualize a página/i);
+ }
+ assert.match(participacao,/function loadTurnstile\(\)/);
+ assert.match(participacao,/turnstileReady=null/);
 });
 test("readiness exige configuracao Resend",async()=>{
  const {productionReadiness}=await import("../lib/readiness.mjs");
