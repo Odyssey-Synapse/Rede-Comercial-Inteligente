@@ -18,9 +18,17 @@ test('admin Founder é noindex e feedback de autenticação é acessível',()=>{
   assert.match(html,/id="admin-feedback" role="status" aria-live="polite"/);
 });
 
-test('falhas operacionais do admin geram mensagem humana',()=>{
+test('pipeline administrativo possui semântica de tabela explícita',()=>{
+  const html=read('admin-founders.html');
+  assert.match(html,/<caption[^>]*>Candidaturas e estados da operação Founder<\/caption>/);
+  for(const label of ['Empresa','Modelo','Status','Pagamento','Fundador','Contato'])assert.match(html,new RegExp(`<th scope="col" align="left">${label}<\\/th>`));
+});
+
+test('falhas operacionais e clipboard do admin geram mensagem humana',()=>{
   const js=read('assets/admin-founders.js');
   assert.match(js,/Não foi possível gerar o convite agora/);
   assert.match(js,/Não foi possível atualizar a operação/);
   assert.match(js,/A sessão administrativa não é mais válida/);
+  assert.match(js,/Link de Fundador copiado/);
+  assert.match(js,/O link ficou selecionado para você copiar no dispositivo/);
 });
