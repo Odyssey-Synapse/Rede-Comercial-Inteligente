@@ -13,6 +13,18 @@ function attrs(tag){
   for(const m of tag.matchAll(/\b([\w:-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g))out[m[1].toLowerCase()]=m[2]??m[3]??m[4]??'';
   return out;
 }
+function isRedirectPage(html){
+  return /<meta\b[^>]*http-equiv=["']refresh["']/i.test(html)||/\blocation\.replace\s*\(/i.test(html);
+}
+function nestedLabelledIds(html){
+  const ids=new Set();
+  for(const label of html.match(/<label\b[^>]*>[\s\S]*?<\/label>/gi)||[]){
+    for(const tag of label.match(/<(?:input|select|textarea)\b[^>]*>/gi)||[]){
+      const id=attrs(tag).id;if(id)ids.add(id);
+    }
+  }
+  return ids;
+}
 
 test('páginas públicas possuem idioma, viewport, título e heading principal',()=>{
   const bad=[];
@@ -21,7 +33,7 @@ test('páginas públicas possuem idioma, viewport, título e heading principal',
     if(!/<html[^>]+lang=["']pt-BR["']/i.test(html))bad.push(`${file}: lang pt-BR ausente`);
     if(!/<meta[^>]+name=["']viewport["']/i.test(html))bad.push(`${file}: viewport ausente`);
     if(!/<title>[^<]+<\/title>/i.test(html))bad.push(`${file}: title vazio/ausente`);
-    if(!/<h1\b/i.test(html))bad.push(`${file}: h1 ausente`);
+    if(!isRedirectPage(html)&&!/<h1\b/i.test(html))bad.push(`${file}: h1 ausente`);
   }
   assert.deepEqual(bad,[],bad.join('\n'));
 });
@@ -64,13 +76,14 @@ test('campos estáticos com id têm label correspondente ou nome acessível expl
   for(const file of pages){
     const html=read(file);
     const labelled=new Set([...html.matchAll(/<label\b[^>]*\bfor=["']([^"']+)["']/gi)].map(m=>m[1]));
+    const nested=nestedLabelledIds(html);
     for(const tag of html.match(/<(?:input|select|textarea)\b[^>]*>/gi)||[]){
       const a=attrs(tag),id=a.id;
       if(!id)continue;
       const type=String(a.type||'').toLowerCase();
       if(type==='hidden')continue;
       const explicit=Object.hasOwn(a,'aria-label')||Object.hasOwn(a,'aria-labelledby');
-      if(!labelled.has(id)&&!explicit)bad.push(`${file}: ${id}`);
+      if(!labelled.has(id)&&!nested.has(id)&&!explicit)bad.push(`${file}: ${id}`);
     }
   }
   assert.deepEqual(bad,[],bad.join('\n'));
